@@ -1,6 +1,7 @@
 const authAuthRouter = require('express').Router();
 const bcrypt = require('bcrypt');
 const { User } = require('../db/models');
+const { Role } = require('../db/models');
 
 authAuthRouter.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
@@ -20,6 +21,7 @@ authAuthRouter.post('/signup', async (req, res) => {
     name,
     email,
     password: hashPass,
+    roleId: 2,
   });
 
   req.session.user = {
@@ -27,8 +29,13 @@ authAuthRouter.post('/signup', async (req, res) => {
     name: newUser.name,
     email: newUser.email,
   };
-
-  res.json({ id: newUser.id, name: newUser.name, email: newUser.email });
+  // const withRole = await User.findOne({ where: { id: newUser.id }, include: { model: Role } });
+  res.json({
+    id: newUser.id,
+    name: newUser.name,
+    email: newUser.email,
+    role: 'guest',
+  });
 });
 
 authAuthRouter.post('/signin', async (req, res) => {
@@ -39,6 +46,7 @@ authAuthRouter.post('/signin', async (req, res) => {
   }
   const currentUser = await User.findOne({
     where: { email },
+    include: { model: Role },
   });
   if (!currentUser || !(await bcrypt.compare(password, currentUser.password))) {
     res.status(401).json({ message: 'email not exists' });
@@ -49,7 +57,7 @@ authAuthRouter.post('/signin', async (req, res) => {
     name: currentUser.name,
     email: currentUser.email,
   };
-  res.json(req.session.user);
+  res.json({ ...req.session.user, role: currentUser.Role });
 });
 
 authAuthRouter.get('/check', (req, res) => {
