@@ -1,4 +1,6 @@
 import React from 'react'
+import { useAppSelector } from '../../hooks/reduxHooks'
+import { NavLink } from 'react-router-dom'
 
 export default function MainPage(): JSX.Element {
 
@@ -14,6 +16,8 @@ export default function MainPage(): JSX.Element {
         },
         // More products...
       ]
+
+      const product = useAppSelector((state) => state.product)
       
   return (
 <div className="bg-white">
@@ -33,10 +37,11 @@ export default function MainPage(): JSX.Element {
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <a href={product.href}>
-                      <span aria-hidden="true" className="absolute inset-0" />
-                      {product.name}
-                    </a>
+                    <NavLink className="nav-link" to={`/main/${product.id}`}>
+                        <span aria-hidden="true" className="absolute inset-0" />
+                        {product.name}
+                     
+                    </NavLink>
                   </h3>
                   <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                 </div>
