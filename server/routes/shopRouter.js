@@ -105,21 +105,21 @@ shopRouter.post('/orders', async (req, res) => {
   const cart = await Cart.findAll({ where: { userId: req.session.user.id } });
   const buy = [];
   const cant = [];
+  const order = await Order.create({ userId: req.session.user.id, statusId: 1 });
   for (let i = 0; i < cart.length; i++) {
     const product = await ProductSize.findByPk(cart[i].id);
     if (product.count >= 1) {
       product.count -= 1;
       product.save();
-  await Order.create({})
       buy.push(product);
     } else {
       cant.push(product);
     }
   }
   for (let i = 0; i < buy.length; i++) {
-    await
+    await OrderList.create({ orderId: order.id, productSizeId: buy[i].id });
   }
-
+  res.json(cant);
 });
 shopRouter.post('/cart/:productId', async (req, res) => {
   if (

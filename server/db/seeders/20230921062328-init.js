@@ -100,6 +100,32 @@ module.exports = {
       ],
       {},
     );
+    await queryInterface.bulkInsert(
+      'Statuses',
+      [
+        {
+          title: 'оформлено',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          title: 'в пути',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          title: 'доставлено',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          title: 'получено',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {},
+    );
   },
 
   async down(queryInterface, Sequelize) {
