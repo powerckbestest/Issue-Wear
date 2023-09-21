@@ -23,12 +23,12 @@ function App(): JSX.Element {
     <>
       <NavBar />
       <Routes>
-        <Route path="/main" element={<MainPage />} />
+        <Route path="/products" element={<MainPage />} />
         <Route element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}>
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/signin" element={<SignInPage />} />
         </Route>
-        <Route path='/main/:productId' element={<ProductCard/>}/>
+        <Route path='/products/:productId' element={<ProductCard/>}/>
       </Routes>
     </>
   );
