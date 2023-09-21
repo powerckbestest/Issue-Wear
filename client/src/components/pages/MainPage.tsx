@@ -17,7 +17,7 @@ export default function MainPage(): JSX.Element {
         // More products...
       ]
 
-      const product = useAppSelector((state) => state.product)
+      const product = useAppSelector((state) => state.product.productsData.products)
       
   return (
 <div className="bg-white">
