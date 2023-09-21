@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Определение анимации пульсации */
+@keyframes pulse {
+  0% {
+    transform: scale(1); /* Начальный размер */
+  }
+  50% {
+    transform: scale(10); /* Максимальный размер (увеличение) */
+  }
+  100% {
+    transform: scale(1); /* Возвращение к начальному размеру */
+  }
+}
+
+/* Применение анимации к элементу с классом .pulsating-image */
+.pulsating-image {
+  animation: pulse 2s infinite; /* 2s - длительность анимации, infinite - бесконечное выполнение */
+}
+
+/* Определение анимации мерцания */
+/* @keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+Применение анимации к элементу с классом .pulsating-image */
+/*.pulsating-image {
+  animation:
+    pulse 2s infinite,
+    blink 1s infinite; Добавляем анимацию blink
+}*/
+
+@keyframes move {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(100px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Применение анимации к элементу с классом .moving-element */
+.moving-element {
+  animation: move 2s ease-in-out infinite;
+}
+
+
+
+/* Примените анимацию к элементу */
+.pulsating-image img {
+  animation: moveInCircle 4s linear infinite;
+}
+
+/* Определение анимации вращения */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Применение анимации к элементу с классом .rotate-image */
+.rotate-image {
+  animation: rotate 2s linear infinite;
+}
