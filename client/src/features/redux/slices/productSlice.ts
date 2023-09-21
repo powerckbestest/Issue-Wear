@@ -1,23 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { ProductType } from "../../../types/productType";
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { ProductType } from '../../../types/productType';
 
-const initialState: ProductType[] = []
+type InitialState = {
+  products: ProductType[];
+  cartProducts: ProductType[];
+};
 
+const initialState: InitialState = {
+  products: [],
+  cartProducts: [],
+};
 
 export const productSlice = createSlice({
-    name: 'product',
-    initialState,
-    reducers: {
-        getProducts: (state, action: PayloadAction<ProductType[]>) => [...action.payload],
-        setProduct: (state, action: PayloadAction<ProductType>) => [...state, action.payload],
-        deleteProduct: (state, action: PayloadAction<number>) => state.filter((el) => el.id !== action.payload),
-        editProduct: (state, action: PayloadAction<ProductType>) => state.map((el) => el.id !== action.payload.id? el: action.payload)
+  name: 'product',
+  initialState,
+  reducers: {
+    getProducts: (state, action: PayloadAction<ProductType[]>) => {
+      state.products = action.payload;
+    },
+    setProduct: (state, action: PayloadAction<ProductType>) => {
+      state.products.push(action.payload);
+    },
+    deleteProduct: (state, action: PayloadAction<number>) => {
+      state.products.filter((el) => el.id !== action.payload);
+    },
+    editProduct: (state, action: PayloadAction<ProductType>) => {
+      state.products.map((el) => (el.id !== action.payload.id ? el : action.payload));
+    },
+    addToCart: (state, action: PayloadAction<ProductType>) => {
+      state.cartProducts.push(action.payload);
+    },
+    deleteFromCart: (state, action: PayloadAction<number>) => {
+      state.cartProducts.filter((el) => el.id !== action.payload);
+    },
+  },
+});
 
-
-    }
-})
-
-
-export default productSlice.reducer
-export const {getProducts, setProduct, deleteProduct, editProduct} = productSlice.actions
+export default productSlice.reducer;
+export const { getProducts, setProduct, deleteProduct, editProduct, addToCart, deleteFromCart } = productSlice.actions;
