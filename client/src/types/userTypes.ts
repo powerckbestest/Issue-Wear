@@ -1,3 +1,5 @@
+import type{ RoleType } from "./roleType";
+
 export type UserFormType = {
     id: number;
     email: string;
@@ -9,6 +11,7 @@ export type UserFormType = {
     id: number;
     email: string;
     name: string;
+    Role: RoleType
   };
   
   export type AuthUserType =
