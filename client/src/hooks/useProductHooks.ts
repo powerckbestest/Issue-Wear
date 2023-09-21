@@ -9,7 +9,7 @@ type ProductFormData = {
   price: string;
 };
 
-export default function productHooks() : {
+export default function useProductHooks() : {
   getProductsHandler: () => void
   addProductHandler: (e: React.FormEvent<HTMLFormElement>) => void;
   deleteProductHandler: (e: React.MouseEvent<HTMLElement>, id: number) => void;
@@ -28,6 +28,7 @@ export default function productHooks() : {
   const addProductHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
+
     const title = formData.get('') as string
     if(title === ''){
       alert('Введите название товара')
