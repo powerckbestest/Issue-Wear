@@ -48,6 +48,7 @@ export default function NavBar(): JSX.Element {
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
                 </button> */}
 
+<<<<<<< HEAD
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     <NavLink
@@ -62,6 +63,22 @@ export default function NavBar(): JSX.Element {
                     >
                       Одежда
                     </NavLink>
+=======
+                
+                  <div className="hidden sm:ml-6 sm:block">
+                    <div className="flex space-x-4">
+                      <NavLink
+                        to="/products"
+                        className={classNames(
+                          user.status !== 'success' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          'rounded-md px-3 py-2 text-sm font-medium'
+                        )}
+                        aria-current="page"
+                      >
+                        Одежда
+                      </NavLink>
+                      </div>
+>>>>>>> dev
                   </div>
                 </div>
 
@@ -125,6 +142,7 @@ export default function NavBar(): JSX.Element {
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm text-gray-700',
                               )}
+<<<<<<< HEAD
                             >
                               Выход
                             </a>
@@ -152,6 +170,33 @@ export default function NavBar(): JSX.Element {
                             {item.name}
                           </NavLink>
                         ))}
+=======
+                            </Menu.Item>
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    ) : (
+                      <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                      
+                        <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+                          <div className="flex space-x-4">
+                            {navigation.map((item) => (
+                              <NavLink
+                                key={item.name} 
+                                to={item.to}
+                                className={classNames(
+                                  item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                  'rounded-md px-3 py-2 text-sm font-medium',
+                                  
+                                )}
+                                aria-current={item.current ? 'page' : undefined}
+                              >
+                                {item.name}
+                              </NavLink>
+                            ))}
+                          </div>
+                        </div>
+>>>>>>> dev
                       </div>
                     </div>
                   </div>

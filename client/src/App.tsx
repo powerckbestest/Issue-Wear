@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import MainPage from './components/pages/MainPage';
+import MainPage from './components/pages/ProductsList';
 import SignUpPage from './components/pages/SignUpPage';
 import SignInPage from './components/pages/SignInPage';
 import NavBar from './components/IU/NavBar';
@@ -35,6 +35,7 @@ function App(): JSX.Element {
 
   return (
     <>
+<<<<<<< HEAD
       {/* Скрываем NavBar и содержимое страницы, пока работает Loader */}
       {isLoading ? (
         <Loader isLoading={isLoading}>
@@ -55,6 +56,17 @@ function App(): JSX.Element {
           </Routes>
         </>
       )}
+=======
+      <NavBar />
+      <Routes>
+        <Route path="/products" element={<MainPage />} />
+        <Route element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}>
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/signin" element={<SignInPage />} />
+        </Route>
+        <Route path='/products/:productId' element={<ProductCard/>}/>
+      </Routes>
+>>>>>>> dev
     </>
   );
 }
