@@ -48,17 +48,6 @@ export default function NavBar(): JSX.Element {
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
                 </button> */}
 
-                <div className="moving-element" style={{ zIndex: 9999 }}>
-                  <div className="flex flex-shrink-0 items-center">
-                    <img
-                      className="h-8 w-auto"
-                      src="../../../public/fire.jpg"
-                      alt="Your Company"
-                      style={{ width: '120px', height: '100px' }}
-                    />
-                  </div>
-                </div>
-
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     <NavLink

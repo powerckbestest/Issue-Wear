@@ -5,12 +5,14 @@ import SignUpPage from './components/pages/SignUpPage';
 import SignInPage from './components/pages/SignInPage';
 import NavBar from './components/IU/NavBar';
 import PrivateRouter from './components/PrivateRouter';
-import ProductCard from './components/pages/ProductCard';
 import { useAppDispatch, useAppSelector } from './hooks/reduxHooks';
 import userCheckActionThunk from './features/redux/actions/userActions';
+import ProductCard from './components/pages/ProductCard';
+import Loader from './components/hocs/Loader';
 
 function App(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
@@ -20,7 +22,10 @@ function App(): JSX.Element {
   useEffect(() => {
     void dispatch(userCheckActionThunk())
       .then(() => {
-        setIsLoading(false);
+        setIsAuthenticated(user.status === 'success');
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1500);
       })
       .catch((error) => {
         console.error('Ошибка:', error);
@@ -30,15 +35,26 @@ function App(): JSX.Element {
 
   return (
     <>
-      <NavBar />
-      <Routes>
-        <Route path="/main" element={<MainPage />} />
-        <Route element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}>
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/signin" element={<SignInPage />} />
-        </Route>
-        <Route path="/main/:productId" element={<ProductCard />} />
-      </Routes>
+      {/* Скрываем NavBar и содержимое страницы, пока работает Loader */}
+      {isLoading ? (
+        <Loader isLoading={isLoading}>
+          <div>Loading...</div>
+        </Loader>
+      ) : (
+        <>
+          <NavBar />
+          <Routes>
+            <Route path="/main" element={<MainPage />} />
+            <Route
+              element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}
+            >
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/signin" element={<SignInPage />} />
+            </Route>
+            <Route path="/main/:productId" element={<ProductCard />} />
+          </Routes>
+        </>
+      )}
     </>
   );
 }
