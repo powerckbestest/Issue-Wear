@@ -12,7 +12,7 @@ type ProductFormData = {
 
 export default function useProductHooks() : {
   getProductsHandler: () => void
-  addProductHandler:  (e: React.FormEvent<HTMLFormElement & ProductFormType>) => void;
+  addProductHandler:  (e: React.FormEvent<HTMLFormElement & ProductFormType>, images) => void;
   deleteProductHandler: (e: React.MouseEvent<HTMLElement>, id: number) => void;
   editProductHandler: (id: number, data: ProductFormData) => void
   getProductsCartHandler: () => void
@@ -41,20 +41,10 @@ export default function useProductHooks() : {
   for (const file of images) {
     formData.append('images', file)
   }
-
-
-
-  // console.log(e.currentTarget.file)
-  // for (let i = 0; i < images.length; i++) { 
-  //   formData.append('files', images[i]); 
-  // } 
-
-
-
     postProductService(formData)
     .then((data) => dispatch(setProduct(data)))
     .catch((err) => Promise.reject(err))
-    // e.currentTarget.reset()
+    
   }
 
   const deleteProductHandler = (e: React.MouseEvent<HTMLElement>, id: number): void =>{
