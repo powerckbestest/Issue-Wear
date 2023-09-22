@@ -1,12 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { addToCart } from '../../features/redux/slices/productSlice';
+import React, { useEffect } from 'react';
+import { useAppSelector } from '../../hooks/reduxHooks';
+import useProductHooks from '../../hooks/useProductHooks';
 
 export default function CartPage(): JSX.Element {
+  const { getProductsCartHandler, deleteProductCartHandler } = useProductHooks();
   const productsInCart = useAppSelector((state) => state.product.productsData.cartProducts);
-  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    getProductsCartHandler();
+  }, []);
+  
   return (
     <div className="mt-8">
       <div className="flow-root">
@@ -35,7 +40,7 @@ export default function CartPage(): JSX.Element {
                     <button
                       type="button"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
-                      onClick={() => dispatch(addToCart(product))}
+                      onClick={(e) => deleteProductCartHandler(e, product.id)}
                     >
                       Remove
                     </button>

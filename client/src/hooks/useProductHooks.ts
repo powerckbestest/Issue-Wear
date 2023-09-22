@@ -1,7 +1,7 @@
 import type React from 'react'
 import { useAppDispatch } from './reduxHooks';
-import { addProductCartService, deleteProductService, editProductService, getProductService, postProductService } from '../services/productService';
-import { addToCart, deleteProduct, editProduct, getProducts, setProduct } from '../features/redux/slices/productSlice';
+import { addProductCartService, deleteProductCartService, deleteProductService, editProductService, getProductInCartService, getProductService, postProductService } from '../services/productService';
+import { addToCart, deleteFromCart, deleteProduct, editProduct, getCartProducts, getProducts, setProduct } from '../features/redux/slices/productSlice';
 
 type ProductFormData = {
   name: string;
@@ -14,6 +14,9 @@ export default function useProductHooks() : {
   addProductHandler: (e: React.FormEvent<HTMLFormElement>) => void;
   deleteProductHandler: (e: React.MouseEvent<HTMLElement>, id: number) => void;
   editProductHandler: (id: number, data: ProductFormData) => void
+  getProductsCartHandler: () => void
+  addProductCartHandler: (e: React.MouseEvent<HTMLElement>, id:number) => void
+  deleteProductCartHandler: (e: React.MouseEvent<HTMLElement>, id: number) => void;
 } {
 
   const dispatch = useAppDispatch()
@@ -57,6 +60,11 @@ export default function useProductHooks() : {
     .catch((err) => Promise.reject(err))
   }
 
+  const getProductsCartHandler = ():void => {
+    getProductInCartService()
+    .then((data) => dispatch(getCartProducts(data)))
+    .catch((err) => Promise.reject(err))
+  }
 
   const addProductCartHandler = (e: React.MouseEvent<HTMLElement>, id:number) : void => {
     e.preventDefault()
@@ -65,10 +73,20 @@ export default function useProductHooks() : {
     .catch((err) => console.error('Ошибка при добавлении в корзину', err))
   }
 
+  const deleteProductCartHandler = (e: React.MouseEvent<HTMLElement>, id: number):void => {
+    e.preventDefault()
+    deleteProductCartService(id)
+    .then(() => dispatch(deleteFromCart(id)))
+    .catch((err) => Promise.reject(err))
+  }
+
   return {
     getProductsHandler,
     addProductHandler,
     deleteProductHandler,
     editProductHandler,
+    getProductsCartHandler,
+    addProductCartHandler,
+    deleteProductCartHandler
   }
 }
