@@ -7,3 +7,13 @@ export type ProductType = {
     colorId: string
 }
 
+
+export type ProductFormType = {
+    id: HTMLInputElement,
+    title: HTMLInputElement,
+    description: HTMLInputElement
+    price: HTMLInputElement,
+    categoryId: HTMLInputElement,
+    colorId: HTMLInputElement
+}
+
