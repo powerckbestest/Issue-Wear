@@ -7,6 +7,7 @@ import NavBar from './components/IU/NavBar';
 import PrivateRouter from './components/PrivateRouter';
 import { useAppDispatch, useAppSelector } from './hooks/reduxHooks';
 import userCheckActionThunk from './features/redux/actions/userActions';
+import CartPage from './components/pages/CartPage';
 import ProductCard from './components/pages/ProductCard';
 
 function App(): JSX.Element {
@@ -28,6 +29,7 @@ function App(): JSX.Element {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/signin" element={<SignInPage />} />
         </Route>
+        <Route path="/cart" element={<CartPage />} />
         <Route path='/products/:productId' element={<ProductCard/>}/>
       </Routes>
     </>
