@@ -30,6 +30,12 @@ export function editProductService(id: number, formData: FormData): Promise<Prod
     .catch((err) => Promise.reject(err))
 }
 
+export function getProductInCartService(): Promise<ProductType[]> {
+    return apiClient
+    .get<ProductType[]>('/cart')
+    .then(({data}) => data)
+    .catch((err) => Promise.reject(err))
+}
 
 export function addProductCartService(id: number) : Promise<ProductType> {
     return apiClient

@@ -28,6 +28,9 @@ export const productSlice = createSlice({
     editProduct: (state, action: PayloadAction<ProductType>) => {
       state.products.map((el) => (el.id !== action.payload.id ? el : action.payload));
     },
+    getCartProducts: (state, action: PayloadAction<ProductType[]>) => {
+      state.cartProducts = action.payload
+    },
     addToCart: (state, action: PayloadAction<ProductType>) => {
       const check = state.cartProducts.find((el) => el.id === action.payload.id);
       if (!check) {
@@ -41,5 +44,5 @@ export const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const { getProducts, setProduct, deleteProduct, editProduct, addToCart, deleteFromCart } =
+export const { getProducts, setProduct, deleteProduct, editProduct, addToCart, deleteFromCart, getCartProducts } =
   productSlice.actions;
