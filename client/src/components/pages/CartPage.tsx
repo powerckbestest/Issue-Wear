@@ -6,7 +6,7 @@ import { addToCart } from '../../features/redux/slices/productSlice';
 
 export default function CartPage(): JSX.Element {
   const productsInCart = useAppSelector((state) => state.product.productsData.cartProducts);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   return (
     <div className="mt-8">
       <div className="flow-root">

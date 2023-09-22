@@ -7,7 +7,6 @@ import NavBar from './components/IU/NavBar';
 import PrivateRouter from './components/PrivateRouter';
 import { useAppDispatch, useAppSelector } from './hooks/reduxHooks';
 import userCheckActionThunk from './features/redux/actions/userActions';
-import CartPage from './components/pages/CartPage';
 import ProductCard from './components/pages/ProductCard';
 import Loader from './components/hocs/Loader';
 
@@ -36,7 +35,6 @@ function App(): JSX.Element {
 
   return (
     <>
-<<<<<<< HEAD
       {/* Скрываем NavBar и содержимое страницы, пока работает Loader */}
       {isLoading ? (
         <Loader isLoading={isLoading}>
@@ -46,29 +44,17 @@ function App(): JSX.Element {
         <>
           <NavBar />
           <Routes>
-            <Route path="/main" element={<MainPage />} />
+            <Route path="/products" element={<MainPage />} />
             <Route
               element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}
             >
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/signin" element={<SignInPage />} />
             </Route>
-            <Route path="/main/:productId" element={<ProductCard />} />
+            <Route path="/products/:productId" element={<ProductCard />} />
           </Routes>
         </>
       )}
-=======
-      <NavBar />
-      <Routes>
-        <Route path="/products" element={<MainPage />} />
-        <Route element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}>
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/signin" element={<SignInPage />} />
-        </Route>
-        <Route path="/cart" element={<CartPage />} />
-        <Route path='/products/:productId' element={<ProductCard/>}/>
-      </Routes>
->>>>>>> dev
     </>
   );
 }
