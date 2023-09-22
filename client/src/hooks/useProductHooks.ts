@@ -37,11 +37,19 @@ export default function useProductHooks() : {
   formData.append('colorId', e.currentTarget.colorId.value);
   formData.append('description', e.currentTarget.description.value);
   formData.append('categoryId', e.currentTarget.categoryId.value);
-  
-  console.log(e.currentTarget.file)
-  for (let i = 0; i < images.length; i++) { 
-    formData.append('files', images[i]); 
-  } 
+  console.log(images)
+  for (const file of images) {
+    formData.append('images', file)
+  }
+
+
+
+  // console.log(e.currentTarget.file)
+  // for (let i = 0; i < images.length; i++) { 
+  //   formData.append('files', images[i]); 
+  // } 
+
+
 
     postProductService(formData)
     .then((data) => dispatch(setProduct(data)))

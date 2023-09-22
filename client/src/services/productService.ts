@@ -11,7 +11,7 @@ export function getProductService(): Promise<ProductType[]> {
 
 export function postProductService(formData: FormData) : Promise< ProductType>{
     return apiClient
-    .post<ProductType>('/products', Object.fromEntries(formData))
+    .post<ProductType>('/products', formData)
     .then(({data}) => data)
     .catch((err) => Promise.reject(err))
 }

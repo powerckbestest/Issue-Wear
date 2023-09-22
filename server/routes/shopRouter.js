@@ -19,12 +19,12 @@ const shopRouter = express.Router();
 shopRouter.post(
   '/products',
   upload.fields([
-    { name: 'cover', maxCount: 1 },
+    // { name: 'cover', maxCount: 1 },
     { name: 'images', maxCount: 10 },
   ]),
   async (req, res) => {
     const { title, categoryId, colorId, price, description } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     const user = await User.findOne({
       where: { id: req.session.user.id },
       include: { model: Role },
@@ -39,8 +39,8 @@ shopRouter.post(
           description,
         });
         console.log(999999999999999999);
-        console.log(req.files)
-        for (const file of req.files) {
+        console.log(req.files.images)
+        for (const file of req.files.images) {
           const name = `${Date.now()}.webp`;
           const outputBuffer = await sharp(file.buffer).webp().toBuffer();
           await fs.writeFile(`./public/images/${name}`, outputBuffer);
