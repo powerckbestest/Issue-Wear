@@ -1,10 +1,19 @@
 export type ProductType = {
     id: number,
-    name: string,
-    desc: string
+    title: string,
+    description: string
     price: string,
     categoryId: string,
-    colorId: string
+    Color: ColorId
+    Image: Url
+}
+
+export type ColorId = {
+    title: string
+}
+
+export type Url = {
+    url: string
 }
 
 

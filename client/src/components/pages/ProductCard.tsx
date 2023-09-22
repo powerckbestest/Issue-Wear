@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
+import { useAppSelector } from '../../hooks/reduxHooks'
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -63,6 +64,8 @@ function classNames(...classes) {
 export default function ProductCard() : JSX.Element {
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+
+  const products = useAppSelector((state) => state.product)
 
   return (
     <div className="bg-white">

@@ -39,7 +39,7 @@ export function getProductInCartService(): Promise<ProductType[]> {
 
 export function addProductCartService(id: number) : Promise<ProductType> {
     return apiClient
-    .post<ProductType>(`/products/${id}`)
+    .post<ProductType>(`/cart/${id}`)
     .then(({data}) => data)
     .catch((err) => Promise.reject(err))
 }

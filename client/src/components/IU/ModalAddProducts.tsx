@@ -13,7 +13,6 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
   const [images, setImages] = useState([]); 
   const changeImg = (e) => { 
     setImages((prev) => [e.target.files[0], ...prev]); 
-    console.log(images); 
   }; 
 
   const deleteImg = (index) => { 

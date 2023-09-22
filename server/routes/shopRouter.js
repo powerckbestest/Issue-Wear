@@ -23,7 +23,9 @@ shopRouter.post(
     { name: 'images', maxCount: 10 },
   ]),
   async (req, res) => {
-    const { title, categoryId, colorId, price, description } = req.body;
+    const {
+      title, categoryId, colorId, price, description,
+    } = req.body;
     // console.log(req.body);
     const user = await User.findOne({
       where: { id: req.session.user.id },
@@ -39,7 +41,7 @@ shopRouter.post(
           description,
         });
         console.log(999999999999999999);
-        console.log(req.files.images)
+        console.log(req.files.images);
         for (const file of req.files.images) {
           const name = `${Date.now()}.webp`;
           const outputBuffer = await sharp(file.buffer).webp().toBuffer();
@@ -54,7 +56,8 @@ shopRouter.post(
         for (let i = 0; i < sizes.length; i++) {
           ProductSize.create({ productId: newProduct.id, sizeId: sizes[i].id, count: 50 });
         }
-        res.json(newProduct);
+        const response = await Product.findOne({ where: { id: newProduct.id }, include: [{ model: Image }, { model: Category }, { model: Color }] });
+        res.json(response);
       }
     } else {
       res.status(400).json({ message: 'Only for admins' });
@@ -69,7 +72,9 @@ shopRouter.put(
     { name: 'images', maxCount: 10 },
   ]),
   async (req, res) => {
-    const { title, categoryId, colorId, price, description, count } = req.body;
+    const {
+      title, categoryId, colorId, price, description, count,
+    } = req.body;
     const user = await User.findByPk({
       where: { id: req.session.user.id },
       include: { model: Role },
