@@ -24,6 +24,7 @@ shopRouter.post(
   ]),
   async (req, res) => {
     const { title, categoryId, colorId, price, description } = req.body;
+    console.log(req.body);
     const user = await User.findOne({
       where: { id: req.session.user.id },
       include: { model: Role },
@@ -37,16 +38,18 @@ shopRouter.post(
           price,
           description,
         });
+        console.log(999999999999999999);
+        console.log(req.files)
         for (const file of req.files) {
           const name = `${Date.now()}.webp`;
           const outputBuffer = await sharp(file.buffer).webp().toBuffer();
           await fs.writeFile(`./public/images/${name}`, outputBuffer);
           await Image.create({ productId: newProduct.id, url: name, forConstructor: false });
         }
-        const name = `${Date.now()}.webp`;
-        const outputBuffer = await sharp(req.cover.buffer).webp().toBuffer();
-        await fs.writeFile(`./public/images/${name}`, outputBuffer);
-        await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
+        // const name = `${Date.now()}.webp`;
+        // const outputBuffer = await sharp(req.cover.buffer).webp().toBuffer();
+        // await fs.writeFile(`./public/images/${name}`, outputBuffer);
+        // await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
         const sizes = await Size.findAll();
         for (let i = 0; i < sizes.length; i++) {
           ProductSize.create({ productId: newProduct.id, sizeId: sizes[i].id, count: 50 });

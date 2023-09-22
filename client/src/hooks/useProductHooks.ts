@@ -2,6 +2,7 @@ import type React from 'react'
 import { useAppDispatch } from './reduxHooks';
 import { addProductCartService, deleteProductService, editProductService, getProductService, postProductService } from '../services/productService';
 import { addToCart, deleteProduct, editProduct, getProducts, setProduct } from '../features/redux/slices/productSlice';
+import type { ProductFormType } from '../types/productType';
 
 type ProductFormData = {
   name: string;
@@ -11,7 +12,7 @@ type ProductFormData = {
 
 export default function useProductHooks() : {
   getProductsHandler: () => void
-  addProductHandler: (e: React.FormEvent<HTMLFormElement>) => void;
+  addProductHandler:  (e: React.FormEvent<HTMLFormElement & ProductFormType>) => void;
   deleteProductHandler: (e: React.MouseEvent<HTMLElement>, id: number) => void;
   editProductHandler: (id: number, data: ProductFormData) => void
 } {
@@ -25,19 +26,24 @@ export default function useProductHooks() : {
     .catch((err) => Promise.reject(err))
   }
 
-  const addProductHandler = (e: React.FormEvent<HTMLFormElement>): void => {
+  const addProductHandler = (e: React.FormEvent<HTMLFormElement & ProductFormType>, images): void => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData()
+  formData.append('title', e.currentTarget.title.value);
+  formData.append('price', e.currentTarget.price.value);
+  formData.append('colorId', e.currentTarget.colorId.value);
+  formData.append('description', e.currentTarget.description.value);
+  formData.append('categoryId', e.currentTarget.categoryId.value);
+  
+  console.log(e.currentTarget.file)
+  for (let i = 0; i < images.length; i++) { 
+    formData.append('files', images[i]); 
+  } 
 
-    const title = formData.get('') as string
-    if(title === ''){
-      alert('Введите название товара')
-      return 
-    }
     postProductService(formData)
     .then((data) => dispatch(setProduct(data)))
     .catch((err) => Promise.reject(err))
-    e.currentTarget.reset()
+    // e.currentTarget.reset()
   }
 
   const deleteProductHandler = (e: React.MouseEvent<HTMLElement>, id: number): void =>{
@@ -72,3 +78,8 @@ export default function useProductHooks() : {
     editProductHandler,
   }
 }
+
+
+
+
+    
