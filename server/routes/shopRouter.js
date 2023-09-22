@@ -39,7 +39,7 @@ shopRouter.post(
           description,
         });
         console.log(999999999999999999);
-        console.log(req.files.images)
+        console.log(req.files.images);
         for (const file of req.files.images) {
           const name = `${Date.now()}.webp`;
           const outputBuffer = await sharp(file.buffer).webp().toBuffer();
@@ -104,6 +104,27 @@ shopRouter.put(
     }
   },
 );
+
+shopRouter.delete('/products/:id', async (req, res) => {
+  const user = await User.findByPk({
+    where: { id: req.session.user.id },
+    include: { model: Role },
+  });
+  if (user.Role.id === 1) {
+    const product = await Product.findByPk(req.params.id);
+    const images = await Image.findAll({ where: { productId: product.id } });
+    for (const image of images) {
+      await fs.unlink(`./public/images/${image.url}`);
+    }
+    images.destroy();
+    const productSize = await ProductSize.findAll({ where: { productId: product.id } });
+    productSize.destroy();
+    product.destroy();
+  } else {
+    res.status(400).json({ message: 'Only for admins' });
+  }
+});
+
 shopRouter.post('/orders', async (req, res) => {
   const cart = await Cart.findAll({ where: { userId: req.session.user.id } });
   const buy = [];
