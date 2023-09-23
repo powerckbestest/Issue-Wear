@@ -27,40 +27,45 @@ shopRouter.post(
       title, categoryId, colorId, price, description,
     } = req.body;
     // console.log(req.body);
-    const user = await User.findOne({
-      where: { id: req.session.user.id },
-      include: { model: Role },
-    });
-    if (user.Role.id === 1) {
-      if (title && categoryId && colorId && price && description) {
-        const newProduct = await Product.create({
-          title,
-          categoryId,
-          colorId,
-          price,
-          description,
-        });
-        console.log(999999999999999999);
-        console.log(req.files.images);
-        for (const file of req.files.images) {
-          const name = `${Date.now()}.webp`;
-          const outputBuffer = await sharp(file.buffer).webp().toBuffer();
-          await fs.writeFile(`./public/images/${name}`, outputBuffer);
-          await Image.create({ productId: newProduct.id, url: name, forConstructor: false });
+    if (req?.session?.user) {
+      const user = await User.findOne({
+        where: { id: req.session.user.id },
+        include: { model: Role },
+      });
+      if (user.Role.id === 1) {
+        if (title && categoryId && colorId && price && description) {
+          const newProduct = await Product.create({
+            title,
+            categoryId,
+            colorId,
+            price,
+            description,
+          });
+          console.log(999999999999999999);
+          console.log(req.files.images);
+          for (const file of req.files.images) {
+            const name = `${Date.now()}.webp`;
+            const outputBuffer = await sharp(file.buffer).webp().toBuffer();
+            await fs.writeFile(`./public/images/${name}`, outputBuffer);
+            await Image.create({ productId: newProduct.id, url: name, forConstructor: false });
+          }
+          // const name = `${Date.now()}.webp`;
+          // const outputBuffer = await sharp(req.cover.buffer).webp().toBuffer();
+          // await fs.writeFile(`./public/images/${name}`, outputBuffer);
+          // await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
+          const sizes = await Size.findAll();
+          for (let i = 0; i < sizes.length; i++) {
+            ProductSize.create({ productId: newProduct.id, sizeId: sizes[i].id, count: 50 });
+          }
+          const response = await Product.findOne({
+            where: { id: newProduct.id },
+            include: [{ model: Image }, { model: Category }, { model: Color }],
+          });
+          res.json(response);
         }
-        // const name = `${Date.now()}.webp`;
-        // const outputBuffer = await sharp(req.cover.buffer).webp().toBuffer();
-        // await fs.writeFile(`./public/images/${name}`, outputBuffer);
-        // await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
-        const sizes = await Size.findAll();
-        for (let i = 0; i < sizes.length; i++) {
-          ProductSize.create({ productId: newProduct.id, sizeId: sizes[i].id, count: 50 });
-        }
-        const response = await Product.findOne({ where: { id: newProduct.id }, include: [{ model: Image }, { model: Category }, { model: Color }] });
-        res.json(response);
+      } else {
+        res.status(400).json({ message: 'Only for admins' });
       }
-    } else {
-      res.status(400).json({ message: 'Only for admins' });
     }
   },
 );
@@ -186,6 +191,14 @@ shopRouter.delete('/image/:id', async (req, res) => {
 shopRouter.get('/products', async (req, res) => {
   res.json(
     await Product.findAll({ include: [{ model: Image }, { model: Category }, { model: Color }] }),
+  );
+});
+shopRouter.get('/products/:id', async (req, res) => {
+  res.json(
+    await Product.findOne({
+      where: { id: req.params.id },
+      include: [{ model: Image }, { model: Category }, { model: Color }],
+    }),
   );
 });
 shopRouter.get('/cart', async (req, res) => {
