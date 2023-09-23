@@ -23,6 +23,7 @@ export const productSlice = createSlice({
       state.products.push(action.payload);
     },
     deleteProduct: (state, action: PayloadAction<number>) => {
+      console.log(action.payload)
       state.products.filter((el) => el.id !== action.payload);
     },
     editProduct: (state, action: PayloadAction<ProductType>) => {

@@ -50,7 +50,7 @@ export default function useProductHooks() : {
   const deleteProductHandler = (e: React.MouseEvent<HTMLElement>, id: number): void =>{
     e.preventDefault()
     deleteProductService(id)
-    .then(() => dispatch(deleteProduct(id)))
+    .then((data) => dispatch(deleteProduct(data)))
     .catch((err) => Promise.reject(err))
   }
 

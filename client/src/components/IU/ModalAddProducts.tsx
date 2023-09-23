@@ -20,27 +20,26 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
   };
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/colors') 
-      .then((response) => response.json())
-      .then((data) => {
-        setColors(data); 
+   
+    axios.get('http://localhost:3001/api/colors')
+      .then((response) => {
+        setColors(response.data);
       })
       .catch((error) => {
         console.error('Ошибка при получении цветов:', error);
       });
-  }, []);
 
-
-  useEffect(() => {
-    fetch('http://localhost:3001/api/categories') 
-      .then((response) => response.json())
-      .then((data) => {
-        setCategory(data); 
+    
+    axios.get('http://localhost:3001/api/categories')
+      .then((response) => {
+        setCategory(response.data);
       })
       .catch((error) => {
         console.error('Ошибка при получении категорий:', error);
       });
-  }, []);
+  }, []); // Эт
+
+  
 
   const {addProductHandler} = useProductHooks()
 

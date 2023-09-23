@@ -111,7 +111,7 @@ shopRouter.put(
 );
 
 shopRouter.delete('/products/:id', async (req, res) => {
-  const user = await User.findByPk({
+  const user = await User.findOne({
     where: { id: req.session.user.id },
     include: { model: Role },
   });
@@ -119,12 +119,13 @@ shopRouter.delete('/products/:id', async (req, res) => {
     const product = await Product.findByPk(req.params.id);
     const images = await Image.findAll({ where: { productId: product.id } });
     for (const image of images) {
+      console.log(image)
       await fs.unlink(`./public/images/${image.url}`);
+    await image.destroy();
     }
-    images.destroy();
-    const productSize = await ProductSize.findAll({ where: { productId: product.id } });
-    productSize.destroy();
+   await ProductSize.destroy({ where: { productId: product.id } });
     product.destroy();
+    return res.json(req.params.id)
   } else {
     res.status(400).json({ message: 'Only for admins' });
   }
