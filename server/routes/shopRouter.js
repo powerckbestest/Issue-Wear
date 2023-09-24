@@ -124,16 +124,15 @@ shopRouter.delete('/products/:id', async (req, res) => {
     const product = await Product.findByPk(req.params.id);
     const images = await Image.findAll({ where: { productId: product.id } });
     for (const image of images) {
-      console.log(image)
+      console.log(image);
       await fs.unlink(`./public/images/${image.url}`);
-    await image.destroy();
+      await image.destroy();
     }
-   await ProductSize.destroy({ where: { productId: product.id } });
+    await ProductSize.destroy({ where: { productId: product.id } });
     product.destroy();
-    return res.json(req.params.id)
-  } else {
-    res.status(400).json({ message: 'Only for admins' });
+    return res.json(req.params.id);
   }
+  res.status(400).json({ message: 'Only for admins' });
 });
 
 shopRouter.post('/orders', async (req, res) => {
@@ -198,7 +197,7 @@ shopRouter.get('/products/:id', async (req, res) => {
   res.json(
     await Product.findOne({
       where: { id: req.params.id },
-      include: [{ model: Image }, { model: Category }, { model: Color }],
+      include: [{ model: Image }, { model: Category }, { model: Color }, { model: ProductSize }],
     }),
   );
 });

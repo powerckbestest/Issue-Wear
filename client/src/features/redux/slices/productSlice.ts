@@ -5,11 +5,13 @@ import type { ProductType } from '../../../types/productType';
 type InitialState = {
   products: ProductType[];
   cartProducts: ProductType[];
+  currProduct: ProductType[]
 };
 
 const initialState: InitialState = {
   products: [],
   cartProducts: [],
+  currProduct: []
 };
 
 export const productSlice = createSlice({
@@ -42,7 +44,7 @@ export const productSlice = createSlice({
       state.cartProducts.filter((el) => el.id !== action.payload);
     },
     getCardProduct: (state, action: PayloadAction<ProductType>) => {
-      state.products = action.payload;    
+      state.currProduct = action.payload;    
     },
   },
 });

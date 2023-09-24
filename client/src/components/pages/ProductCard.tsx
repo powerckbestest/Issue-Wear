@@ -71,9 +71,9 @@ export default function ProductCard() : JSX.Element {
 
   const {productId} = useParams()
 
-  const products = useAppSelector((state) => state.product.productsData.products)
+  const products = useAppSelector((state) => state.product.productsData.currProduct)
   console.log(products)
-  const {getCartProductHandler} = useProductHooks()
+  const {getCartProductHandler, addProductCartHandler} = useProductHooks()
 
   useEffect(() => {
     getCartProductHandler(Number(productId))
@@ -120,7 +120,7 @@ export default function ProductCard() : JSX.Element {
             {products?.Images?.map((image, index) => (
               <div key={index} className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
                 <img 
-                  src={image.url}
+                  src={`http://localhost:3001/images/${image?.url}`}
                   alt={image.id} 
                   className="h-full w-full object-cover object-center"
                 />
@@ -244,6 +244,7 @@ export default function ProductCard() : JSX.Element {
               <button
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                onClick={addProductCartHandler}
               >
                 Add to bag
               </button>
@@ -260,7 +261,7 @@ export default function ProductCard() : JSX.Element {
               </div>
             </div>
 
-            <div className="mt-10">
+            {/* <div className="mt-10">
               <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
 
               <div className="mt-4">
@@ -272,7 +273,7 @@ export default function ProductCard() : JSX.Element {
                   ))}
                 </ul>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
