@@ -6,6 +6,7 @@ export type ProductType = {
     categoryId: string,
     Color: ColorId
     Image: Url
+    size: string
 }
 
 export type ColorId = {
@@ -23,6 +24,7 @@ export type ProductFormType = {
     description: HTMLInputElement
     price: HTMLInputElement,
     categoryId: HTMLInputElement,
-    colorId: HTMLInputElement
+    colorId: HTMLInputElement,
+    size: HTMLInputElement,
 }
 

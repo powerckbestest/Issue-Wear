@@ -17,7 +17,7 @@ export default function CartPage(): JSX.Element {
       <div className="flow-root">
         <h1>Shopping cart</h1>
         <ul role="list" className="-my-6 divide-y divide-gray-200">
-          {productsInCart.map((product) => (
+          {productsInCart?.map((product) => (
             <li key={product.id} className="flex py-6">
               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                 <img src="" alt="" className="h-full w-full object-cover object-center" />
@@ -27,11 +27,11 @@ export default function CartPage(): JSX.Element {
                 <div>
                   <div className="flex justify-between text-base font-medium text-gray-900">
                     <h3>
-                      <a href="#">{product.title}</a>
+                      <a href="#">{product?.title}</a>
                     </h3>
-                    <p className="ml-4">{product.price}</p>
+                    <p className="ml-4">{product?.price}</p>
                   </div>
-                  <p className="mt-1 text-sm text-gray-500">{product.Color.title}</p>
+                  <p className="mt-1 text-sm text-gray-500">{product?.Color?.title}</p>
                 </div>
                 <div className="flex flex-1 items-end justify-between text-sm">
                   <p className="text-gray-500">Qty </p>

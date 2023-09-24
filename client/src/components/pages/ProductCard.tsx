@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
+import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/reduxHooks'
+import useProductHooks from '../../hooks/useProductHooks'
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -65,7 +67,21 @@ export default function ProductCard() : JSX.Element {
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(product.sizes[2])
 
-  const products = useAppSelector((state) => state.product)
+  
+
+  const {productId} = useParams()
+
+  const products = useAppSelector((state) => state.product.productsData.products)
+  console.log(products)
+  const {getCartProductHandler} = useProductHooks()
+
+  useEffect(() => {
+    getCartProductHandler(Number(productId))
+  }, [])
+
+  // const test = products.find((el) => el.id === productId)
+  // console.log(test)
+  
 
   return (
     <div className="bg-white">
@@ -101,11 +117,11 @@ export default function ProductCard() : JSX.Element {
 
         {/* Image gallery */}
           <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
-            {product.images.map((image, index) => (
+            {products?.Images?.map((image, index) => (
               <div key={index} className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
                 <img 
-                  src={image.src}
-                  alt={image.alt} 
+                  src={image.url}
+                  alt={image.id} 
                   className="h-full w-full object-cover object-center"
                 />
               </div>
@@ -116,14 +132,14 @@ export default function ProductCard() : JSX.Element {
         {/* Product info */}
         <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
           <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{products.title}</h1>
           </div>
 
           {/* Options */}
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Информация о продукте</h2>
             <br/>
-            <p className="text-3xl tracking-tight text-gray-900">{product.price}</p>
+            <p className="text-3xl tracking-tight text-gray-900">{products.price}</p>
 
           
             <form className="mt-10">
@@ -240,7 +256,7 @@ export default function ProductCard() : JSX.Element {
               <h3 className="sr-only">Description</h3>
 
               <div className="space-y-6">
-                <p className="text-base text-gray-900">{product.description}</p>
+                <p className="text-base text-gray-900">{products.description}</p>
               </div>
             </div>
 
