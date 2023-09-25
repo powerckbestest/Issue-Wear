@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import axios from 'axios';
 import useProductHooks from '../../hooks/useProductHooks';
-import { getColorService } from '../../services/modalService';
+import { getCategories, getColorService, getSizes } from '../../services/modalService';
 
 export default function ModalAddProducts({ show, onHide }: { show: boolean; onHide: () => void }): JSX.Element {
   const [open, setOpen] = useState(true)
@@ -22,41 +22,18 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
   };
 
   useEffect(() => {
-   
-    // axios.get('http://localhost:3001/api/colors')
-    //   .then((response) => {
-    //     setColors(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Ошибка при получении цветов:', error);
-    //   });
-
-    
-    axios.get('http://localhost:3001/api/categories')
-      .then((response) => {
-        setCategory(response.data);
-      })
-      .catch((error) => {
-        console.error('Ошибка при получении категорий:', error);
-      });
-
-      axios.get('http://localhost:3001/api/sizes')
-      .then((response) => {
-        setSize(response.data);
-      })
-      .catch((error) => {
-        console.error('Ошибка при получении размеров:', error);
-      });
-  }, []); 
-
-
-  useEffect(() => {
     getColorService()
     .then((data) => setColors(data))
     .catch((err) => console.log(err))
-    
-    
-  })
+
+    getCategories()
+    .then((data) => setCategory(data))
+    .catch((err) => console.log(err))
+
+    getSizes()
+    .then((data) => setSize(data))
+    .catch((err) => console.log(err))
+  }, [])
 
   
 

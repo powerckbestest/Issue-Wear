@@ -193,10 +193,10 @@ export default function ProductCard() : JSX.Element {
                 <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
                   <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
                   <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                    {products.ProductSizes.map((size) => (
+                    {product?.sizes?.map((size) => (
                       <RadioGroup.Option
-                        key={size}
-                        value={size.count}
+                        key={size.name}
+                        value={size}
                         disabled={!size.inStock}
                         className={({ active }) =>
                           classNames(
