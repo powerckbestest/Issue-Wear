@@ -38,7 +38,7 @@ export default function MainPage(): JSX.Element {
             Customers also purchased
           </h2>
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {product.map((el) => (
+            {product?.map((el) => (
               <OneCard key={el.id} product={el} />
             ))}
           </div>

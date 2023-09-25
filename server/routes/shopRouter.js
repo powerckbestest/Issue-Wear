@@ -152,28 +152,26 @@ shopRouter.post('/orders', async (req, res) => {
   res.json(cant);
 });
 shopRouter.post('/cart/:productId', async (req, res) => {
-  if (
-    !(await Cart.findOne({ where: { userId: req.session.user.id, productSizeId: req.params.id } }))
-  ) {
-    await Cart.create({
-      userId: req.session.user.id,
-      productSizeId: req.params.productId,
-    });
-    return res.json(
-      await ProductSize.findOne({
-        where: { id: req.params.productId },
-        include: {
-          model: Product,
-          include: [{ model: Image }, { model: Category }, { model: Color }],
-        },
-      }),
-    );
-  }
-  res.sendStatus(400).message('Error in api/cart');
+  console.log(req.params.productId);
+  await Cart.create({
+    userId: req.session.user.id,
+    productSizeId: req.params.productId,
+  });
+  return res.json(
+    await ProductSize.findOne({
+      where: { id: req.params.productId },
+      include: {
+        model: Product,
+        include: [{ model: Image }, { model: Category }, { model: Color }],
+      },
+    }),
+  );
+  // res.sendStatus(400).message('Error in api/cart');
 });
+
 shopRouter.delete('/cart/:productId', async (req, res) => {
   const inCart = await Cart.findOne({
-    where: { userId: req.session.user.id, productSizeId: req.params.id },
+    where: { userId: req.session.user.id, productSizeId: req.params.productId },
   });
   if (inCart) {
     await inCart.destroy();
@@ -181,6 +179,7 @@ shopRouter.delete('/cart/:productId', async (req, res) => {
   }
   res.sendStatus(400).message('Error in api/cart');
 });
+
 shopRouter.delete('/image/:id', async (req, res) => {
   const image = await Image.findByPk(req.params.id);
   const user = await User.findOne({
