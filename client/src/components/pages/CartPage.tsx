@@ -40,7 +40,7 @@ export default function CartPage(): JSX.Element {
                   </p>
                 </div>
                 <div className="flex flex-1 items-end justify-between text-sm">
-                  <p className="text-gray-500">Размер: </p>
+                  <p className="text-gray-500">Размер: {product.ProductSize.Size.title}</p>
 
                   <div className="flex">
                     <button
