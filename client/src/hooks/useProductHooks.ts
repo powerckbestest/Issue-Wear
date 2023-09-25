@@ -1,7 +1,7 @@
 import type React from 'react'
 import { useAppDispatch } from './reduxHooks';
-import { addProductCartService, deleteProductCartService, deleteProductService, editProductService, getProductInCartService, getProductService, postProductService } from '../services/productService';
-import { addToCart, deleteFromCart, deleteProduct, editProduct, getCartProducts, getProducts, setProduct } from '../features/redux/slices/productSlice';
+import { addProductCartService, deleteProductCartService, deleteProductService, editProductService, getCardProductService, getProductInCartService, getProductService, postProductService } from '../services/productService';
+import { addToCart, deleteFromCart, deleteProduct, editProduct, getCardProduct, getCartProducts, getProducts, setProduct } from '../features/redux/slices/productSlice';
 import type { ProductFormType } from '../types/productType';
 
 type ProductFormData = {
@@ -18,6 +18,7 @@ export default function useProductHooks() : {
   getProductsCartHandler: () => void
   addProductCartHandler: (e: React.MouseEvent<HTMLElement>, id:number) => void
   deleteProductCartHandler: (e: React.MouseEvent<HTMLElement>, id: number) => void;
+  getCartProductHandler: (id: number) => void
 } {
 
   const dispatch = useAppDispatch()
@@ -37,7 +38,7 @@ export default function useProductHooks() : {
   formData.append('colorId', e.currentTarget.colorId.value);
   formData.append('description', e.currentTarget.description.value);
   formData.append('categoryId', e.currentTarget.categoryId.value);
-  console.log(images)
+  formData.append('size', e.currentTarget.size.value)
   for (const file of images) {
     formData.append('images', file)
   }
@@ -50,7 +51,7 @@ export default function useProductHooks() : {
   const deleteProductHandler = (e: React.MouseEvent<HTMLElement>, id: number): void =>{
     e.preventDefault()
     deleteProductService(id)
-    .then(() => dispatch(deleteProduct(id)))
+    .then((data) => dispatch(deleteProduct(data)))
     .catch((err) => Promise.reject(err))
   }
 
@@ -84,6 +85,13 @@ export default function useProductHooks() : {
     .catch((err) => Promise.reject(err))
   }
 
+// НЕ ЗАБЫТЬ ПРАВИЛЬНО ДОПИСАТЬ В СЛАЙСЕ getCardProduct
+  const getCartProductHandler = (id:number) :void => {
+    getCardProductService(id)
+    .then((data) => dispatch(getCardProduct(data)))
+    .catch((err) => Promise.reject(err))
+  }
+
   return {
     getProductsHandler,
     addProductHandler,
@@ -91,7 +99,8 @@ export default function useProductHooks() : {
     editProductHandler,
     getProductsCartHandler,
     addProductCartHandler,
-    deleteProductCartHandler
+    deleteProductCartHandler,
+    getCartProductHandler
   }
 }
 

@@ -112,7 +112,7 @@ shopRouter.put(
 );
 
 shopRouter.delete('/products/:id', async (req, res) => {
-  const user = await User.findByPk({
+  const user = await User.findOne({
     where: { id: req.session.user.id },
     include: { model: Role },
   });
@@ -120,15 +120,15 @@ shopRouter.delete('/products/:id', async (req, res) => {
     const product = await Product.findByPk(req.params.id);
     const images = await Image.findAll({ where: { productId: product.id } });
     for (const image of images) {
+      console.log(image);
       await fs.unlink(`./public/images/${image.url}`);
+      await image.destroy();
     }
-    images.destroy();
-    const productSize = await ProductSize.findAll({ where: { productId: product.id } });
-    productSize.destroy();
+    await ProductSize.destroy({ where: { productId: product.id } });
     product.destroy();
-  } else {
-    res.status(400).json({ message: 'Only for admins' });
+    return res.json(req.params.id);
   }
+  res.status(400).json({ message: 'Only for admins' });
 });
 
 shopRouter.post('/orders', async (req, res) => {
@@ -155,8 +155,11 @@ shopRouter.post('/cart/:productId', async (req, res) => {
   if (
     !(await Cart.findOne({ where: { userId: req.session.user.id, productSizeId: req.params.id } }))
   ) {
-    await Cart.create({ userId: req.session.user.id, productSizeId: req.params.productId });
-    return res.sendStatus(200);
+    const data = await Cart.create({
+      userId: req.session.user.id,
+      productSizeId: req.params.productId,
+    });
+    return res.status(200).json(data);
   }
   res.sendStatus(400).message('Error in api/cart');
 });
@@ -193,7 +196,7 @@ shopRouter.get('/products/:id', async (req, res) => {
   res.json(
     await Product.findOne({
       where: { id: req.params.id },
-      include: [{ model: Image }, { model: Category }, { model: Color }],
+      include: [{ model: Image }, { model: Category }, { model: Color }, { model: ProductSize }],
     }),
   );
 });

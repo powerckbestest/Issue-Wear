@@ -50,3 +50,12 @@ export function deleteProductCartService(id:number) : Promise<number> {
     .then(() => id)
     .catch((err) => Promise.reject(err))
 }
+
+
+// СЕРВИС НА ПОЛУЧЕНИЕ КАРТОЧКИ ПО ЕЕ ID НЕ ЗАБЫТЬ ПРО НЕГО 
+export function getCardProductService(id:number) : Promise<ProductType> {
+    return apiClient
+    .get<ProductType>(`/products/${id}`)
+    .then(({data}) => (data))
+    .catch((err) => Promise.reject(err))
+}

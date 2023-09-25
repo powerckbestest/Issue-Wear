@@ -9,7 +9,7 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
 
   const [colors, setColors] = useState([])
   const [categories, setCategory] = useState([])
-
+  const [sizes, setSize] = useState([])
   const [images, setImages] = useState([]); 
   const changeImg = (e) => { 
     setImages((prev) => [e.target.files[0], ...prev]); 
@@ -20,27 +20,34 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
   };
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/colors') 
-      .then((response) => response.json())
-      .then((data) => {
-        setColors(data); 
+   
+    axios.get('http://localhost:3001/api/colors')
+      .then((response) => {
+        setColors(response.data);
       })
       .catch((error) => {
         console.error('Ошибка при получении цветов:', error);
       });
-  }, []);
 
-
-  useEffect(() => {
-    fetch('http://localhost:3001/api/categories') 
-      .then((response) => response.json())
-      .then((data) => {
-        setCategory(data); 
+    
+    axios.get('http://localhost:3001/api/categories')
+      .then((response) => {
+        setCategory(response.data);
       })
       .catch((error) => {
         console.error('Ошибка при получении категорий:', error);
       });
-  }, []);
+
+      axios.get('http://localhost:3001/api/sizes')
+      .then((response) => {
+        setSize(response.data);
+      })
+      .catch((error) => {
+        console.error('Ошибка при получении размеров:', error);
+      });
+  }, []); 
+
+  
 
   const {addProductHandler} = useProductHooks()
 
@@ -142,6 +149,22 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
                               {categories.map((category) => (
                                 <option key={category} value={category.id}>
                                   {category.title}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          {/* Инпут для размеров товара */}
+                        <div className="mt-2">
+                            Размеры товара
+                            <select multiple
+                              name="size" 
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            >
+                              <option value="">Выбери размер</option>
+                              {sizes.map((size) => (
+                                <option key={size} value={size.id}>
+                                  {size.title}
                                 </option>
                               ))}
                             </select>
