@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs/promises');
 const sharp = require('sharp');
+const { Op } = require('sequelize');
 const {
   Product,
   Category,
@@ -13,7 +14,6 @@ const {
   User,
 } = require('../db/models');
 const upload = require('../middlewares/multerMid');
-const { Op } = require('sequelize');
 
 const shopRouter = express.Router();
 
@@ -161,10 +161,13 @@ shopRouter.post('/cart/:productId', async (req, res) => {
   return res.json(
     await ProductSize.findOne({
       where: { id: req.params.productId },
-      include: {
-        model: Product,
-        include: [{ model: Image }, { model: Category }, { model: Color }],
-      },
+      include: [
+        {
+          model: Product,
+          include: [{ model: Image }, { model: Category }, { model: Color }],
+        },
+        { model: Size },
+      ],
     }),
   );
   // res.sendStatus(400).message('Error in api/cart');
@@ -224,10 +227,13 @@ shopRouter.get('/cart', async (req, res) => {
       where: { userId: req.session.user.id },
       include: {
         model: ProductSize,
-        include: {
-          model: Product,
-          include: [{ model: Image }, { model: Category }, { model: Color }],
-        },
+        include: [
+          {
+            model: Product,
+            include: [{ model: Image }, { model: Category }, { model: Color }],
+          },
+          { model: Size },
+        ],
       },
     }),
   );

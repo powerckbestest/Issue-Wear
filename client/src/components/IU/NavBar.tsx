@@ -19,13 +19,16 @@ export default function NavBar(): JSX.Element {
   const user = useAppSelector((state) => state.user);
   const cartLabel = useAppSelector((state) => state.product.productsData.cartProducts);
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure
+      as="nav"
+      style={{ display: 'flex', justifyContent: 'space-around' }}
+      className="bg-gray-800"
+    >
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button */}
                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
@@ -36,18 +39,7 @@ export default function NavBar(): JSX.Element {
                   )}
                 </Disclosure.Button>
               </div>
-
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* КОЛОКОЛЬЧИК УВЕДОМЛЕНИЙ */}
-                {/* <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button> */}
-
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     <NavLink
@@ -66,7 +58,8 @@ export default function NavBar(): JSX.Element {
                 </div>
                 {/* Функциональная иконка профиля */}
                 {/* {/* Profile dropdown */}
-
+              </div>
+              <div>
                 {user.status === 'success' ? (
                   <div className="flex md:flex md:flex-grow flex-row justify-end space-x-1">
                     <Menu as="div" className="relative ml-max">
@@ -163,7 +156,7 @@ export default function NavBar(): JSX.Element {
                             style={{ height: '30px', width: '30px' }}
                             alt="cart"
                           />
-                          {cartLabel.length > 0 ? (
+                          {cartLabel?.length > 0 ? (
                             <label
                               style={{
                                 position: 'absolute',
@@ -175,7 +168,7 @@ export default function NavBar(): JSX.Element {
                                 fontSize: '12px',
                               }}
                             >
-                              {cartLabel.length}
+                              {cartLabel?.length}
                             </label>
                           ) : (
                             false
