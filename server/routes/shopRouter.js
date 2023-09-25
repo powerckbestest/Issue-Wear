@@ -23,9 +23,7 @@ shopRouter.post(
     { name: 'images', maxCount: 10 },
   ]),
   async (req, res) => {
-    const {
-      title, categoryId, colorId, price, description,
-    } = req.body;
+    const { title, categoryId, colorId, price, description } = req.body;
     // console.log(req.body);
     if (req?.session?.user) {
       const user = await User.findOne({
@@ -77,9 +75,7 @@ shopRouter.put(
     { name: 'images', maxCount: 10 },
   ]),
   async (req, res) => {
-    const {
-      title, categoryId, colorId, price, description, count,
-    } = req.body;
+    const { title, categoryId, colorId, price, description, count } = req.body;
     const user = await User.findByPk({
       where: { id: req.session.user.id },
       include: { model: Role },
@@ -170,7 +166,7 @@ shopRouter.delete('/cart/:productId', async (req, res) => {
   });
   if (inCart) {
     await inCart.destroy();
-    return res.sendStatus(200);
+    return res.json(await ProductSize.findByPk(req.params.productId));
   }
   res.sendStatus(400).message('Error in api/cart');
 });

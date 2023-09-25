@@ -1,0 +1,14 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.3s ease; /* Анимация всех свойств за 0.3 секунды */
+  }
+  
+  .navbar.navbar-hidden {
+    height: 0;
+    /* opacity: 0; Можете оставить эту строку, если хотите анимацию изменения непрозрачности */
+    /* overflow: hidden; Можете оставить эту строку, если хотите анимацию скрытия содержимого */
+  }
