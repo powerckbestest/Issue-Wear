@@ -33,13 +33,10 @@ export default function CartPage(): JSX.Element {
                     <h3>
                       <a href="#">{product.ProductSize.Product.title}</a>
                     </h3>
-                    <p className="ml-4">{product?.price}</p>
+                    <p className="ml-4">Цена: {product.ProductSize.Product.price} руб.</p>
                   </div>
                   <p className="mt-1 text-sm text-gray-500">
-                    {product.ProductSize.Product.Color.title}
-                  </p>
-                  <p className="mt-1 text-sm text-gray-500">
-                    Цена: {product.ProductSize.Product.price} руб.
+                    Цвет: {product.ProductSize.Product.Color.title}
                   </p>
                 </div>
                 <div className="flex flex-1 items-end justify-between text-sm">

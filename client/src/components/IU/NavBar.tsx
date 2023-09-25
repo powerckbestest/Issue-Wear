@@ -163,7 +163,7 @@ export default function NavBar(): JSX.Element {
                             style={{ height: '30px', width: '30px' }}
                             alt="cart"
                           />
-                          {cartLabel.length > 0 ? (
+                          {cartLabel?.length > 0 ? (
                             <label
                               style={{
                                 position: 'absolute',
