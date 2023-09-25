@@ -155,11 +155,19 @@ shopRouter.post('/cart/:productId', async (req, res) => {
   if (
     !(await Cart.findOne({ where: { userId: req.session.user.id, productSizeId: req.params.id } }))
   ) {
-    const data = await Cart.create({
+    await Cart.create({
       userId: req.session.user.id,
       productSizeId: req.params.productId,
     });
-    return res.status(200).json(data);
+    return res.json(
+      await ProductSize.findOne({
+        where: { id: req.params.productId },
+        include: {
+          model: Product,
+          include: [{ model: Image }, { model: Category }, { model: Color }],
+        },
+      }),
+    );
   }
   res.sendStatus(400).message('Error in api/cart');
 });
