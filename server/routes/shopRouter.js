@@ -204,13 +204,18 @@ shopRouter.get('/products/:id', async (req, res) => {
   res.json(
     await Product.findOne({
       where: { id: req.params.id },
-      include: [{ model: Image }, { model: Category }, { model: Color }, { model: ProductSize }],
+      include: [
+        { model: Image },
+        { model: Category },
+        { model: Color },
+        { model: ProductSize, require: t },
+      ],
     }),
   );
 });
 shopRouter.get('/cart', async (req, res) => {
   res.json(
-    await Cart.findOne({
+    await Cart.findAll({
       where: { userId: req.session.user.id },
       include: {
         model: ProductSize,
