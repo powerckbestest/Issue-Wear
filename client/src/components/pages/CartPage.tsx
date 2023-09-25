@@ -11,30 +11,39 @@ export default function CartPage(): JSX.Element {
   useEffect(() => {
     getProductsCartHandler();
   }, []);
-  console.log(productsInCart)
+  console.log(productsInCart);
   return (
-    <div className="mt-8">
+    <div className="mt-8 container mx-auto px-10">
       <div className="flow-root">
-        <h1>Shopping cart</h1>
+        <h1 className="flex justify-center items-center font-bold	text-3xl">Корзина:</h1>
         <ul role="list" className="-my-6 divide-y divide-gray-200">
           {productsInCart?.map((product) => (
             <li key={product.id} className="flex py-6">
               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                <img src={`http://localhost:3001/images/${product.ProductSize.Product.Images[0].url}`} alt="" className="h-full w-full object-cover object-center" />
+                <img
+                  src={`http://localhost:3001/images/${product.ProductSize.Product.Images[0].url}`}
+                  alt=""
+                  className="h-full w-full object-cover object-center"
+                />
               </div>
 
               <div className="ml-4 flex flex-1 flex-col">
                 <div>
-                  <div className="flex justify-between text-base font-medium text-gray-900">
+                  <div className="flex justify-between text-base font-medium text-gray-900 text-xl">
                     <h3>
                       <a href="#">{product.ProductSize.Product.title}</a>
                     </h3>
                     <p className="ml-4">{product?.price}</p>
                   </div>
-                  <p className="mt-1 text-sm text-gray-500">{product.ProductSize.Product.Color.title}</p>
+                  <p className="mt-1 text-sm text-gray-500">
+                    {product.ProductSize.Product.Color.title}
+                  </p>
+                  <p className="mt-1 text-sm text-gray-500">
+                    Цена: {product.ProductSize.Product.price} руб.
+                  </p>
                 </div>
                 <div className="flex flex-1 items-end justify-between text-sm">
-                  <p className="text-gray-500">Qty </p>
+                  <p className="text-gray-500">Размер: </p>
 
                   <div className="flex">
                     <button
@@ -42,7 +51,7 @@ export default function CartPage(): JSX.Element {
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                       onClick={(e) => deleteProductCartHandler(e, product.ProductSize.id)}
                     >
-                      Remove
+                      Убрать из корзины
                     </button>
                   </div>
                 </div>
@@ -50,6 +59,17 @@ export default function CartPage(): JSX.Element {
             </li>
           ))}
         </ul>
+        <div className="flex justify-center items-center m-5">
+          <h1>ИТОГО:</h1>
+        </div>
+        <div className="flex justify-center items-center">
+            <button
+              type="button"
+              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Оформить заказ
+            </button>
+        </div>
       </div>
     </div>
   );
