@@ -8,7 +8,7 @@ type ProductProps = {
 };
 
 export default function OneCard({ product }: ProductProps): JSX.Element {
-  const { addProductCartHandler, deleteProductHandler } = useProductHooks();
+  const { deleteProductHandler } = useProductHooks();
   return (
     <div>
       <div key={product.id} className="group relative">
@@ -27,9 +27,9 @@ export default function OneCard({ product }: ProductProps): JSX.Element {
                 {product.title}
               </NavLink>
             </h3>
-            <p className="mt-1 text-sm text-gray-500">{product.Color.title}</p>
+            <p className="mt-1 text-sm text-gray-500">Цвет: {product.Color.title}</p>
           </div>
-          <p className="text-sm font-medium text-gray-900">{product.price}</p>
+          <p className="text-sm font-medium text-gray-900">Цена: {product.price}</p>
         </div>
       </div>
       {/* <button

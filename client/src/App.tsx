@@ -6,6 +6,7 @@ import SignInPage from './components/pages/SignInPage';
 import NavBar from './components/IU/NavBar';
 import PrivateRouter from './components/PrivateRouter';
 import { useAppDispatch, useAppSelector } from './hooks/reduxHooks';
+import useProductHooks from './hooks/useProductHooks';
 import userCheckActionThunk from './features/redux/actions/userActions';
 import CartPage from './components/pages/CartPage';
 import ProductCard from './components/pages/ProductCard';
@@ -14,10 +15,12 @@ function App(): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
-  console.log(user)
+  console.log(user);
+  const { getProductsCartHandler } = useProductHooks();
 
   useEffect(() => {
-   void dispatch(userCheckActionThunk());
+    void dispatch(userCheckActionThunk());
+    getProductsCartHandler();
   }, []);
 
   return (
@@ -30,7 +33,7 @@ function App(): JSX.Element {
           <Route path="/signin" element={<SignInPage />} />
         </Route>
         <Route path="/cart" element={<CartPage />} />
-        <Route path='/products/:productId' element={<ProductCard/>}/>
+        <Route path="/products/:productId" element={<ProductCard />} />
       </Routes>
     </>
   );
