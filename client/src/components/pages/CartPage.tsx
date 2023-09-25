@@ -11,7 +11,7 @@ export default function CartPage(): JSX.Element {
   useEffect(() => {
     getProductsCartHandler();
   }, []);
-  
+  console.log(productsInCart)
   return (
     <div className="mt-8">
       <div className="flow-root">
@@ -20,18 +20,18 @@ export default function CartPage(): JSX.Element {
           {productsInCart?.map((product) => (
             <li key={product.id} className="flex py-6">
               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                <img src="" alt="" className="h-full w-full object-cover object-center" />
+                <img src={`http://localhost:3001/images/${product.ProductSize.Product.Images[0].url}`} alt="" className="h-full w-full object-cover object-center" />
               </div>
 
               <div className="ml-4 flex flex-1 flex-col">
                 <div>
                   <div className="flex justify-between text-base font-medium text-gray-900">
                     <h3>
-                      <a href="#">{product?.title}</a>
+                      <a href="#">{product.ProductSize.Product.title}</a>
                     </h3>
                     <p className="ml-4">{product?.price}</p>
                   </div>
-                  <p className="mt-1 text-sm text-gray-500">{product?.Color?.title}</p>
+                  <p className="mt-1 text-sm text-gray-500">{product.ProductSize.Product.Color.title}</p>
                 </div>
                 <div className="flex flex-1 items-end justify-between text-sm">
                   <p className="text-gray-500">Qty </p>
@@ -40,7 +40,7 @@ export default function CartPage(): JSX.Element {
                     <button
                       type="button"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
-                      onClick={(e) => deleteProductCartHandler(e, product.id)}
+                      onClick={(e) => deleteProductCartHandler(e, product.ProductSize.id)}
                     >
                       Remove
                     </button>
