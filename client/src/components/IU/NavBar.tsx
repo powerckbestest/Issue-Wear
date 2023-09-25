@@ -21,11 +21,10 @@ export default function NavBar(): JSX.Element {
   return (
     <Disclosure
       as="nav"
-      style={{ display: 'flex', justifyContent: 'space-around' }}
       className="bg-gray-800"
     >
       {({ open }) => (
-        <>
+        <div>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -64,7 +63,7 @@ export default function NavBar(): JSX.Element {
                   <div className="flex md:flex md:flex-grow flex-row justify-end space-x-1">
                     <Menu as="div" className="relative ml-max">
                       <div>
-                        <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <Menu.Button className="pt-2 relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                           <span className="absolute -inset-1.5" />
                           <span className="sr-only">Open user menu</span>
                           <img
@@ -222,7 +221,7 @@ export default function NavBar(): JSX.Element {
               ))}
             </div>
           </Disclosure.Panel> */}
-        </>
+        </div>
       )}
     </Disclosure>
   );
