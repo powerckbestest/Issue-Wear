@@ -5,13 +5,13 @@ import type { ProductType } from '../../../types/productType';
 type InitialState = {
   products: ProductType[];
   cartProducts: ProductType[];
-  currProduct: ProductType[]
+  currProduct: ProductType[];
 };
 
 const initialState: InitialState = {
   products: [],
   cartProducts: [],
-  currProduct: []
+  currProduct: [],
 };
 
 export const productSlice = createSlice({
@@ -24,15 +24,13 @@ export const productSlice = createSlice({
     setProduct: (state, action: PayloadAction<ProductType>) => {
       state.products.push(action.payload);
     },
-    deleteProduct: (state, action: PayloadAction<number>) => {
-      console.log(action.payload)
-      state.products.filter((el) => el.id !== action.payload);
-    },
+    deleteProduct: (state, action: PayloadAction<number>) =>
+      state.products.filter((el) => el.id !== action.payload),
     editProduct: (state, action: PayloadAction<ProductType>) => {
       state.products.map((el) => (el.id !== action.payload.id ? el : action.payload));
     },
     getCartProducts: (state, action: PayloadAction<ProductType[]>) => {
-      state.cartProducts = action.payload
+      state.cartProducts = action.payload;
     },
     addToCart: (state, action: PayloadAction<ProductType>) => {
       const check = state.cartProducts.find((el) => el.id === action.payload.id);
@@ -40,15 +38,22 @@ export const productSlice = createSlice({
         state.cartProducts.push(action.payload);
       }
     },
-    deleteFromCart: (state, action: PayloadAction<number>) => {
-      state.cartProducts.filter((el) => el.id !== action.payload);
-    },
+    deleteFromCart: (state, action: PayloadAction<number>) =>
+      state.cartProducts.filter((el) => el.id !== action.payload),
     getCardProduct: (state, action: PayloadAction<ProductType>) => {
-      state.currProduct = action.payload;    
+      state.currProduct = action.payload;
     },
   },
 });
 
 export default productSlice.reducer;
-export const { getProducts, setProduct, deleteProduct, editProduct, addToCart, deleteFromCart, getCartProducts, getCardProduct } =
-  productSlice.actions;
+export const {
+  getProducts,
+  setProduct,
+  deleteProduct,
+  editProduct,
+  addToCart,
+  deleteFromCart,
+  getCartProducts,
+  getCardProduct,
+} = productSlice.actions;
