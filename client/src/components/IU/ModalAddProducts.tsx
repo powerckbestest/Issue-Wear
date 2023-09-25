@@ -145,6 +145,7 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
                           {/* Инпут для размеров товара */}
                         <div className="mt-2">
                         <input
+                            placeholder='Количество товара'
                             type="text"
                             name="size"
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"

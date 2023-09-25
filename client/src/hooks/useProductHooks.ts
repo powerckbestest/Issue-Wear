@@ -73,7 +73,6 @@ export default function useProductHooks() : {
 
   const addProductCartHandler = (e: React.MouseEvent<HTMLElement>, id:number) : void => {
     e.preventDefault()
-    console.log(id)
     addProductCartService(id)
     .then((addProduct) => dispatch(addToCart(addProduct)))
     .catch((err) => console.error('Ошибка при добавлении в корзину', err))
