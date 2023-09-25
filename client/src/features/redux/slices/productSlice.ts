@@ -33,10 +33,14 @@ export const productSlice = createSlice({
       state.cartProducts = action.payload;
     },
     addToCart: (state, action: PayloadAction<ProductType>) => {
-        state.cartProducts.push(action.payload);
+      console.log(action.payload);
+      state.cartProducts.push(action.payload);
     },
-    deleteFromCart: (state, action: PayloadAction<number>) =>
-      state.cartProducts.filter((el) => el.id !== action.payload),
+    deleteFromCart: (state, action: PayloadAction<number>) => {
+      console.log(state);
+
+      return state.cartProducts.filter((el) => el.id !== action.payload);
+    },
     getCardProduct: (state, action: PayloadAction<ProductType>) => {
       state.currProduct = action.payload;
     },
