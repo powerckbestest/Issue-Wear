@@ -29,7 +29,7 @@ export default function OneCard({ product }: ProductProps): JSX.Element {
             </h3>
             <p className="mt-1 text-sm text-gray-500">Цвет: {product.Color.title}</p>
           </div>
-          <p className="text-sm font-medium text-gray-900">Цена: {product.price}</p>
+          <p className="text-sm font-medium text-gray-900">Цена: {product.price} руб.</p>
         </div>
       </div>
       {/* <button

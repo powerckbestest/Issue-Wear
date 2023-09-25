@@ -222,21 +222,24 @@ shopRouter.get('/products/:id', async (req, res) => {
   );
 });
 shopRouter.get('/cart', async (req, res) => {
-  res.json(
-    await Cart.findAll({
-      where: { userId: req.session.user.id },
-      include: {
-        model: ProductSize,
-        include: [
-          {
-            model: Product,
-            include: [{ model: Image }, { model: Category }, { model: Color }],
-          },
-          { model: Size },
-        ],
-      },
-    }),
-  );
+  if (req?.session?.user) {
+    return res.json(
+      await Cart.findAll({
+        where: { userId: req.session.user.id },
+        include: {
+          model: ProductSize,
+          include: [
+            {
+              model: Product,
+              include: [{ model: Image }, { model: Category }, { model: Color }],
+            },
+            { model: Size },
+          ],
+        },
+      }),
+    );
+  }
+  return res.sendStatus(200);
 });
 shopRouter.get('/categories', async (req, res) => res.json(await Category.findAll()));
 shopRouter.get('/sizes', async (req, res) => res.json(await Size.findAll()));
