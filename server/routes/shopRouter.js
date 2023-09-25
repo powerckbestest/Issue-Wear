@@ -13,6 +13,7 @@ const {
   User,
 } = require('../db/models');
 const upload = require('../middlewares/multerMid');
+const { Op } = require('sequelize');
 
 const shopRouter = express.Router();
 
@@ -207,7 +208,12 @@ shopRouter.get('/products/:id', async (req, res) => {
         { model: Image },
         { model: Category },
         { model: Color },
-        { model: ProductSize, require: t },
+        {
+          model: ProductSize,
+          where: { count: { [Op.gt]: 0 } },
+          require: true,
+          include: { model: Size },
+        },
       ],
     }),
   );
