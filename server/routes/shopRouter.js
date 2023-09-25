@@ -169,7 +169,7 @@ shopRouter.delete('/cart/:productId', async (req, res) => {
   });
   if (inCart) {
     await inCart.destroy();
-    return res.json(await ProductSize.findByPk(req.params.productId));
+    return res.sendStatus(200);
   }
   res.sendStatus(400).message('Error in api/cart');
 });

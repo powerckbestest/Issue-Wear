@@ -3,6 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import axios from 'axios';
 import useProductHooks from '../../hooks/useProductHooks';
+import { getColorService } from '../../services/modalService';
 
 export default function ModalAddProducts({ show, onHide }: { show: boolean; onHide: () => void }): JSX.Element {
   const [open, setOpen] = useState(true)
@@ -15,19 +16,20 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
     setImages((prev) => [e.target.files[0], ...prev]); 
   }; 
 
+
   const deleteImg = (index) => { 
     setImages((prev) => prev.filter((el, i) => index !== i)); 
   };
 
   useEffect(() => {
    
-    axios.get('http://localhost:3001/api/colors')
-      .then((response) => {
-        setColors(response.data);
-      })
-      .catch((error) => {
-        console.error('Ошибка при получении цветов:', error);
-      });
+    // axios.get('http://localhost:3001/api/colors')
+    //   .then((response) => {
+    //     setColors(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Ошибка при получении цветов:', error);
+    //   });
 
     
     axios.get('http://localhost:3001/api/categories')
@@ -46,6 +48,15 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
         console.error('Ошибка при получении размеров:', error);
       });
   }, []); 
+
+
+  useEffect(() => {
+    getColorService()
+    .then((data) => setColors(data))
+    .catch((err) => console.log(err))
+    
+    
+  })
 
   
 
