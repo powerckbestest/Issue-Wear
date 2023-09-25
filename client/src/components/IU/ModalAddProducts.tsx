@@ -144,18 +144,11 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
 
                           {/* Инпут для размеров товара */}
                         <div className="mt-2">
-                            Размеры товара
-                            <select multiple
-                              name="size" 
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            >
-                              <option value="">Выбери размер</option>
-                              {sizes.map((size) => (
-                                <option key={size} value={size.id}>
-                                  {size.title}
-                                </option>
-                              ))}
-                            </select>
+                        <input
+                            type="text"
+                            name="size"
+                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          />
                           </div>
 
                           <div>Изображение товара
