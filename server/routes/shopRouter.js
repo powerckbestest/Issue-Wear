@@ -13,6 +13,7 @@ const {
   User,
 } = require('../db/models');
 const upload = require('../middlewares/multerMid');
+const { Op } = require('sequelize');
 
 const shopRouter = express.Router();
 
@@ -173,7 +174,7 @@ shopRouter.post('/cart/:productId', async (req, res) => {
 });
 shopRouter.delete('/cart/:productId', async (req, res) => {
   const inCart = await Cart.findOne({
-    where: { userId: req.session.user.id, productSizeId: req.params.id },
+    where: { userId: req.session.user.id, productSizeId: req.params.productId },
   });
   if (inCart) {
     await inCart.destroy();
@@ -208,7 +209,12 @@ shopRouter.get('/products/:id', async (req, res) => {
         { model: Image },
         { model: Category },
         { model: Color },
-        { model: ProductSize, require: t },
+        {
+          model: ProductSize,
+          where: { count: { [Op.gt]: 0 } },
+          require: true,
+          include: { model: Size },
+        },
       ],
     }),
   );
