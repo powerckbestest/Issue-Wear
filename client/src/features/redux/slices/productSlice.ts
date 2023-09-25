@@ -33,10 +33,7 @@ export const productSlice = createSlice({
       state.cartProducts = action.payload;
     },
     addToCart: (state, action: PayloadAction<ProductType>) => {
-      const check = state.cartProducts.find((el) => el.id === action.payload.id);
-      if (!check) {
         state.cartProducts.push(action.payload);
-      }
     },
     deleteFromCart: (state, action: PayloadAction<number>) =>
       state.cartProducts.filter((el) => el.id !== action.payload),
