@@ -9,10 +9,11 @@ import type { ProductType } from '../../types/productType';
 
 export default function MainPage(): JSX.Element {
   const [show, setShow] = useState(false);
-  const [selectedNoteId, setSelectedNoteId] = useState(null);
   const [editProduct, setEditProduct] = useState<ProductType | null>(null);
   const { getProductsHandler } = useProductHooks();
 
+  const user = useAppSelector((state) => state.user)
+  console.log(user)
   const handleEditClick = (): void => {
     setShow(true);
   };
@@ -25,6 +26,7 @@ export default function MainPage(): JSX.Element {
   // console.log(product)
   return (
     <>
+    {}
       <div className='flex items-center justify-center mt-5'>
         <button
           type="button"

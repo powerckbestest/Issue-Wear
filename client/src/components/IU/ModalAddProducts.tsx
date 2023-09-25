@@ -12,15 +12,21 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
   const [categories, setCategory] = useState([])
   const [sizes, setSize] = useState([])
   const [images, setImages] = useState([]); 
+  const [imageWardrobe, setImageWardrobe] = useState([])
+  
   const changeImg = (e) => { 
     setImages((prev) => [e.target.files[0], ...prev]); 
   }; 
-
-
   const deleteImg = (index) => { 
     setImages((prev) => prev.filter((el, i) => index !== i)); 
   };
 
+  const changeImgWardrobe = (e) => {
+    setImageWardrobe((prev) => [e.target.files[0], ...prev]);
+  }
+  const deleteImgWardrobe = (index) => {
+    setImageWardrobe((prev) => prev.filter((el, i) => index !== i));
+  }
   useEffect(() => {
     getColorService()
     .then((data) => setColors(data))
@@ -39,13 +45,11 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
 
   const {addProductHandler} = useProductHooks()
 
-  // const cancelButtonRef = useRef(null)
-
   return (
     
       <Transition.Root show={show} as={Fragment}>
         <Dialog as="div" className="relative z-10"  onClose={setOpen}>
-          <form onSubmit={(e) => addProductHandler(e, images)}>
+          <form onSubmit={(e) => addProductHandler(e, images, imageWardrobe)}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -152,7 +156,7 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
                           />
                           </div>
 
-                          <div>Изображение товара
+                          <div>Изображение товара для карточки
                               <input 
                               name='file' 
                               type="file" 
@@ -178,10 +182,19 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
                             </div> 
                           )) 
                         : false}
-
-
                           </div>
+
+                          <br />
+                      <div> Изображение для гардероба
+                        <input 
+                        type="file" 
+                        name='wardrobe'
+                        multiple
+                        onChange={changeImgWardrobe}
+                        />
                       </div>
+                      </div>
+
                     </div>
                   </div>
 
@@ -194,7 +207,6 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
                       Отменить
                     </button>
 
-                    {/* Кнопка отправки формы */}
                     <button
                       type="submit"
                       className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"

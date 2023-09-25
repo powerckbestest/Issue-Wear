@@ -48,7 +48,7 @@ export default function useProductHooks(): {
 
   const addProductHandler = (
     e: React.FormEvent<HTMLFormElement & ProductFormType>,
-    images,
+    images, wardrobe
   ): void => {
     e.preventDefault();
     const formData = new FormData();
@@ -61,6 +61,11 @@ export default function useProductHooks(): {
     for (const file of images) {
       formData.append('images', file);
     }
+
+    for (const file of wardrobe) {
+      formData.append('wardrobe', file)
+    }
+
     postProductService(formData)
       .then((data) => dispatch(setProduct(data)))
       .catch((err) => Promise.reject(err));
