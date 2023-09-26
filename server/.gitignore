@@ -1,4 +1,4 @@
 .env
 node_modules
 sessions
-images
+images/*

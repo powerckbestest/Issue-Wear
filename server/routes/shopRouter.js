@@ -20,12 +20,12 @@ const shopRouter = express.Router();
 shopRouter.post(
   '/products',
   upload.fields([
-    { name: 'cover', maxCount: 1 },
+    // { name: 'cover', maxCount: 1 },
     { name: 'images', maxCount: 10 },
   ]),
   async (req, res) => {
     const { title, categoryId, colorId, price, description } = req.body;
-    console.log(req.files.images);
+
     if (req?.session?.user) {
       const user = await User.findOne({
         where: { id: req.session.user.id },
@@ -40,25 +40,17 @@ shopRouter.post(
             price,
             description,
           });
-          // console.log(req.files);
-          // console.log(req.files[0]);
-          // console.log(req.files[1]);
-          if (req?.files?.images) {
-            console.log(999999999999999999);
-            for (const file of req.files.images) {
-              const name = `${Date.now()}.webp`;
-              const outputBuffer = await sharp(file.buffer).webp().toBuffer();
-              await fs.writeFile(`./public/images/${name}`, outputBuffer);
-              await Image.create({ productId: newProduct.id, url: name, forConstructor: false });
-            }
-          }
-          if (req?.files?.cover) {
-            console.log(999999999999999999);
+
+          for (const file of req.files.images) {
             const name = `${Date.now()}.webp`;
-            const outputBuffer = await sharp(req.files.cover[0].buffer).webp().toBuffer();
+            const outputBuffer = await sharp(file.buffer).webp().toBuffer();
             await fs.writeFile(`./public/images/${name}`, outputBuffer);
-            await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
+            await Image.create({ productId: newProduct.id, url: name, forConstructor: false });
           }
+          const name = `${Date.now()}.webp`;
+          const outputBuffer = await sharp(req.cover.buffer).webp().toBuffer();
+          await fs.writeFile(`./public/images/${name}`, outputBuffer);
+          await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
           console.log(999999999999999999);
           const sizes = await Size.findAll();
           for (let i = 0; i < sizes.length; i++) {
@@ -192,7 +184,7 @@ shopRouter.delete('/cart/:cartId', async (req, res) => {
     await inCart.destroy();
     return res.sendStatus(200);
   }
-  res.sendStatus(400).message('Error in api/cart');
+  res.status(400).message('Error in api/cart');
 });
 
 shopRouter.delete('/image/:id', async (req, res) => {

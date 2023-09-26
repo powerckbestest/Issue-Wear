@@ -74,6 +74,8 @@ export default function useProductHooks(): {
     postProductService(formData)
       .then((data) => dispatch(setProduct(data)))
       .catch((err) => Promise.reject(err));
+
+      
   };
 
   const deleteProductHandler = (e: React.MouseEvent<HTMLElement>, id: number): void => {
