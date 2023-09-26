@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './components/pages/ProductsList';
 import SignUpPage from './components/pages/SignUpPage';
@@ -44,28 +44,31 @@ function App(): JSX.Element {
 
   return (
     <>
-    {/* Скрываем NavBar и содержимое страницы, пока работает Loader */}
-    {isLoading ? (
-      <Loader isLoading={isLoading}>
-        <div>Loading...</div>
-      </Loader>
-    ) : (
-    <>
-      <NavBar />
-      <Routes>
-        <Route path="/products" element={<MainPage />} />
-        <Route element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}>
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/signin" element={<SignInPage />} />
-        </Route>
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/products/:productId" element={<ProductCard />} />
-      </Routes>
-      {/* <Footer /> */}
+      {/* Скрываем NavBar и содержимое страницы, пока работает Loader */}
+      {isLoading ? (
+        <Loader isLoading={isLoading}>
+          <div>Loading...</div>
+        </Loader>
+      ) : (
+        <>
+          <NavBar />
+          <Routes>
+            <Route path="/" />
+            <Route path="/products" element={<MainPage />} />
+            <Route
+              element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}
+            >
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/signin" element={<SignInPage />} />
+            </Route>
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/products/:productId" element={<ProductCard />} />
+          </Routes>
+          {/* <Footer /> */}
+        </>
+      )}
     </>
-   )}
-   </>
- );
+  );
 }
 
 export default App;
