@@ -17,7 +17,7 @@ export default function CartPage(): JSX.Element {
         0,
       ),
     );
-  }, []);
+  }, [productsInCart]);
 
   useEffect(() => {
     getProductsCartHandler();

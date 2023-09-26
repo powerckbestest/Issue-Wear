@@ -24,8 +24,10 @@ export const productSlice = createSlice({
     setProduct: (state, action: PayloadAction<ProductType>) => {
       state.products.push(action.payload);
     },
-    deleteProduct: (state, action: PayloadAction<number>) =>
-      state.products.filter((el) => el.id !== action.payload),
+    deleteProduct: (state, action: PayloadAction<number>) =>{
+    state.products = state.products.filter((el) => el.id !== action.payload),
+    console.log(action.payload)
+    },
     editProduct: (state, action: PayloadAction<ProductType>) => {
       state.products.map((el) => (el.id !== action.payload.id ? el : action.payload));
     },
@@ -39,7 +41,7 @@ export const productSlice = createSlice({
     deleteFromCart: (state, action: PayloadAction<number>) => {
       console.log(state);
 
-      return state.cartProducts.filter((el) => el.id !== action.payload);
+      state.cartProducts = state.cartProducts.filter((el) => el.id !== action.payload);
     },
     getCardProduct: (state, action: PayloadAction<ProductType>) => {
       state.currProduct = action.payload;
