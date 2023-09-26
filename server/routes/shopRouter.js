@@ -163,27 +163,30 @@ shopRouter.post('/cart/:productId', async (req, res) => {
     productSizeId: req.params.productId,
   });
   return res.json(
-    await ProductSize.findOne({
-      where: { id: req.params.productId },
-      include: [
-        {
-          model: Product,
-          include: [{ model: Image }, { model: Category }, { model: Color }],
-        },
-        { model: Size },
-      ],
+    await Cart.findOne({
+      where: { productSizeId: req.params.productId, userId: req.session.user.id },
+      include: {
+        model: ProductSize,
+        include: [
+          {
+            model: Product,
+            include: [{ model: Image }, { model: Category }, { model: Color }],
+          },
+          { model: Size },
+        ],
+      },
     }),
   );
   // res.sendStatus(400).message('Error in api/cart');
 });
 
-shopRouter.delete('/cart/:productId', async (req, res) => {
+shopRouter.delete('/cart/:cartId', async (req, res) => {
   const inCart = await Cart.findOne({
-    where: { userId: req.session.user.id, productSizeId: req.params.productId },
+    where: { userId: req.session.user.id, id: req.params.cartId },
   });
   if (inCart) {
     await inCart.destroy();
-    return res.json(await ProductSize.findByPk(req.params.productId));
+    return res.sendStatus(200);
   }
   res.sendStatus(400).message('Error in api/cart');
 });
@@ -226,21 +229,24 @@ shopRouter.get('/products/:id', async (req, res) => {
   );
 });
 shopRouter.get('/cart', async (req, res) => {
-  res.json(
-    await Cart.findAll({
-      where: { userId: req.session.user.id },
-      include: {
-        model: ProductSize,
-        include: [
-          {
-            model: Product,
-            include: [{ model: Image }, { model: Category }, { model: Color }],
-          },
-          { model: Size },
-        ],
-      },
-    }),
-  );
+  if (req?.session?.user) {
+    return res.json(
+      await Cart.findAll({
+        where: { userId: req.session.user.id },
+        include: {
+          model: ProductSize,
+          include: [
+            {
+              model: Product,
+              include: [{ model: Image }, { model: Category }, { model: Color }],
+            },
+            { model: Size },
+          ],
+        },
+      }),
+    );
+  }
+  return res.sendStatus(200);
 });
 shopRouter.get('/categories', async (req, res) => res.json(await Category.findAll()));
 shopRouter.get('/sizes', async (req, res) => res.json(await Size.findAll()));

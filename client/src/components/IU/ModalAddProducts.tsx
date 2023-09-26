@@ -3,6 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import axios from 'axios';
 import useProductHooks from '../../hooks/useProductHooks';
+import { getCategories, getColorService, getSizes } from '../../services/modalService';
 
 export default function ModalAddProducts({ show, onHide }: { show: boolean; onHide: () => void }): JSX.Element {
   const [open, setOpen] = useState(true)
@@ -11,53 +12,44 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
   const [categories, setCategory] = useState([])
   const [sizes, setSize] = useState([])
   const [images, setImages] = useState([]); 
+  const [imageWardrobe, setImageWardrobe] = useState([])
+  
   const changeImg = (e) => { 
     setImages((prev) => [e.target.files[0], ...prev]); 
   }; 
-
   const deleteImg = (index) => { 
     setImages((prev) => prev.filter((el, i) => index !== i)); 
   };
 
+  const changeImgWardrobe = (e) => {
+    setImageWardrobe((prev) => [e.target.files[0], ...prev]);
+  }
+  const deleteImgWardrobe = (index) => {
+    setImageWardrobe((prev) => prev.filter((el, i) => index !== i));
+  }
   useEffect(() => {
-   
-    axios.get('http://localhost:3001/api/colors')
-      .then((response) => {
-        setColors(response.data);
-      })
-      .catch((error) => {
-        console.error('Ошибка при получении цветов:', error);
-      });
+    getColorService()
+    .then((data) => setColors(data))
+    .catch((err) => console.log(err))
 
-    
-    axios.get('http://localhost:3001/api/categories')
-      .then((response) => {
-        setCategory(response.data);
-      })
-      .catch((error) => {
-        console.error('Ошибка при получении категорий:', error);
-      });
+    getCategories()
+    .then((data) => setCategory(data))
+    .catch((err) => console.log(err))
 
-      axios.get('http://localhost:3001/api/sizes')
-      .then((response) => {
-        setSize(response.data);
-      })
-      .catch((error) => {
-        console.error('Ошибка при получении размеров:', error);
-      });
-  }, []); 
+    getSizes()
+    .then((data) => setSize(data))
+    .catch((err) => console.log(err))
+  }, [])
 
   
 
   const {addProductHandler} = useProductHooks()
 
-  // const cancelButtonRef = useRef(null)
-
   return (
     
       <Transition.Root show={show} as={Fragment}>
         <Dialog as="div" className="relative z-10"  onClose={setOpen}>
-          <form onSubmit={(e) => addProductHandler(e, images)}>
+          <form onSubmit={(e) => addProductHandler(e, images, imageWardrobe)}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -156,21 +148,15 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
 
                           {/* Инпут для размеров товара */}
                         <div className="mt-2">
-                            Размеры товара
-                            <select multiple
-                              name="size" 
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            >
-                              <option value="">Выбери размер</option>
-                              {sizes.map((size) => (
-                                <option key={size} value={size.id}>
-                                  {size.title}
-                                </option>
-                              ))}
-                            </select>
+                        <input
+                            placeholder='Количество товара'
+                            type="text"
+                            name="size"
+                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          />
                           </div>
 
-                          <div>Изображение товара
+                          <div>Изображение товара для карточки
                               <input 
                               name='file' 
                               type="file" 
@@ -196,10 +182,19 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
                             </div> 
                           )) 
                         : false}
-
-
                           </div>
+
+                          <br />
+                      <div> Изображение для гардероба
+                        <input 
+                        type="file" 
+                        name='wardrobe'
+                        multiple
+                        onChange={changeImgWardrobe}
+                        />
                       </div>
+                      </div>
+
                     </div>
                   </div>
 
@@ -212,7 +207,6 @@ export default function ModalAddProducts({ show, onHide }: { show: boolean; onHi
                       Отменить
                     </button>
 
-                    {/* Кнопка отправки формы */}
                     <button
                       type="submit"
                       className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
