@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState} from 'react';
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './components/pages/ProductsList';
 import SignUpPage from './components/pages/SignUpPage';
@@ -12,8 +12,12 @@ import CartPage from './components/pages/CartPage';
 import ProductCard from './components/pages/ProductCard';
 import Footer from './components/IU/Footer';
 import { setUser } from './features/redux/slices/userSlice';
+import Loader from './components/hocs/Loader';
 
 function App(): JSX.Element {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
@@ -25,7 +29,28 @@ function App(): JSX.Element {
     getProductsCartHandler();
   }, []);
 
+  useEffect(() => {
+    void dispatch(userCheckActionThunk())
+      .then(() => {
+        setIsAuthenticated(user.status === 'success');
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1500);
+      })
+      .catch((error) => {
+        console.error('Ошибка:', error);
+        setIsLoading(false);
+      });
+  }, []);
+
   return (
+    <>
+    {/* Скрываем NavBar и содержимое страницы, пока работает Loader */}
+    {isLoading ? (
+      <Loader isLoading={isLoading}>
+        <div>Loading...</div>
+      </Loader>
+    ) : (
     <>
       <NavBar />
       <Routes>
@@ -39,7 +64,9 @@ function App(): JSX.Element {
       </Routes>
       {/* <Footer /> */}
     </>
-  );
+   )}
+   </>
+ );
 }
 
 export default App;
