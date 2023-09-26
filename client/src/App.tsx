@@ -11,6 +11,7 @@ import userCheckActionThunk from './features/redux/actions/userActions';
 import CartPage from './components/pages/CartPage';
 import ProductCard from './components/pages/ProductCard';
 import Footer from './components/IU/Footer';
+import { setUser } from './features/redux/slices/userSlice';
 import Loader from './components/hocs/Loader';
 
 function App(): JSX.Element {

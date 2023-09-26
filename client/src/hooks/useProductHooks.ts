@@ -8,6 +8,7 @@ import {
   getCardProductService,
   getProductInCartService,
   getProductService,
+  makeOrderService,
   postProductService,
 } from '../services/productService';
 import {
@@ -20,7 +21,8 @@ import {
   getProducts,
   setProduct,
 } from '../features/redux/slices/productSlice';
-import type { ProductFormType } from '../types/productType';
+import type { OrderFormType, ProductFormType } from '../types/productType';
+import { addOrder } from '../features/redux/slices/orderSlice';
 
 type ProductFormData = {
   name: string;
@@ -41,6 +43,7 @@ export default function useProductHooks(): {
   addProductCartHandler: (e: React.MouseEvent<HTMLElement>, id: number) => void;
   deleteProductCartHandler: (e: React.MouseEvent<HTMLElement>, id: number) => void;
   getCartProductHandler: (id: number) => void;
+  makeOrderHandler: (e: React.FormEvent<HTMLFormElement & OrderFormType>) => void
 } {
   const dispatch = useAppDispatch();
 
@@ -77,6 +80,18 @@ export default function useProductHooks(): {
 
       
   };
+
+  const makeOrderHandler = (e: React.FormEvent<HTMLFormElement & OrderFormType>):void => {
+    e.preventDefault()
+    const formData = new FormData()
+    formData.append('name', e.currentTarget.name.value)
+    formData.append('phone', e.currentTarget.phone.value)
+    formData.append('address', e.currentTarget.address.value)
+
+    makeOrderService(formData)
+    .then((data) => dispatch(addOrder(data)))
+    .catch((err) => Promise.reject(err))
+  }
 
   const deleteProductHandler = (e: React.MouseEvent<HTMLElement>, id: number): void => {
     e.preventDefault();
@@ -134,5 +149,6 @@ export default function useProductHooks(): {
     addProductCartHandler,
     deleteProductCartHandler,
     getCartProductHandler,
+    makeOrderHandler
   };
 }
