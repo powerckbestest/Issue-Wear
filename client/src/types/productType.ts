@@ -59,3 +59,9 @@ export type ProductFormType = {
   colorId: HTMLInputElement;
   size: HTMLInputElement;
 };
+
+export type OrderFormType = {
+  name: HTMLInputElement;
+  phone: HTMLInputElement;
+  address: HTMLInputElement;
+};
