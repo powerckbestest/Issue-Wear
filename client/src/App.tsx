@@ -36,7 +36,7 @@ function App(): JSX.Element {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/products/:productId" element={<ProductCard />} />
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
