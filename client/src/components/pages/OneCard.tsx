@@ -30,14 +30,6 @@ export default function OneCard({ product }: ProductProps): JSX.Element {
           <p className="text-sm font-medium text-gray-500">{product.price}</p>
         </div>
       </div>
-      <div className="w-32 mx-auto mt-10">
-        <button
-          type="button"
-          className="bg-white hover:bg-gray-300  border border-solid border-gray-700 font-bold py-2 px-4 rounded mx-auto transition-transform transform hover:scale-105 shadow-md"
-        >
-          В корзину
-        </button>
-      </div>
     </div>
   );
 }
