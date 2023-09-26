@@ -32,13 +32,6 @@ export default function OneCard({ product }: ProductProps): JSX.Element {
           <p className="text-sm font-medium text-gray-900">Цена: {product.price} руб.</p>
         </div>
       </div>
-      {/* <button
-        onClick={(e) => addProductCartHandler(e, product.id)}
-        type="button"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        В корзину
-      </button> */}
       <button 
       type='button'
       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

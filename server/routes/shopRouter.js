@@ -20,11 +20,13 @@ const shopRouter = express.Router();
 shopRouter.post(
   '/products',
   upload.fields([
-    // { name: 'cover', maxCount: 1 },
+    { name: 'cover', maxCount: 1 },
     { name: 'images', maxCount: 10 },
   ]),
   async (req, res) => {
-    const { title, categoryId, colorId, price, description } = req.body;
+    const {
+      title, categoryId, colorId, price, description,
+    } = req.body;
 
     if (req?.session?.user) {
       const user = await User.findOne({
@@ -76,7 +78,9 @@ shopRouter.put(
     { name: 'images', maxCount: 10 },
   ]),
   async (req, res) => {
-    const { title, categoryId, colorId, price, description, count } = req.body;
+    const {
+      title, categoryId, colorId, price, description, count,
+    } = req.body;
     const user = await User.findByPk({
       where: { id: req.session.user.id },
       include: { model: Role },
