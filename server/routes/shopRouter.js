@@ -26,6 +26,8 @@ shopRouter.post(
   async (req, res) => {
     const { title, categoryId, colorId, price, description } = req.body;
     // console.log(req.body);
+    // console.log(999999999999999999);
+    // console.log(req.files.images);
     if (req?.session?.user) {
       const user = await User.findOne({
         where: { id: req.session.user.id },
@@ -52,6 +54,8 @@ shopRouter.post(
           // const outputBuffer = await sharp(req.cover.buffer).webp().toBuffer();
           // await fs.writeFile(`./public/images/${name}`, outputBuffer);
           // await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
+          console.log(999999999999999999);
+          console.log(req.files.images);
           const sizes = await Size.findAll();
           for (let i = 0; i < sizes.length; i++) {
             ProductSize.create({ productId: newProduct.id, sizeId: sizes[i].id, count: 50 });
