@@ -61,7 +61,7 @@ export function getCardProductService(id: number): Promise<ProductType> {
 
 export function makeOrderService(formData: FormData): Promise<OrderType> {
   return apiClient
-    .post<OrderType>(`/orders`, formData)
+    .post<OrderType>(`/orders`, Object.fromEntries(formData))
     .then(({ data }) => data)
     .catch((err) => Promise.reject(err));
 }

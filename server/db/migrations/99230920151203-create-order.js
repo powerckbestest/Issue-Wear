@@ -16,8 +16,12 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
-      status: {
-        type: Sequelize.BOOLEAN,
+      statusId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Statuses',
+          key: 'id',
+        },
       },
       address: {
         type: Sequelize.TEXT,
