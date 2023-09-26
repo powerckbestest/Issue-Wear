@@ -54,7 +54,7 @@ export default function NavBar(): JSX.Element {
   }, []);
 
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className={`bg-gray-800 ${isDarkMode ? 'text-white' : 'text-gray-500'}`}>
       {({ open }) => (
         <div>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
