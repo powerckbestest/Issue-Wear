@@ -4,6 +4,8 @@ import { RadioGroup } from '@headlessui/react'
 import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/reduxHooks'
 import useProductHooks from '../../hooks/useProductHooks'
+import './slider.css'
+import ModalSizeGuide from '../IU/ModalSizeGuide'
 // import '/styles/slider.css'
 
 function classNames(...classes) {
@@ -38,37 +40,55 @@ const [selectedSize, setSelectedSize] = useState(null);
     );
   };
 
+
+  const [show, setShow] = useState(false);
+  const openModal = () => {
+    setShow(true);
+  };
+
+  // Закрыть модальное окно
+  const closeModal = () => {
+    setShow(false);
+  };
+
   return (
-<div className="bg-white lg:flex mt-16"> {/* Added top margin */}
-      <div className="lg:w-2/3">
-        {/* Image gallery */}
-        <div
-          id="indicators-carousel"
-          className="relative max-w-screen-xl mx-auto"
-          data-carousel="static"
-        >
-          {/* Carousel wrapper */}
-          <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
-            {products?.Images?.map((image, index) => (
+<div className="bg-white lg:flex mt-16 relative"> {/* Added top margin */}
+<div className="lg:w-2/3"
+
+>
+      <div
+      
+        id="indicators-carousel"
+        className="relative max-w-screen-xl mx-auto"
+        data-carousel="static"
+      >
+        {/* Carousel wrapper */}
+        <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
+          
+          {products?.Images
+            ?.filter(image => !image.forConstructor) 
+            .map((image, index) => (
               <div
                 key={index}
                 className={`${
-                  index === currentSlide ? 'duration-700 ease-in-out' : 'hidden'
+                  index === currentSlide ? 'transition-slide-enter-active' : 'transition-slide-enter'
                 }`}
                 data-carousel-item={index === currentSlide ? 'active' : ''}
               >
                 <img
                   src={`http://localhost:3001/images/${image?.url}`}
-                  style={{ width: '40%', height: 'auto' }}
-                  className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                  style={{ width: '30%', height: 'auto', objectFit: 'Contain' }}
+                  className="absolute block w-full -translate-x-1/2  top-1/2 left-1/2"
                   alt={`Slide ${index + 1}`}
                 />
               </div>
             ))}
-          </div>
+        </div>
+
           {/* Slider indicators */}
           <div className="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
             {products?.Images?.map((_, index) => (
+              
               <button
                 key={index}
                 type="button"
@@ -100,9 +120,6 @@ const [selectedSize, setSelectedSize] = useState(null);
             <img src="/icons8-стрелка-вправо-в-круге-2-50.png" alt="стрелка вправо" />
             {/* Next button */}
           </button>
-
-          
-          
         </div>
         
 
@@ -134,14 +151,19 @@ const [selectedSize, setSelectedSize] = useState(null);
           <div className="mt-10">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-medium text-gray-900">Size</h3>
-              <a
-                href="#"
+              <button
+                type="button"
+                onClick={openModal} // Открыть модальное окно при нажатии на кнопку
                 className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
               >
                 Size guide
-              </a>
+              </button>
+              {show && (
+            <ModalSizeGuide show={show} onHide={closeModal} />
+          )}
             </div>
             <RadioGroup
+              // defaultValue={products?.ProductSizes[0]?.Size?.title}
               value={selectedSize}
               onChange={setSelectedSize}
               className="mt-4"

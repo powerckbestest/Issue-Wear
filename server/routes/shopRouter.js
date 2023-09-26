@@ -28,6 +28,10 @@ shopRouter.post(
       title, categoryId, colorId, price, description,
     } = req.body;
 
+
+    console.log('====================================')
+    console.log(req.body)
+
     if (req?.session?.user) {
       const user = await User.findOne({
         where: { id: req.session.user.id },
@@ -57,6 +61,7 @@ shopRouter.post(
             await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
           }
           console.log(999999999999999999);
+          console.log(req.files)
           const sizes = await Size.findAll();
           for (let i = 0; i < sizes.length; i++) {
             ProductSize.create({ productId: newProduct.id, sizeId: sizes[i].id, count: 50 });

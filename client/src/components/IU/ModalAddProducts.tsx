@@ -45,6 +45,10 @@ export default function ModalAddProducts({
       .catch((err) => console.log(err));
   }, []);
 
+  const imageInputRef = useRef(null);
+const wardrobeInputRef = useRef(null);
+
+
   const { addProductHandler } = useProductHooks();
 
   return (
@@ -114,7 +118,7 @@ export default function ModalAddProducts({
                           >
                             <option value="">Выберите цвет</option>
                             {colors.map((color) => (
-                              <option key={color} value={color.id}>
+                              <option key={color.id} value={color.id}>
                                 {color.title}
                               </option>
                             ))}
@@ -125,7 +129,7 @@ export default function ModalAddProducts({
                         <div className="mt-2">
                           {' '}
                           Описание
-                          <input
+                          <textarea
                             type="text"
                             name="description"
                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -141,7 +145,7 @@ export default function ModalAddProducts({
                           >
                             <option value="">Выбери категорию</option>
                             {categories.map((category) => (
-                              <option key={category} value={category.id}>
+                              <option key={category.id} value={category.id}>
                                 {category.title}
                               </option>
                             ))}
@@ -160,19 +164,26 @@ export default function ModalAddProducts({
 
                         <div>
                           Изображение товара для карточки
-                          <input name="file" type="file" multiple onChange={changeImg} />
+                          <input 
+                          name="file" 
+                          type="file" 
+                          multiple 
+                          onChange={changeImg} 
+                          
+                          />
                           {images
-                            ? images?.map((el, index) => (
-                                <div className="col" key={index}>
+                            ? images?.map((el) => (
+                                <div className="col" key={el.id}>
                                   <div className="card">
                                     <img
+                                    key={el.id}
                                       src={URL.createObjectURL(el)}
                                       className="card-img-top"
                                       alt="..."
                                     />
                                     <div className="card-body">
                                       <button
-                                        onClick={() => deleteImg(index)}
+                                        onClick={() => deleteImg(el.id)}
                                         type="button"
                                         className="btn btn-primary"
                                       >
@@ -191,7 +202,7 @@ export default function ModalAddProducts({
                           Изображение для гардероба
                           <input
                             type="file"
-                            name="wardrobe"
+                            name="cover"
                             multiple
                             onChange={changeImgWardrobe}
                           />
