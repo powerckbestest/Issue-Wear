@@ -21,6 +21,7 @@ module.exports = {
           model: 'ProductSizes',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,

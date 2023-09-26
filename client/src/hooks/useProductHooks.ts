@@ -30,7 +30,11 @@ type ProductFormData = {
 
 export default function useProductHooks(): {
   getProductsHandler: () => void;
-  addProductHandler: (e: React.FormEvent<HTMLFormElement & ProductFormType>, images) => void;
+  addProductHandler: (
+    e: React.FormEvent<HTMLFormElement & ProductFormType>,
+    images,
+    imageWardrobe,
+  ) => void;
   deleteProductHandler: (e: React.MouseEvent<HTMLElement>, id: number) => void;
   editProductHandler: (id: number, data: ProductFormData) => void;
   getProductsCartHandler: () => void;
@@ -48,7 +52,8 @@ export default function useProductHooks(): {
 
   const addProductHandler = (
     e: React.FormEvent<HTMLFormElement & ProductFormType>,
-    images, wardrobe
+    images,
+    wardrobe,
   ): void => {
     e.preventDefault();
     const formData = new FormData();
@@ -63,7 +68,7 @@ export default function useProductHooks(): {
     }
 
     for (const file of wardrobe) {
-      formData.append('wardrobe', file)
+      formData.append('cover', file);
     }
 
     postProductService(formData)
@@ -94,12 +99,12 @@ export default function useProductHooks(): {
       .catch((err) => Promise.reject(err));
   };
 
-  const addProductCartHandler = (e: React.MouseEvent<HTMLElement>, id:number) : void => {
-    e.preventDefault()
+  const addProductCartHandler = (e: React.MouseEvent<HTMLElement>, id: number): void => {
+    e.preventDefault();
     addProductCartService(id)
       .then((addProduct) => {
-        console.log(addProduct)
-        dispatch(addToCart(addProduct))
+        console.log(addProduct);
+        dispatch(addToCart(addProduct));
       })
       .catch((err) => console.error('Ошибка при добавлении в корзину', err));
   };

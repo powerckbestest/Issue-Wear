@@ -25,8 +25,6 @@ shopRouter.post(
   ]),
   async (req, res) => {
     const { title, categoryId, colorId, price, description } = req.body;
-    console.log(req.body);
-    console.log(999999999999999999);
     console.log(req.files.images);
     if (req?.session?.user) {
       const user = await User.findOne({
@@ -42,20 +40,26 @@ shopRouter.post(
             price,
             description,
           });
-          console.log(999999999999999999);
-          console.log(req.files.images);
-          for (const file of req.files.images) {
-            const name = `${Date.now()}.webp`;
-            const outputBuffer = await sharp(file.buffer).webp().toBuffer();
-            await fs.writeFile(`./public/images/${name}`, outputBuffer);
-            await Image.create({ productId: newProduct.id, url: name, forConstructor: false });
+          // console.log(req.files);
+          // console.log(req.files[0]);
+          // console.log(req.files[1]);
+          if (req?.files?.images) {
+            console.log(999999999999999999);
+            for (const file of req.files.images) {
+              const name = `${Date.now()}.webp`;
+              const outputBuffer = await sharp(file.buffer).webp().toBuffer();
+              await fs.writeFile(`./public/images/${name}`, outputBuffer);
+              await Image.create({ productId: newProduct.id, url: name, forConstructor: false });
+            }
           }
-          const name = `${Date.now()}.webp`;
-          const outputBuffer = await sharp(req.cover.buffer).webp().toBuffer();
-          await fs.writeFile(`./public/images/${name}`, outputBuffer);
-          await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
+          if (req?.files?.cover) {
+            console.log(999999999999999999);
+            const name = `${Date.now()}.webp`;
+            const outputBuffer = await sharp(req.files.cover[0].buffer).webp().toBuffer();
+            await fs.writeFile(`./public/images/${name}`, outputBuffer);
+            await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
+          }
           console.log(999999999999999999);
-          console.log(req.files.images);
           const sizes = await Size.findAll();
           for (let i = 0; i < sizes.length; i++) {
             ProductSize.create({ productId: newProduct.id, sizeId: sizes[i].id, count: 50 });

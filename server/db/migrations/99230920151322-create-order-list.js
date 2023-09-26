@@ -14,6 +14,7 @@ module.exports = {
           model: 'Orders',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       productSizeId: {
         type: Sequelize.INTEGER,
@@ -21,6 +22,7 @@ module.exports = {
           model: 'ProductSizes',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
