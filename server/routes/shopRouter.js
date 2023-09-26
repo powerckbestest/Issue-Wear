@@ -12,6 +12,8 @@ const {
   ProductSize,
   Role,
   User,
+  Order,
+  OrderList,
 } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
@@ -136,10 +138,16 @@ shopRouter.delete('/products/:id', async (req, res) => {
 });
 
 shopRouter.post('/orders', async (req, res) => {
+  const { phone, address } = req.body;
   const cart = await Cart.findAll({ where: { userId: req.session.user.id } });
   const buy = [];
   const cant = [];
-  const order = await Order.create({ userId: req.session.user.id, statusId: 1 });
+  const order = await Order.create({
+    userId: req.session.user.id,
+    phone,
+    address,
+    statusId: 1,
+  });
   for (let i = 0; i < cart.length; i++) {
     const product = await ProductSize.findByPk(cart[i].id);
     if (product.count >= 1) {
@@ -153,7 +161,25 @@ shopRouter.post('/orders', async (req, res) => {
   for (let i = 0; i < buy.length; i++) {
     await OrderList.create({ orderId: order.id, productSizeId: buy[i].id });
   }
-  res.json(cant);
+  const response = await Order.findOne({
+    where: { id: order.id },
+    include: [
+      {
+        model: User,
+      },
+      {
+        model: OrderList,
+        include: {
+          model: ProductSize,
+          include: [
+            { model: Product, include: [{ model: Image }, { model: Color }, { model: Category }] },
+            { model: Size },
+          ],
+        },
+      },
+    ],
+  });
+  res.json({ response, cant });
 });
 shopRouter.post('/cart/:productId', async (req, res) => {
   console.log(req.params.productId);
