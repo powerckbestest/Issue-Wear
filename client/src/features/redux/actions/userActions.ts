@@ -5,9 +5,8 @@ import { setUser } from '../slices/userSlice';
 
 const userCheckActionThunk = createAsyncThunk('user/userCheckActionThunk', async () => {
   try {
-    const dispatch = useAppDispatch()
     const data = await authCheckService();
-    dispatch(setUser(data))
+    console.log(data)
     return data;
   } catch (error) {
     return Promise.reject(error);

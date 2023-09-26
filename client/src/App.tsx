@@ -16,7 +16,7 @@ import Loader from './components/hocs/Loader';
 
 function App(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
@@ -24,15 +24,17 @@ function App(): JSX.Element {
   console.log(user);
   const { getProductsCartHandler } = useProductHooks();
 
-  useEffect(() => {
-    void dispatch(userCheckActionThunk());
-    getProductsCartHandler();
-  }, []);
+  // useEffect(() => {
+  //   void dispatch(userCheckActionThunk());
+  //   getProductsCartHandler();
+  // }, []);
 
   useEffect(() => {
     void dispatch(userCheckActionThunk())
+    
       .then(() => {
-        setIsAuthenticated(user.status === 'success');
+        getProductsCartHandler();
+        // setIsAuthenticated(user.status === 'success');
         setTimeout(() => {
           setIsLoading(false);
         }, 1500);

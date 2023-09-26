@@ -20,6 +20,7 @@ import {
   getCartProducts,
   getProducts,
   setProduct,
+  madeOrder
 } from '../features/redux/slices/productSlice';
 import type { OrderFormType, ProductFormType } from '../types/productType';
 import { addOrder } from '../features/redux/slices/orderSlice';
@@ -89,7 +90,10 @@ export default function useProductHooks(): {
     formData.append('address', e.currentTarget.address.value)
 
     makeOrderService(formData)
-    .then((data) => dispatch(addOrder(data)))
+    .then((data) => {
+      dispatch(addOrder(data))
+      dispatch(madeOrder())
+    })
     .catch((err) => Promise.reject(err))
   }
 
