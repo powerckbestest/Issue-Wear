@@ -9,7 +9,7 @@ export default function CartPage(): JSX.Element {
   const dispatch = useAppDispatch();
   return (
     <div className="mt-8">
-      <div className="flow-root">
+      <div className="flow-root ">
         <h1>Shopping cart</h1>
         <ul role="list" className="-my-6 divide-y divide-gray-200">
           {productsInCart.map((product) => (

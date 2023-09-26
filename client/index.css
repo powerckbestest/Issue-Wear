@@ -2,18 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Определение анимации увеличения */
 @keyframes pulse {
   0% {
     transform: scale(1);
   }
   50% {
-    transform: scale(3);
+    transform: scale(1.7); /* Максимальный размер (увеличение) */
   }
   100% {
     transform: scale(1);
   }
 }
 
+/* Применение анимации к классу animate-pulse */
 .animate-pulse {
-  animation: pulse 1.5s infinite;
+  animation: pulse 1.5s infinite; /* 1.5 секунды длительности анимации */
 }
+

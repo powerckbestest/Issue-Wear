@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 
+
+
 const product = {
   name: 'Basic Tee 6-Pack',
   price: '$192',
@@ -65,7 +67,7 @@ export default function ProductCard() : JSX.Element {
   const [selectedSize, setSelectedSize] = useState(product.sizes[2])
 
   return (
-    <div className="bg-white">
+    <div className="bg-grey">
       <div className="pt-6">
         {/* <nav aria-label="Breadcrumb">
           <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">

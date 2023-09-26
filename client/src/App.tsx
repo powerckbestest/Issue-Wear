@@ -10,6 +10,7 @@ import userCheckActionThunk from './features/redux/actions/userActions';
 import ProductCard from './components/pages/ProductCard';
 import Loader from './components/hocs/Loader';
 
+
 function App(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,6 +45,7 @@ function App(): JSX.Element {
         <>
           <NavBar />
           <Routes>
+            <Route path="/" />
             <Route path="/products" element={<MainPage />} />
             <Route
               element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}
