@@ -188,7 +188,7 @@ shopRouter.delete('/cart/:cartId', async (req, res) => {
     await inCart.destroy();
     return res.sendStatus(200);
   }
-  res.sendStatus(400).message('Error in api/cart');
+  res.status(400).message('Error in api/cart');
 });
 
 shopRouter.delete('/image/:id', async (req, res) => {
