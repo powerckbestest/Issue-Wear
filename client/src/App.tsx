@@ -10,6 +10,7 @@ import useProductHooks from './hooks/useProductHooks';
 import userCheckActionThunk from './features/redux/actions/userActions';
 import CartPage from './components/pages/CartPage';
 import ProductCard from './components/pages/ProductCard';
+import Footer from './components/IU/Footer';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -35,6 +36,7 @@ function App(): JSX.Element {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/products/:productId" element={<ProductCard />} />
       </Routes>
+      {/* <Footer /> */}
     </>
   );
 }

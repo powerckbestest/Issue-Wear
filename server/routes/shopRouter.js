@@ -33,6 +33,8 @@ shopRouter.post(
       });
       if (user.Role.id === 1) {
         if (title && categoryId && colorId && price && description) {
+          console.log(999999999999999999);
+          console.log(req.files.images);
           const newProduct = await Product.create({
             title,
             categoryId,
@@ -52,6 +54,8 @@ shopRouter.post(
           // const outputBuffer = await sharp(req.cover.buffer).webp().toBuffer();
           // await fs.writeFile(`./public/images/${name}`, outputBuffer);
           // await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
+          console.log(999999999999999999);
+          console.log(req.files.images);
           const sizes = await Size.findAll();
           for (let i = 0; i < sizes.length; i++) {
             ProductSize.create({ productId: newProduct.id, sizeId: sizes[i].id, count: 50 });

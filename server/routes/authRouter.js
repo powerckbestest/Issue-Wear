@@ -60,12 +60,19 @@ authAuthRouter.post('/signin', async (req, res) => {
   res.json({ ...req.session.user, role: currentUser.Role });
 });
 
-authAuthRouter.get('/check', (req, res) => {
+authAuthRouter.get('/check', async (req, res) => {
   if (!req.session.user) {
     res.status(401).json({ message: 'no cookies' });
     return;
   }
-  res.json(req.session.user);
+  const user = await User.findOne({
+    where: { id: req.session.user.id },
+    attributes: {
+      exclude: ['password'], // Исключить поле 'password' из результата
+    },
+    include: { model: Role },
+  });
+  res.json(user);
 });
 
 authAuthRouter.get('/logout', (req, res) => {
