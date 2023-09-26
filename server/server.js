@@ -4,6 +4,7 @@ const session = require('express-session');
 const sessionStore = require('session-file-store');
 const postRouter = require('./routes/postRouter');
 const authAuthRouter = require('./routes/authRouter');
+const shopRouter = require('./routes/shopRouter');
 
 const Fstore = sessionStore(session);
 
@@ -31,6 +32,7 @@ app.use(sessionParser);
 
 app.use('/api/posts', postRouter);
 app.use('/api/auth', authAuthRouter);
+app.use('/api', shopRouter);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}!`);
