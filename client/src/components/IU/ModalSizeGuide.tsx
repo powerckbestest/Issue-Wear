@@ -18,7 +18,14 @@ export default function ModalSizeGuide({
                     <img
                       src="/Размерная сетка.jpg"
                       alt=""
-                      style={{padding: '10px', display: 'block', maxWidth: '100%', maxHeight: '100%' }} // Установлены стили для фото
+                      style={{
+                      padding: '10px', 
+                      display: 'block', 
+                      maxWidth: '100%', 
+                      maxHeight: '100%',
+                      boxShadow: '0px 10px 50px  black',
+                    
+                    }}
                     />
                   </div>
                 </div>

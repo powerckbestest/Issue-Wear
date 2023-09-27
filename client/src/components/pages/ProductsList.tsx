@@ -35,8 +35,6 @@ export default function MainPage(): JSX.Element {
   }, [product.length]);
 
   console.log(filtred.filter((el) => el.categoryId === 1));
-
-  // console.log(product)
   return (
     <>
       {user?.user?.Role?.id === 1 ? (
@@ -58,7 +56,7 @@ export default function MainPage(): JSX.Element {
 
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2 className="text-4xl font-bold tracking-tight text-gray-900 text-center">Одежда:</h2>
+          <h2 style={{fontFamily: 'Benzin'}} className="text-4xl font-bold tracking-tight text-gray-900 text-center">Одежда:</h2>
           <div style={{ display: 'flex' }}>
             <select
               id="countries"
@@ -84,7 +82,7 @@ export default function MainPage(): JSX.Element {
                 <option value={el.id}>{el.title}</option>
               ))}
             </select>
-            <select
+            <select style={{marginLeft: '40px'}}
               id="countries"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(e) => {
