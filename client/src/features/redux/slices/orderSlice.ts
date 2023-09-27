@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { OrderType } from '../../../types/orderType';
+import type { OrderFromDb, OrderType } from '../../../types/orderType';
 
 type InitialState = OrderType[];
 
@@ -10,15 +10,15 @@ export const orderSlice = createSlice({
   name: 'orderSlice',
   initialState,
   reducers: {
-    getOrders: (state, action: PayloadAction<OrderType[]>) => {
-      state = action.payload;
-    },
-    addOrder: (state, action: PayloadAction<OrderType>) => {
+    getOrders: (state, action: PayloadAction<OrderFromDb[]>) => (state = action.payload),
+    addOrder: (state, action: PayloadAction<OrderFromDb>) => {
       state.push(action.payload);
     },
+    changeOrderStatus: (state, action: PayloadAction<OrderFromDb>) =>
+      state.map((order) => (order.id === action.payload.id ? action.payload : order)),
   },
 });
 
 export default orderSlice.reducer;
 
-export const { getOrders, addOrder } = orderSlice.actions;
+export const { getOrders, addOrder, changeOrderStatus } = orderSlice.actions;
