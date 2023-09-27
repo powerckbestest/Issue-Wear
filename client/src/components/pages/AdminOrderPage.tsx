@@ -46,7 +46,7 @@ export default function AdminOrderPage(): JSX.Element {
                     </h3>
                     <p className="ml-4">
                       Общая стоимость заказа:{' '}
-                      {order?.OrderLists.reduce(
+                      {order?.OrderLists?.reduce(
                         (acc, el) => acc + el?.ProductSize?.Product?.price,
                         0,
                       )}{' '}
