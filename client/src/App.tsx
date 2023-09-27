@@ -67,7 +67,7 @@ function App(): JSX.Element {
               <Route path="/signin" element={<SignInPage />} />
             </Route>
             <Route
-              element={<PrivateRouter isAllowed={user.user.Role.id === 1} redirectTo="/main" />}
+              element={<PrivateRouter isAllowed={user?.user?.Role?.id === 1} redirectTo="/main" />}
             >
               <Route path="/adminorders" element={<AdminOrderPage />} />
             </Route>
