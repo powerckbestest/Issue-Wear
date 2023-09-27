@@ -11,6 +11,7 @@ import userCheckActionThunk from './features/redux/actions/userActions';
 import CartPage from './components/pages/CartPage';
 import ProductCard from './components/pages/ProductCard';
 import Footer from './components/IU/Footer';
+import WardrobePage from './components/pages/WardrobePage';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -33,6 +34,7 @@ function App(): JSX.Element {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/signin" element={<SignInPage />} />
         </Route>
+        <Route path="/wardrobe" element={<WardrobePage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/products/:productId" element={<ProductCard />} />
       </Routes>
