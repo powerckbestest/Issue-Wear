@@ -58,8 +58,16 @@ export default function useProductHooks(): {
     e: React.FormEvent<HTMLFormElement & ProductFormType>,
     images,
     wardrobe,
+    imageInputRef, 
+    wardrobeInputRef
   ): void => {
     e.preventDefault();
+
+
+    if (![e.currentTarget.title.value, e.currentTarget.price.value, e.currentTarget.colorId.value, e.currentTarget.description.value, e.currentTarget.categoryId.value, e.currentTarget.size.value].every(Boolean) && !images.length && !wardrobe.length) {
+      alert('Вы не заполнили все поля!');
+      return;
+    }
     const formData = new FormData();
     formData.append('title', e.currentTarget.title.value);
     formData.append('price', e.currentTarget.price.value);
@@ -68,18 +76,22 @@ export default function useProductHooks(): {
     formData.append('categoryId', e.currentTarget.categoryId.value);
     formData.append('size', e.currentTarget.size.value);
     for (const file of images) {
-      formData.append('images', file);
+    formData.append('images', file);
     }
 
     for (const file of wardrobe) {
       formData.append('cover', file);
     }
 
+    
+
     postProductService(formData)
       .then((data) => dispatch(setProduct(data)))
       .catch((err) => Promise.reject(err));
 
       
+
+    
   };
 
   const makeOrderHandler = (e: React.FormEvent<HTMLFormElement & OrderFormType>):void => {
