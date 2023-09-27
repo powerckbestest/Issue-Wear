@@ -15,6 +15,7 @@ const {
   User,
   Order,
   OrderList,
+  Status,
 } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
@@ -146,7 +147,77 @@ shopRouter.delete('/products/:id', async (req, res) => {
   }
   res.status(400).json({ message: 'Only for admins' });
 });
-
+shopRouter.get('/orders', async (req, res) => {
+  const user = await User.findByPk(req?.session?.user?.id);
+  if (!user) {
+    return res.status(400).json({ message: 'Cant find user' });
+  }
+  if (user.roleId === 2) {
+    return res.json(
+      await Order.findAll({
+        where: { userId: user.Id },
+        include: {
+          model: OrderList,
+          include: {
+            model: ProductSize,
+            include: [
+              { model: Size },
+              {
+                model: Product,
+                include: [{ model: Color }, { model: Size }, { model: { Image } }],
+              },
+            ],
+          },
+        },
+      }),
+    );
+  }
+  return res.json(
+    await Order.findAll({
+      include: {
+        model: OrderList,
+        include: {
+          model: ProductSize,
+          include: [
+            { model: Size },
+            {
+              model: Product,
+              include: [{ model: Color }, { model: Size }, { model: { Image } }],
+            },
+          ],
+        },
+      },
+    }),
+  );
+});
+shopRouter.put('/orders/:id', async (req, res) => {
+  const user = await User.findByPk(req.session.user.id);
+  if (!user || user.roleId !== 1) {
+    return res.status(400).json({ message: 'Only for admins' });
+  }
+  const { status } = req.body();
+  const order = await Order.findByPk(req.params.id);
+  order.statusId = status;
+  order.save();
+  req.json(
+    await Order.findOne({
+      where: { id: order.id },
+      include: {
+        model: OrderList,
+        include: {
+          model: ProductSize,
+          include: [
+            { model: Size },
+            {
+              model: Product,
+              include: [{ model: Color }, { model: Size }, { model: { Image } }],
+            },
+          ],
+        },
+      },
+    }),
+  );
+});
 shopRouter.post('/orders', async (req, res) => {
   const { phone, address } = req.body;
   console.log(req.body);
@@ -295,5 +366,6 @@ shopRouter.get('/cart', async (req, res) => {
 shopRouter.get('/categories', async (req, res) => res.json(await Category.findAll()));
 shopRouter.get('/sizes', async (req, res) => res.json(await Size.findAll()));
 shopRouter.get('/colors', async (req, res) => res.json(await Color.findAll()));
+shopRouter.get('/statuses', async (req, res) => res.json(await Status.findAll()));
 
 module.exports = shopRouter;
