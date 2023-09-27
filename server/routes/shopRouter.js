@@ -126,12 +126,14 @@ shopRouter.delete('/products/:id', async (req, res) => {
   if (user.Role.id === 1) {
     const product = await Product.findByPk(req.params.id);
     const images = await Image.findAll({ where: { productId: product.id } });
-    const folder = await fs.readdir('./public/images/');
+    // const folder = await fs.readdir('./public/images/');
     for (const image of images) {
-      if (folder.includes(image.url)) {
+      try {
         await fs.unlink(`./public/images/${image.url}`);
+      } catch (err) {
+        console.log(err);
       }
-        await image.destroy();
+      await image.destroy();
     }
     await ProductSize.destroy({ where: { productId: product.id } });
     product.destroy();
