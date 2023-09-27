@@ -46,6 +46,9 @@ export const productSlice = createSlice({
     getCardProduct: (state, action: PayloadAction<ProductType>) => {
       state.currProduct = action.payload;
     },
+    madeOrder:(state, action: PayloadAction<void>) => {
+      state.cartProducts = []
+    }
   },
 });
 
@@ -59,4 +62,5 @@ export const {
   deleteFromCart,
   getCartProducts,
   getCardProduct,
+  madeOrder
 } = productSlice.actions;

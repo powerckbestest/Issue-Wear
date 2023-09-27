@@ -4,11 +4,16 @@ import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import useProductHooks from '../../hooks/useProductHooks';
 import type { ProductType } from '../../types/productType';
+import ModalMakeOrder from '../IU/ModalMakeOrder';
 
 export default function CartPage(): JSX.Element {
   const { getProductsCartHandler, deleteProductCartHandler } = useProductHooks();
   const productsInCart = useAppSelector((state) => state.product.productsData.cartProducts);
   const [totalPrice, setTotalPrice] = useState<number | ProductType>(0);
+  const [show, setShow] = useState(false)
+
+  const openModal = ():void => {setShow(true)}
+  const closeModal = ():void => {setShow(false)}
 
   useEffect(() => {
     setTotalPrice(
@@ -28,6 +33,7 @@ export default function CartPage(): JSX.Element {
     <div className="mt-8 container mx-auto px-10">
       <div className="flow-root">
         <h1 className="flex justify-center items-center font-bold	text-3xl">Корзина:</h1>
+        <ModalMakeOrder show={show} closeModal={closeModal} />
         <ul role="list" className="-my-6 divide-y divide-gray-200">
           {productsInCart?.map((product) => (
             <li key={product.id} className="flex py-6">
@@ -59,9 +65,8 @@ export default function CartPage(): JSX.Element {
                       type="button"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                       onClick={(e) => {
-                        console.log(product.id)
-                        deleteProductCartHandler(e, product.id)
-                      
+                        console.log(product.id);
+                        deleteProductCartHandler(e, product.id);
                       }}
                     >
                       Убрать из корзины
@@ -78,6 +83,7 @@ export default function CartPage(): JSX.Element {
         <div className="flex justify-center items-center">
           <button
             type="button"
+            onClick={() => openModal()}
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Оформить заказ

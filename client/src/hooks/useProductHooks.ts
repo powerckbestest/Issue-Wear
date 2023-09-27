@@ -8,6 +8,7 @@ import {
   getCardProductService,
   getProductInCartService,
   getProductService,
+  makeOrderService,
   postProductService,
 } from '../services/productService';
 import {
@@ -19,8 +20,10 @@ import {
   getCartProducts,
   getProducts,
   setProduct,
+  madeOrder
 } from '../features/redux/slices/productSlice';
-import type { ProductFormType } from '../types/productType';
+import type { OrderFormType, ProductFormType } from '../types/productType';
+import { addOrder } from '../features/redux/slices/orderSlice';
 
 type ProductFormData = {
   name: string;
@@ -41,6 +44,7 @@ export default function useProductHooks(): {
   addProductCartHandler: (e: React.MouseEvent<HTMLElement>, id: number) => void;
   deleteProductCartHandler: (e: React.MouseEvent<HTMLElement>, id: number) => void;
   getCartProductHandler: (id: number) => void;
+  makeOrderHandler: (e: React.FormEvent<HTMLFormElement & OrderFormType>) => void
 } {
   const dispatch = useAppDispatch();
 
@@ -54,8 +58,16 @@ export default function useProductHooks(): {
     e: React.FormEvent<HTMLFormElement & ProductFormType>,
     images,
     wardrobe,
+    imageInputRef, 
+    wardrobeInputRef
   ): void => {
     e.preventDefault();
+
+
+    if (![e.currentTarget.title.value, e.currentTarget.price.value, e.currentTarget.colorId.value, e.currentTarget.description.value, e.currentTarget.categoryId.value, e.currentTarget.size.value].every(Boolean) && !images.length && !wardrobe.length) {
+      alert('Вы не заполнили все поля!');
+      return;
+    }
     const formData = new FormData();
     console.log(e.currentTarget, images, wardrobe);
 
@@ -66,17 +78,34 @@ export default function useProductHooks(): {
     formData.append('categoryId', e.currentTarget.categoryId.value);
     formData.append('size', e.currentTarget.size.value);
     for (const file of images) {
-      formData.append('images', file);
+    formData.append('images', file);
     }
 
     for (const file of wardrobe) {
       formData.append('cover', file);
     }
 
+    
+
     postProductService(formData)
       .then((data) => dispatch(setProduct(data)))
       .catch((err) => Promise.reject(err));
   };
+
+  const makeOrderHandler = (e: React.FormEvent<HTMLFormElement & OrderFormType>):void => {
+    e.preventDefault()
+    const formData = new FormData()
+    formData.append('name', e.currentTarget.name.value)
+    formData.append('phone', e.currentTarget.phone.value)
+    formData.append('address', e.currentTarget.address.value)
+
+    makeOrderService(formData)
+    .then((data) => {
+      dispatch(addOrder(data))
+      dispatch(madeOrder())
+    })
+    .catch((err) => Promise.reject(err))
+  }
 
   const deleteProductHandler = (e: React.MouseEvent<HTMLElement>, id: number): void => {
     e.preventDefault();
@@ -134,5 +163,6 @@ export default function useProductHooks(): {
     addProductCartHandler,
     deleteProductCartHandler,
     getCartProductHandler,
+    makeOrderHandler
   };
 }
