@@ -12,7 +12,7 @@ export default function OneCard({ product }: ProductProps): JSX.Element {
   return (
     <div>
       <div key={product.id} className="group relative">
-        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg">
           <img
             src={`http://localhost:3001/images/${product?.Images[0]?.url}`}
             alt={product.Image}
