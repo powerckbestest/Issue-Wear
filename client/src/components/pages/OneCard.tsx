@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import type { ProductType } from '../../types/productType';
 import useProductHooks from '../../hooks/useProductHooks';
-import toggleDarkMode from '../IU/NavBar';
 
 type ProductProps = {
   product: ProductType;
@@ -15,7 +14,7 @@ export default function OneCard({ product }: ProductProps): JSX.Element {
   return (
     <div>
       <div key={product.id} className="group relative">
-        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg">
+        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80 ">
           <img
             src={`http://localhost:3001/images/${product?.Images[0]?.url}`}
             alt={product.Image}
@@ -24,8 +23,9 @@ export default function OneCard({ product }: ProductProps): JSX.Element {
         </div>
         <div className="mt-4 flex justify-between">
           <div>
-            <h3 className={`text-sm ${isDarkMode ? 'text-dark' : 'text-white'}`}>
+            <h3 className={`${isDarkMode ? 'text-dark' : 'text-white'} text-sm`}>
               <NavLink className="nav-link" to={`/products/${product.id}`}>
+                <span aria-hidden="true" className="absolute inset-0" />
                 {product.title}
               </NavLink>
             </h3>
