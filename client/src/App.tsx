@@ -11,6 +11,7 @@ import userCheckActionThunk from './features/redux/actions/userActions';
 import CartPage from './components/pages/CartPage';
 import ProductCard from './components/pages/ProductCard';
 import Footer from './components/IU/Footer';
+import WardrobePage from './components/pages/WardrobePage';
 import { setUser } from './features/redux/slices/userSlice';
 import Loader from './components/hocs/Loader';
 import AdminOrderPage from './components/pages/AdminOrderPage';
@@ -70,7 +71,8 @@ function App(): JSX.Element {
             >
               <Route path="/adminorders" element={<AdminOrderPage />} />
             </Route>
-            <Route path="/cart" element={<CartPage />} />
+            <Route path="/wardrobe" element={<WardrobePage />} />
+        <Route path="/cart" element={<CartPage />} />
             <Route path="/products/:productId" element={<ProductCard />} />
           </Routes>
           {/* <Footer /> */}
