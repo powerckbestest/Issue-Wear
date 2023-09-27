@@ -25,6 +25,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(userCheckActionThunk.fulfilled, (state, action) => {
       state.status = 'success';
+      state.user = action.payload
     });
     builder.addCase(userCheckActionThunk.rejected, (state, action) => {
       state.status = 'failed';
