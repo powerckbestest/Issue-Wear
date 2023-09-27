@@ -99,10 +99,10 @@ const getItemStyle = (
 ): React.CSSProperties => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-  //   padding: grid * 2,
-  //   margin: `0 0 ${grid}px 0`,
+  // padding: grid * 2,
+  // margin: `0 0 ${grid}px 0`,
   width: '70%',
-
+  // marginTop: '40px',
   // change background colour if dragging
   // background: isDragging ? 'lightgreen' : 'grey',
 
@@ -135,6 +135,7 @@ const getListStyleRigth = (isDraggingOver: boolean): React.CSSProperties => ({
   flexDirection: 'column',
   alignItems: 'center',
   gridTemplateColumns: '250px 250px',
+  marginRight: '120px',
 });
 
 const getImageStyle = {
@@ -290,66 +291,75 @@ export default function WardrobePage(): JSX.Element {
               </div>
             )}
           </Droppable>
-          <div style={{ marginTop: '-65px' }}>
-            <h2>Wardrobe</h2>
-            <Droppable droppableId="WardrobeTop">
-              {(provided, snapshot): JSX.Element => (
-                <div
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                  style={getListStyleRigth(snapshot.isDraggingOver)}
-                >
-                  {/* <h2>Wardrobe (Top)</h2> */}
-
-                  {wardrobeTop.map((item, index) => (
-                    <Draggable key={item.id} draggableId={item.id} index={index}>
-                      {(provided, snapshot): JSX.Element => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                        >
-                          <div>
-                            <img src={item.image} alt="#" style={getImageStyle} />
-                          </div>
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+          {/* <div style={{ marginTop: '-65px' }}> */}
+          <div>
+            <div>
+              {/* <h2>Wardrobe</h2> */}
+              <Droppable droppableId="WardrobeTop">
+                {(provided, snapshot): JSX.Element => (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={getListStyleRigth(snapshot.isDraggingOver)}
+                  >
+                    {/* <h2>Wardrobe (Top)</h2> */}
+                    <div style={{marginRight: '-100px'}}>
+                      {wardrobeTop.map((item, index) => (
+                        <Draggable key={item.id} draggableId={item.id} index={index}>
+                          {(provided, snapshot): JSX.Element => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              style={getItemStyle(
+                                snapshot.isDragging,
+                                provided.draggableProps.style,
+                              )}
+                            >
+                              <div>
+                                <img src={item.image} alt="#" style={getImageStyle} />
+                              </div>
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                    </div>
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </div>
             {/* <hr /> */}
-            <Droppable droppableId="WardrobeBottom">
-              {(provided, snapshot): JSX.Element => (
-                <div
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                  style={getListStyleRigth(snapshot.isDraggingOver)}
-                >
-                  {/* <h2>Wardrobe (Bottom)</h2> */}
-                  {wardrobeBottom.map((item, index) => (
-                    <Draggable key={item.id} draggableId={item.id} index={index}>
-                      {(provided, snapshot): JSX.Element => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                        >
-                          <div>
-                            <img src={item.image} alt="#" style={getImageStyle} />
+            <div style={{ marginTop: '-20px' , marginLeft: '-30px'}}>
+              <Droppable droppableId="WardrobeBottom">
+                {(provided, snapshot): JSX.Element => (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={getListStyleRigth(snapshot.isDraggingOver)}
+                  >
+                    {/* <h2>Wardrobe (Bottom)</h2> */}
+                    {wardrobeBottom.map((item, index) => (
+                      <Draggable key={item.id} draggableId={item.id} index={index}>
+                        {(provided, snapshot): JSX.Element => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                          >
+                            <div>
+                              <img src={item.image} alt="#" style={getImageStyle} />
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </div>
           </div>
         </div>
       </DragDropContext>
