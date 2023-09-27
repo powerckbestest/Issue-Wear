@@ -51,6 +51,7 @@ const [selectedSize, setSelectedSize] = useState(null);
     setShow(false);
   };
 
+    console.log(products.Images)
   return (
 <div className="bg-white lg:flex mt-16 relative"> {/* Added top margin */}
 <div className="lg:w-2/3"
@@ -68,6 +69,7 @@ const [selectedSize, setSelectedSize] = useState(null);
           {products?.Images
             ?.filter(image => !image.forConstructor) 
             .map((image, index) => (
+              !image.forConstructor?
               <div
                 key={index}
                 className={`${
@@ -81,7 +83,7 @@ const [selectedSize, setSelectedSize] = useState(null);
                   className="absolute block w-full -translate-x-1/2  top-1/2 left-1/2"
                   alt={`Slide ${index + 1}`}
                 />
-              </div>
+              </div>:false
             ))}
         </div>
 
