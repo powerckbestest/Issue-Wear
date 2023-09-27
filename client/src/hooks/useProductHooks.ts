@@ -57,6 +57,8 @@ export default function useProductHooks(): {
   ): void => {
     e.preventDefault();
     const formData = new FormData();
+    console.log(e.currentTarget, images, wardrobe);
+
     formData.append('title', e.currentTarget.title.value);
     formData.append('price', e.currentTarget.price.value);
     formData.append('colorId', e.currentTarget.colorId.value);
@@ -74,8 +76,6 @@ export default function useProductHooks(): {
     postProductService(formData)
       .then((data) => dispatch(setProduct(data)))
       .catch((err) => Promise.reject(err));
-
-      
   };
 
   const deleteProductHandler = (e: React.MouseEvent<HTMLElement>, id: number): void => {
