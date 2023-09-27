@@ -35,6 +35,7 @@ export default function MainPage(): JSX.Element {
   }, [product.length]);
 
   console.log(filtred.filter((el) => el.categoryId === 1));
+  const isDarkMode = 'true';
 
   // console.log(product)
   return (
@@ -43,7 +44,7 @@ export default function MainPage(): JSX.Element {
       <div className="flex items-center justify-center mt-5">
         <button
           type="button"
-          className="mt-3 w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+          className="bg-black hover:bg-black-100 text-white font-bold py-2 px-4 rounded mt-5 mx-auto block"
           onClick={handleEditClick}
         >
           Добавить товар
@@ -51,9 +52,16 @@ export default function MainPage(): JSX.Element {
       </div>
       <div className="bg-grey">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2 className="text-4xl font-bold tracking-tight text-gray-900 text-center">Одежда:</h2>
+          <h2
+            className={`${
+              isDarkMode ? 'text-dark' : 'text-white'
+            } text-5xl font-bold tracking-tight text-center mb-20`}
+          >
+            Одежда:
+          </h2>
           <div style={{ display: 'flex' }}>
             <select
+              style={{ background: 'black' }}
               id="countries"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(e) => {
@@ -78,8 +86,9 @@ export default function MainPage(): JSX.Element {
               ))}
             </select>
             <select
+              style={{ background: 'black' }}
               id="countries"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50  ml-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(e) => {
                 if (e.target.value !== 'all') {
                   setFilter((prev) => ({ ...prev, category: Number(e.target.value) }));

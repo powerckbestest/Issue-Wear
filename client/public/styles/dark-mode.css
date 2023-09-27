@@ -2,3 +2,22 @@ body {
   background: #383838;
   transition: 1s;
 }
+.my-button {
+  /* Добавьте любые общие стили для кнопки */
+}
+
+/* Кнопки белые, текст черный в темной теме */
+.my-button.button-dark {
+  background-color: #111; /* Замените цвет фона на ваш выбор */
+  color: #ffffff;
+}
+
+/* Текст белый в темной теме */
+.my-button.text-dark {
+  color: #fff;
+}
+
+/* Текст белый в темной теме */
+.text-dark {
+  color: #fff;
+}
