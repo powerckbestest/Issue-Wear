@@ -4,9 +4,9 @@ import ymaps from 'yandex-maps';
 
 export default function Footer(): JSX.Element {
   return (
-    <footer className="footer">
+    <footer style={{backgroundColor: 'gray'}} className="footer">
       <div className="footer-content">
-        <div style={{ float: 'left', }}>
+        <div style={{ float: 'left'}}>
         <p><b>Наши контакты:</b></p>
         <p>mail : issuewear@gmail.com</p>
         <p>telegram : @issue_wear</p>

@@ -65,14 +65,18 @@ export default function NavBar(): JSX.Element {
                 width: '698px',
                 height: '182px',
                 position: 'absolute',
-                marginTop: '-70px',
-                opacity: '50%',
+                marginTop: '-60px',
+                opacity: '20%',
               }}
             />
+            <div style={{ marginLeft: '-250px', marginTop: '100px', position: 'absolute',opacity:'40%',zIndex:'-20'  }}>
+              <p>Спасибо улице, что воспитала,</p>
+              <p>маме — что родила, е-е</p>
+            </div>
             <img
               src="/_1fire.png"
               alt="fire"
-              style={{ width: '71px', height: '91px', position: 'absolute', marginTop: '40px' }}
+              style={{ width: '71px', height: '101px', position: 'absolute', marginTop: '70px'}}
             />
           </div>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -135,8 +139,8 @@ export default function NavBar(): JSX.Element {
                           : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium',
                       )}
-                        aria-current="page"
-                        style={{marginTop:'-15px'}}
+                      aria-current="page"
+                      style={{ marginTop: '-15px' }}
                     >
                       <img
                         src="/shopping-cart-7-svgrepo-com.svg"
