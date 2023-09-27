@@ -1,4 +1,4 @@
-import { OrderType } from '../types/orderType';
+import type { OrderFromDb, OrderType, StatusType } from '../types/orderType';
 import type { ProductType } from '../types/productType';
 import apiClient from './apiConfig';
 
@@ -64,4 +64,25 @@ export function makeOrderService(formData: FormData): Promise<OrderType> {
     .post<OrderType>(`/orders`, Object.fromEntries(formData))
     .then(({ data }) => data)
     .catch((err) => Promise.reject(err));
+}
+
+export function getOrdersService(): Promise<OrderFromDb[]> {
+  return apiClient
+    .get<OrderFromDb[]>('/orders')
+    .then(({ data }) => data)
+    .catch((err) => Promise.reject(err));
+}
+
+export function changeOrderStatusService(id: number, formData: FormData): Promise<OrderFromDb> {
+  return apiClient
+  .put<OrderFromDb>(`/orders/${id}`, formData)
+  .then(({data}) => data)
+  .catch((err) => Promise.reject(err))
+} 
+
+export function getStatusesService(): Promise<StatusType[]> {
+  return apiClient
+  .get<StatusType[]>('/statuses')
+    .then(({data}) => data)
+    .catch((err) => Promise.reject(err))
 }

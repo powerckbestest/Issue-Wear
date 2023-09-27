@@ -78,7 +78,7 @@ export default function MainPage(): JSX.Element {
               }}
             >
               <option selected value="all">
-                Choose a color
+                Цвет
               </option>
               {color.map((el) => (
                 <option value={el.id}>{el.title}</option>
@@ -103,7 +103,7 @@ export default function MainPage(): JSX.Element {
               }}
             >
               <option selected value="all">
-                Choose a category
+                Категория
               </option>
               {categories.map((el) => (
                 <option value={el.id}>{el.title}</option>
