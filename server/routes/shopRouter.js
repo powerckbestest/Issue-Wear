@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const express = require('express');
 const fs = require('fs/promises');
 const sharp = require('sharp');
@@ -12,6 +13,8 @@ const {
   ProductSize,
   Role,
   User,
+  Order,
+  OrderList,
 } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
@@ -145,12 +148,19 @@ shopRouter.delete('/products/:id', async (req, res) => {
 });
 
 shopRouter.post('/orders', async (req, res) => {
+  const { phone, address } = req.body;
+  console.log(req.body);
   const cart = await Cart.findAll({ where: { userId: req.session.user.id } });
   const buy = [];
   const cant = [];
-  const order = await Order.create({ userId: req.session.user.id, statusId: 1 });
+  const order = await Order.create({
+    userId: req.session.user.id,
+    phone,
+    address,
+    statusId: 1,
+  });
   for (let i = 0; i < cart.length; i++) {
-    const product = await ProductSize.findByPk(cart[i].id);
+    const product = await ProductSize.findByPk(cart[i].productSizeId);
     if (product.count >= 1) {
       product.count -= 1;
       product.save();
@@ -161,8 +171,34 @@ shopRouter.post('/orders', async (req, res) => {
   }
   for (let i = 0; i < buy.length; i++) {
     await OrderList.create({ orderId: order.id, productSizeId: buy[i].id });
+    console.clear();
+    console.log(req.session.user.id);
+    console.log(buy[i].id);
+    const del = await Cart.findOne({
+      where: [{ productSizeId: buy[i].id }, { userId: req.session.user.id }],
+    });
+    await Cart.destroy({ where: { id: del.id } });
+    console.log(del);
   }
-  res.json(cant);
+  const response = await Order.findOne({
+    where: { id: order.id },
+    include: [
+      {
+        model: User,
+      },
+      {
+        model: OrderList,
+        include: {
+          model: ProductSize,
+          include: [
+            { model: Product, include: [{ model: Image }, { model: Color }, { model: Category }] },
+            { model: Size },
+          ],
+        },
+      },
+    ],
+  });
+  res.json({ response, cant });
 });
 shopRouter.post('/cart/:productId', async (req, res) => {
   console.log(req.params.productId);
