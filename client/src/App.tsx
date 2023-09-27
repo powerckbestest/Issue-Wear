@@ -13,6 +13,7 @@ import ProductCard from './components/pages/ProductCard';
 import Footer from './components/IU/Footer';
 import { setUser } from './features/redux/slices/userSlice';
 import Loader from './components/hocs/Loader';
+import AdminOrderPage from './components/pages/AdminOrderPage';
 
 function App(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
@@ -63,6 +64,11 @@ function App(): JSX.Element {
             >
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/signin" element={<SignInPage />} />
+            </Route>
+            <Route
+              element={<PrivateRouter isAllowed={user.user.Role.id === 1} redirectTo="/main" />}
+            >
+              <Route path="/adminorders" element={<AdminOrderPage />} />
             </Route>
             <Route path="/cart" element={<CartPage />} />
             <Route path="/products/:productId" element={<ProductCard />} />
