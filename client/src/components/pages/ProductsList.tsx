@@ -38,8 +38,8 @@ export default function MainPage(): JSX.Element {
 
   // console.log(product)
   return (
-    <>
-      {user.user.Role.id === 1 ? (
+    <div style={{marginTop:'150px'}}>
+      {user?.user?.Role?.id === 1 ? (
         <div className="flex items-center justify-center mt-5">
           <button
             type="button"
@@ -121,6 +121,6 @@ export default function MainPage(): JSX.Element {
           product={editProduct}
         />
       </div>
-    </>
+    </div>
   );
 }
