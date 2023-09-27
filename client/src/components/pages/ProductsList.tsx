@@ -44,7 +44,9 @@ export default function MainPage(): JSX.Element {
       <div className="flex items-center justify-center mt-5">
         <button
           type="button"
-          className="bg-black hover:bg-black-100 text-white font-bold py-2 px-4 rounded mt-5 mx-auto block"
+          className={`my-button ${
+            isDarkMode ? 'button-dark' : 'button-white'
+          } font-bold py-2 px-4 rounded-lg mt-5 mx-auto block border border-black hover:border-transparent`}
           onClick={handleEditClick}
         >
           Добавить товар
@@ -61,9 +63,10 @@ export default function MainPage(): JSX.Element {
           </h2>
           <div style={{ display: 'flex' }}>
             <select
-              style={{ background: 'black' }}
               id="countries"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={`my-button ${isDarkMode ? 'button-dark' : 'button-white'}   
+              
+               font-boilb py-2 px-4 rounded block border border-black hover:border-transparent text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-50 p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500`}
               onChange={(e) => {
                 if (e.target.value !== 'all') {
                   setFilter((prev) => ({ ...prev, color: Number(e.target.value) }));
@@ -86,9 +89,10 @@ export default function MainPage(): JSX.Element {
               ))}
             </select>
             <select
-              style={{ background: 'black' }}
               id="countries"
-              className="bg-gray-50  ml-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={`my-button ${isDarkMode ? 'button-dark' : 'button-white'}   
+              
+              font-boilb py-2 ml-2 px-4 rounded block border border-black hover:border-transparent text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-50 p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500`}
               onChange={(e) => {
                 if (e.target.value !== 'all') {
                   setFilter((prev) => ({ ...prev, category: Number(e.target.value) }));

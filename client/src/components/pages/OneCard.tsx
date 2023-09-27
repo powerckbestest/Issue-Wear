@@ -49,7 +49,7 @@ export default function OneCard({ product }: ProductProps): JSX.Element {
         type="button"
         className={`my-button ${
           isDarkMode ? 'button-dark' : 'button-white'
-        } font-bold py-2 px-4 rounded mt-5 mx-auto block border border-black hover:border-transparent`}
+        } font-bold py-2 px-4 rounded-lg mt-5 mx-auto block border border-black hover:border-transparent`}
         onClick={(e) => deleteProductHandler(e, product.id)}
       >
         Удалить

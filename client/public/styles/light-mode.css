@@ -8,8 +8,8 @@ body {
 
 /* Кнопки белые, текст черный в темной теме */
 .my-button.button-light {
-  background-color: #111; /* Замените цвет фона на ваш выбор */
-  color: #ffffff;
+  background-color: white; /* Замените цвет фона на ваш выбор */
+  color: #fff;
 }
 
 /* Текст белый в темной теме */
