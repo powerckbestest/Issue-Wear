@@ -6,15 +6,17 @@ export default function SignUpPage(): JSX.Element {
   const { signUpActionHandler } = authHooks();
   return (
     <div
-      style={{
-        width: '800px',
-        height: '500px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh', // Чтобы форма занимала всю высоту экрана
+    }}
+
     >
-      <form onSubmit={(e) => void signUpActionHandler(e)}>
+      <form 
+      
+      onSubmit={(e) => void signUpActionHandler(e)}>
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">SignUp</h2>
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">

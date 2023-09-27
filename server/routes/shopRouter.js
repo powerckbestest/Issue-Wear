@@ -15,6 +15,7 @@ const {
   User,
   Order,
   OrderList,
+  Status,
 } = require('../db/models');
 const upload = require('../middlewares/multerMid');
 
@@ -27,7 +28,13 @@ shopRouter.post(
     { name: 'images', maxCount: 10 },
   ]),
   async (req, res) => {
-    const { title, categoryId, colorId, price, description } = req.body;
+    const {
+      title, categoryId, colorId, price, description,
+    } = req.body;
+
+
+    console.log('====================================')
+    console.log(req.body)
 
     if (req?.session?.user) {
       const user = await User.findOne({
@@ -43,13 +50,23 @@ shopRouter.post(
             price,
             description,
           });
-          if (req.files.images) {
-            for (const file of req.files.images) {
-              const name = `${Date.now()}.webp`;
-              const outputBuffer = await sharp(file.buffer).webp().toBuffer();
-              await fs.writeFile(`./public/images/${name}`, outputBuffer);
-              await Image.create({ productId: newProduct.id, url: name, forConstructor: false });
+          try {
+            if (req?.files?.images) {
+              for (const file of req.files.images) {
+                const name = `${Date.now()}.webp`;
+                const outputBuffer = await sharp(file.buffer).webp().toBuffer();
+                await fs.writeFile(`./public/images/${name}`, outputBuffer);
+                await Image.create({ productId: newProduct.id, url: name, forConstructor: false });
+              }
             }
+            if (req?.files?.cover[0]) {
+              const name = `${Date.now()}.webp`;
+              const outputBuffer = await sharp(req.files.cover[0].buffer).webp().toBuffer();
+              await fs.writeFile(`./public/images/${name}`, outputBuffer);
+              await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
+            }
+          } catch (err) {
+            return res.status(403).json({ message: 'Нет картинки' });
           }
           if (req.files.cover[0]) {
             const name = `${Date.now()}.webp`;
@@ -58,6 +75,7 @@ shopRouter.post(
             await Image.create({ productId: newProduct.id, url: name, forConstructor: true });
           }
           console.log(999999999999999999);
+          console.log(req.files)
           const sizes = await Size.findAll();
           for (let i = 0; i < sizes.length; i++) {
             ProductSize.create({ productId: newProduct.id, sizeId: sizes[i].id, count: 50 });
@@ -82,7 +100,9 @@ shopRouter.put(
     { name: 'images', maxCount: 10 },
   ]),
   async (req, res) => {
-    const { title, categoryId, colorId, price, description, count } = req.body;
+    const {
+      title, categoryId, colorId, price, description, count,
+    } = req.body;
     const user = await User.findByPk({
       where: { id: req.session.user.id },
       include: { model: Role },
@@ -120,15 +140,19 @@ shopRouter.put(
 
 shopRouter.delete('/products/:id', async (req, res) => {
   const user = await User.findOne({
-    where: { id: req.session.user.id },
+    where: { id: req?.session?.user?.id },
     include: { model: Role },
   });
   if (user.Role.id === 1) {
     const product = await Product.findByPk(req.params.id);
     const images = await Image.findAll({ where: { productId: product.id } });
+    // const folder = await fs.readdir('./public/images/');
     for (const image of images) {
-      console.log(image);
-      await fs.unlink(`./public/images/${image.url}`);
+      try {
+        await fs.unlink(`./public/images/${image.url}`);
+      } catch (err) {
+        console.log(err);
+      }
       await image.destroy();
     }
     await ProductSize.destroy({ where: { productId: product.id } });
@@ -137,7 +161,77 @@ shopRouter.delete('/products/:id', async (req, res) => {
   }
   res.status(400).json({ message: 'Only for admins' });
 });
-
+shopRouter.get('/orders', async (req, res) => {
+  const user = await User.findByPk(req?.session?.user?.id);
+  if (!user) {
+    return res.status(400).json({ message: 'Cant find user' });
+  }
+  if (user.roleId === 2) {
+    return res.json(
+      await Order.findAll({
+        where: { userId: user.Id },
+        include: {
+          model: OrderList,
+          include: {
+            model: ProductSize,
+            include: [
+              { model: Size },
+              {
+                model: Product,
+                include: [{ model: Color }, { model: Size }, { model: { Image } }],
+              },
+            ],
+          },
+        },
+      }),
+    );
+  }
+  return res.json(
+    await Order.findAll({
+      include: {
+        model: OrderList,
+        include: {
+          model: ProductSize,
+          include: [
+            { model: Size },
+            {
+              model: Product,
+              include: [{ model: Color }, { model: Size }, { model: { Image } }],
+            },
+          ],
+        },
+      },
+    }),
+  );
+});
+shopRouter.put('/orders/:id', async (req, res) => {
+  const user = await User.findByPk(req.session.user.id);
+  if (!user || user.roleId !== 1) {
+    return res.status(400).json({ message: 'Only for admins' });
+  }
+  const { status } = req.body();
+  const order = await Order.findByPk(req.params.id);
+  order.statusId = status;
+  order.save();
+  req.json(
+    await Order.findOne({
+      where: { id: order.id },
+      include: {
+        model: OrderList,
+        include: {
+          model: ProductSize,
+          include: [
+            { model: Size },
+            {
+              model: Product,
+              include: [{ model: Color }, { model: Size }, { model: { Image } }],
+            },
+          ],
+        },
+      },
+    }),
+  );
+});
 shopRouter.post('/orders', async (req, res) => {
   const { phone, address } = req.body;
   console.log(req.body);
@@ -192,7 +286,6 @@ shopRouter.post('/orders', async (req, res) => {
   res.json({ response, cant });
 });
 shopRouter.post('/cart/:productId', async (req, res) => {
-  console.log(req.params.productId);
   await Cart.create({
     userId: req.session.user.id,
     productSizeId: req.params.productId,
@@ -286,5 +379,6 @@ shopRouter.get('/cart', async (req, res) => {
 shopRouter.get('/categories', async (req, res) => res.json(await Category.findAll()));
 shopRouter.get('/sizes', async (req, res) => res.json(await Size.findAll()));
 shopRouter.get('/colors', async (req, res) => res.json(await Color.findAll()));
+shopRouter.get('/statuses', async (req, res) => res.json(await Status.findAll()));
 
 module.exports = shopRouter;
