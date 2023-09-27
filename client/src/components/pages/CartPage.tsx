@@ -33,7 +33,7 @@ export default function CartPage(): JSX.Element {
     <div className="mt-8 container mx-auto px-10">
       <div className="flow-root">
         <h1 className="flex justify-center items-center font-bold	text-3xl">Корзина:</h1>
-        <ModalMakeOrder show={show} closeModal={closeModal} />
+        <ModalMakeOrder show={show} closeModal={closeModal} totalPrice={totalPrice} />
         <ul role="list" className="-my-6 divide-y divide-gray-200">
           {productsInCart?.map((product) => (
             <li key={product.id} className="flex py-6">
