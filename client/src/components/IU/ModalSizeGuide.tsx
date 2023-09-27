@@ -5,7 +5,7 @@ export default function ModalSizeGuide({
     onHide,
 }): JSX.Element {
   return (
-    <div className={`relative z-50 ${show ? 'block' : 'hidden'}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div className={`relative z-50  ${show ? 'block' : 'hidden'}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
