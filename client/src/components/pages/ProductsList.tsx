@@ -36,7 +36,7 @@ export default function MainPage(): JSX.Element {
 
   console.log(filtred.filter((el) => el.categoryId === 1));
   return (
-    <>
+    <div style={{marginTop:'150px'}}>
       {user?.user?.Role?.id === 1 ? (
         <div className="flex items-center justify-center mt-5">
           <button
@@ -76,7 +76,7 @@ export default function MainPage(): JSX.Element {
               }}
             >
               <option selected value="all">
-                Choose a color
+                Цвет
               </option>
               {color.map((el) => (
                 <option value={el.id}>{el.title}</option>
@@ -101,7 +101,7 @@ export default function MainPage(): JSX.Element {
               }}
             >
               <option selected value="all">
-                Choose a category
+                Категория
               </option>
               {categories.map((el) => (
                 <option value={el.id}>{el.title}</option>
@@ -119,6 +119,6 @@ export default function MainPage(): JSX.Element {
           product={editProduct}
         />
       </div>
-    </>
+    </div>
   );
 }

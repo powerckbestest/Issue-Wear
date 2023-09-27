@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useAppSelector } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import useProductHooks from '../../hooks/useProductHooks';
+import { getStatusesService } from '../../services/productService';
 
 export default function AdminOrderPage(): JSX.Element {
-    const orders = useAppSelector((state) => state.order)
+  const orders = useAppSelector((state) => state.order);
+  const { getOrdersHandler, changeOrderStatusHandler } = useProductHooks();
+  const [statuses, setStatuses] = useState([]);
+  const [input, setInput] = useState(1)
 
-    const [totalPrice, setTotalPrice] = useState(0)
+  const [show, setShow] = useState(false);
 
-    console.log(orders)
+  console.log(orders);
 
-    // useEffect(() => {
-    //     setTotalPrice(orders.response.OrderLists?.reduce((acc, currEl) => acc + currEl.ProductSize.Product.price, 0))
-    // }, [])
+  useEffect(() => {
+    getOrdersHandler();
+    getStatusesService()
+      .then((data) => setStatuses(data))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="mt-8 container mx-auto px-10">
       <div className="flow-root">
@@ -30,35 +39,69 @@ export default function AdminOrderPage(): JSX.Element {
                 <div>
                   <div className="flex justify-between text-base font-medium text-gray-900 text-xl">
                     <h3>
-                      <p>Имя клиента: {order.response.User.name}</p>
-                      <p>Адрес клиента: {order.response.address}</p>
-                      <p>Телефон клиента: {order.response.phone}</p>
+                      <p>Имя клиента: {order?.User?.name}</p>
+                      <p>Адрес клиента: {order?.address}</p>
+                      <p>Телефон клиента: {order?.phone}</p>
+                      <p>Статус заказа: {order?.Status?.title}</p>
                     </h3>
-                    <p className="ml-4">Общая стоимость заказа: {totalPrice} руб.</p>
+                    <p className="ml-4">
+                      Общая стоимость заказа:{' '}
+                      {order?.OrderLists?.reduce(
+                        (acc, el) => acc + el?.ProductSize?.Product?.price,
+                        0,
+                      )}{' '}
+                      руб.
+                    </p>
+                    <p className="ml-4">Номер заказа: {order?.id}</p>
                   </div>
                 </div>
                 <div className="flex flex-1 items-end justify-between text-sm">
                   <div className="flex mt-5">
-                    <button
-                      type="button"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      Изменить статус заказа
-                    </button>
+                    {show ? (
+                      <form
+                        onSubmit={(e) => {
+                          changeOrderStatusHandler
+                          (order.id, input);
+                          setShow((prev) => !prev);
+                        }}
+                      >
+                        <select
+                          id="countries"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            onChange={(e) => setInput(e.currentTarget.value)}
+                        >
+                          <option selected value="all">
+                            Статус
+                          </option>
+                          {statuses?.map((el) => (
+                            <option value={el.id} key={el.id}>
+                              {' '}
+                              {el.title}
+                            </option>
+                          ))}
+                        </select>
+                        <button
+                          type="submit"
+                          className="font-medium text-indigo-600 hover:text-indigo-500"
+                        >
+                          Сохранить
+                        </button>
+                      </form>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setShow((prev) => !prev)}
+                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                      >
+                        Изменить статус заказа
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
             </li>
           ))}
         </ul>
-        <div className="flex justify-center items-center mt-5">
-          <button
-            type="button"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Оформить заказ
-          </button>
-        </div>
       </div>
     </div>
   );

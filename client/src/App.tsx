@@ -33,7 +33,6 @@ function App(): JSX.Element {
 
   useEffect(() => {
     void dispatch(userCheckActionThunk())
-    
       .then(() => {
         getProductsCartHandler();
         // setIsAuthenticated(user.status === 'success');
@@ -57,25 +56,29 @@ function App(): JSX.Element {
       ) : (
         <>
           <NavBar />
-          <Routes>
-            <Route path="/" />
-            <Route path="/products" element={<ProductsList />} />
-            <Route
-              element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}
-            >
-              <Route path="/signup" element={<SignUpPage />} />
-              <Route path="/signin" element={<SignInPage />} />
-            </Route>
-            <Route
-              element={<PrivateRouter isAllowed={user?.user?.Role?.id === 1} redirectTo="/main" />}
-            >
-              <Route path="/adminorders" element={<AdminOrderPage />} />
-            </Route>
-            <Route path="/wardrobe" element={<WardrobePage />} />
-        <Route path="/cart" element={<CartPage />} />
-            <Route path="/products/:productId" element={<ProductCard />} />
-          </Routes>
-          {/* <Footer /> */}
+          <div style={{marginTop:'200px'}}>
+            <Routes>
+              <Route path="/" />
+              <Route path="/products" element={<MainPage />} />
+              <Route
+                element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}
+              >
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/signin" element={<SignInPage />} />
+              </Route>
+              <Route
+                element={
+                  <PrivateRouter isAllowed={user?.user?.Role?.id === 1} redirectTo="/main" />
+                }
+              >
+                <Route path="/adminorders" element={<AdminOrderPage />} />
+              </Route>
+              <Route path="/wardrobe" element={<WardrobePage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/products/:productId" element={<ProductCard />} />
+            </Routes>
+          </div>
+          <Footer  />
         </>
       )}
     </>
