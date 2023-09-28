@@ -1,34 +1,18 @@
-* {
-  font-family: 'Segoe UI';
-  font-weight: 200;
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
 body {
   transition: 2s;
 }
-h1 {
-  text-align: center;
+
+.my-button {
+  /* Добавьте любые общие стили для кнопки */
 }
-.wrapper {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-button {
-  padding: 8px;
-  background-color: #000;
+
+/* Кнопки белые, текст черный в темной теме */
+.my-button.button-light {
+  background-color: white; /* Замените цвет фона на ваш выбор */
   color: #fff;
-  border: none;
-  border-radius: 3px;
-  font-size: 1em;
-  margin-top: 1%;
-  outline: none;
 }
-button:hover {
-  background: rgb(45, 50, 102);
+
+/* Текст белый в темной теме */
+.my-button.text-light {
+  color: #fff;
 }

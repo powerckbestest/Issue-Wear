@@ -57,7 +57,7 @@ function App(): JSX.Element {
       ) : (
         <>
           <NavBar />
-          <div style={{marginTop:'200px'}}>
+          <div style={{ marginTop: '200px' }}>
             <Routes>
               <Route path="/" />
               <Route path="/products" element={<MainPage />} />
@@ -79,7 +79,7 @@ function App(): JSX.Element {
               <Route path="/products/:productId" element={<ProductCard />} />
             </Routes>
           </div>
-          <Footer  />
+          <Footer />
         </>
       )}
     </>
