@@ -58,7 +58,7 @@ function App(): JSX.Element {
       ) : (
         <>
           <NavBar />
-          <div style={{ marginTop: '200px' }}>
+          <div style={{ marginTop: '220px' }}>
             <Routes>
               <Route path="/" element={<MainPage/>} />
               <Route path="/products" element={<ProductsList />} />

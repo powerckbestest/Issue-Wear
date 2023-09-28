@@ -69,7 +69,16 @@ export default function NavBar(): JSX.Element {
                 opacity: '20%',
               }}
             />
-            <div style={{ marginTop: '210px', position: 'absolute',opacity:'40%',zIndex:'-20', textAlign: 'center', fontSize: '22px'  }}>
+            <div
+              style={{
+                marginTop: '210px',
+                position: 'absolute',
+                opacity: '40%',
+                zIndex: '-20',
+                textAlign: 'center',
+                fontSize: '22px',
+              }}
+            >
               <p>Спасибо улице, что воспитала,</p>
               <p>маме — что родила, е-е</p>
             </div>
@@ -157,12 +166,13 @@ export default function NavBar(): JSX.Element {
                         <label
                           style={{
                             position: 'absolute',
-                            marginLeft: '20px',
-                            marginTop: '-40px',
+                            marginLeft: '35px',
+                            marginTop: '-50px',
                             borderRadius: '50px',
                             backgroundColor: 'red',
                             padding: `3px ${cartLabel.length > 10 ? '0' : 10}px`,
                             fontSize: '12px',
+                            cursor: 'pointer',
                           }}
                         >
                           {cartLabel?.length}
