@@ -15,6 +15,7 @@ import WardrobePage from './components/pages/WardrobePage';
 import { setUser } from './features/redux/slices/userSlice';
 import Loader from './components/hocs/Loader';
 import AdminOrderPage from './components/pages/AdminOrderPage';
+import MainPage from './components/pages/ProductsList';
 
 function App(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
