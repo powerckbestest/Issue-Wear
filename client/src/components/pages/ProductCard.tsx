@@ -127,7 +127,7 @@ export default function ProductCard(): JSX.Element {
         </div>
 
         {/* Description and details */}
-        <div style={{ marginLeft: '70px' }}>
+        <div style={{ marginLeft: '100px',marginTop:'20px' }}>
           <div>
             <h2 style={{ fontSize: '24px' }}>
               <b>Описание</b>
