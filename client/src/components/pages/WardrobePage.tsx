@@ -150,7 +150,7 @@ export default function WardrobePage(): JSX.Element {
   const images = useAppSelector((state) => state.product.productsData.cartProducts);
   const [leftColumn, setLeftColumn] = useState<Item[]>(
     images
-      .map((el) => el.ProductSize?.Product.Images.find((el) => el.forConstructor))
+      ?.map((el) => el.ProductSize?.Product.Images.find((el) => el.forConstructor))
       .map((el) => ({ id: el?.url, name: el?.url, image: el.url })),
   );
   const [wardrobeTop, setWardrobeTop] = useState<Item[]>([]);
