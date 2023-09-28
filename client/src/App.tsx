@@ -15,6 +15,7 @@ import WardrobePage from './components/pages/WardrobePage';
 import { setUser } from './features/redux/slices/userSlice';
 import Loader from './components/hocs/Loader';
 import AdminOrderPage from './components/pages/AdminOrderPage';
+import MainPage from './components/pages/ProductsList';
 
 function App(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
@@ -56,7 +57,7 @@ function App(): JSX.Element {
       ) : (
         <>
           <NavBar />
-          <div style={{marginTop:'200px'}}>
+          <div style={{ marginTop: '200px' }}>
             <Routes>
               <Route path="/" />
               <Route path="/products" element={<MainPage />} />
@@ -78,7 +79,7 @@ function App(): JSX.Element {
               <Route path="/products/:productId" element={<ProductCard />} />
             </Routes>
           </div>
-          <Footer  />
+          <Footer />
         </>
       )}
     </>
