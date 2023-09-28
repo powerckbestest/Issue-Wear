@@ -19,7 +19,7 @@ export default function MainPage(): JSX.Element {
           </p>
         </div>
       </div>
-      <h1 style={{ textAlign: 'center', fontFamily: 'Benzin', fontSize: '50px', marginTop: '20px' }}>
+      <h1 style={{ textAlign: 'center', fontFamily: 'Benzin', fontSize: '50px', marginTop: '20px', marginBottom: '-150px' }}>
         Новая коллекция
       </h1>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
