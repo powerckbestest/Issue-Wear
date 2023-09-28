@@ -1,34 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import { StarIcon } from '@heroicons/react/20/solid'
-import { RadioGroup } from '@headlessui/react'
-import { NavLink, useParams } from 'react-router-dom'
-import { useAppSelector } from '../../hooks/reduxHooks'
-import useProductHooks from '../../hooks/useProductHooks'
-import './slider.css'
-import ModalSizeGuide from '../IU/ModalSizeGuide'
+import React, { useEffect, useState } from 'react';
+import { StarIcon } from '@heroicons/react/20/solid';
+import { RadioGroup } from '@headlessui/react';
+import { NavLink, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/reduxHooks';
+import useProductHooks from '../../hooks/useProductHooks';
+import './slider.css';
+import ModalSizeGuide from '../IU/ModalSizeGuide';
 // import '/styles/slider.css'
-import '../../../public/styles/stylesheet.css'
+import '../../../public/styles/stylesheet.css';
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 
-export default function ProductCard() : JSX.Element {
-  const {productId} = useParams()
+export default function ProductCard(): JSX.Element {
+  const { productId } = useParams();
 
-const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
 
-
-  const products = useAppSelector((state) => state.product.productsData.currProduct)
-  console.log(products)
-  const {getCartProductHandler, addProductCartHandler} = useProductHooks()
+  const products = useAppSelector((state) => state.product.productsData.currProduct);
+  console.log(products);
+  const { getCartProductHandler, addProductCartHandler } = useProductHooks();
 
   useEffect(() => {
-    getCartProductHandler(Number(productId))
-  }, [])
+    getCartProductHandler(Number(productId));
+  }, []);
 
-
-  // СЛАЙДЕР ДЛЯ ФОТО 
+  // СЛАЙДЕР ДЛЯ ФОТО
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = () => {
@@ -36,11 +34,8 @@ const [selectedSize, setSelectedSize] = useState(null);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prevSlide) =>
-      prevSlide === 0 ? products.Images.length - 1 : prevSlide - 1
-    );
+    setCurrentSlide((prevSlide) => (prevSlide === 0 ? products.Images.length - 1 : prevSlide - 1));
   };
-
 
   const [show, setShow] = useState(false);
   const openModal = () => {
@@ -52,45 +47,52 @@ const [selectedSize, setSelectedSize] = useState(null);
     setShow(false);
   };
 
-    console.log(products.Images)
+  console.log(products.Images);
   return (
-<div style={{fontFamily: 'Benzin'}} className="bg-white lg:flex mt-16 relative"> {/* Added top margin */}
-<div className="lg:w-2/3">
-  <NavLink style={{marginLeft: '40px', fontFamily: 'Benzin', fontWeight: 'bold', fontSize: '20px'}} to="/products">← Все товары</NavLink> 
-      <div
-      
-        id="indicators-carousel"
-        className="relative max-w-screen-xl mx-auto"
-        data-carousel="static"
-      >
-        {/* Carousel wrapper */}
-        <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
-          
-          {products?.Images
-            ?.filter(image => !image.forConstructor) 
-            .map((image, index) => (
-              !image.forConstructor?
-              <div
-                key={index}
-                className={`${
-                  index === currentSlide ? 'transition-slide-enter-active' : 'transition-slide-enter'
-                }`}
-                data-carousel-item={index === currentSlide ? 'active' : ''}
-              >
-                <img
-                  src={`http://localhost:3001/images/${image?.url}`}
-                  style={{ width: '30%', height: 'auto', objectFit: 'Contain' }}
-                  className="absolute block w-full -translate-x-1/2  top-1/2 left-1/2"
-                  alt={`Slide ${index + 1}`}
-                />
-              </div>:false
-            ))}
-        </div>
+    <div style={{ fontFamily: 'Benzin' }} className="bg-white lg:flex mt-16 relative">
+      {' '}
+      {/* Added top margin */}
+      <div style={{width: '60%'}} className="lg:w-2/3">
+        <NavLink
+          style={{ marginLeft: '40px', fontFamily: 'Benzin', fontWeight: 'bold', fontSize: '20px' }}
+          to="/products"
+        >
+          ← Все товары
+        </NavLink>
+        <div
+          id="indicators-carousel"
+          className="relative max-w-screen-xl mx-auto"
+          data-carousel="static"
+        >
+          {/* Carousel wrapper */}
+          <div style={{height: '40rem'}} className=" overflow-hidden md:h-96">
+            {products?.Images?.filter((image) => !image.forConstructor).map((image, index) =>
+              !image.forConstructor ? (
+                <div
+                  key={index}
+                  className={`${
+                    index === currentSlide
+                      ? 'transition-slide-enter-active'
+                      : 'transition-slide-enter'
+                  }`}
+                  data-carousel-item={index === currentSlide ? 'active' : ''}
+                >
+                  <img
+                    src={`http://localhost:3001/images/${image?.url}`}
+                    style={{ width: '38%', height: 'auto', objectFit: 'contain' }}
+                    className="absolute block w-full -translate-x-1/2  top-1/2 left-1/2"
+                    alt={`Slide ${index + 1}`}
+                  />
+                </div>
+              ) : (
+                false
+              ),
+            )}
+          </div>
 
           {/* Slider indicators */}
-          <div className="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
+          <div  className="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
             {products?.Images?.map((_, index) => (
-              
               <button
                 key={index}
                 type="button"
@@ -106,6 +108,7 @@ const [selectedSize, setSelectedSize] = useState(null);
           {/* Slider controls */}
           <button
             type="button"
+            style={{width: '40%'}}
             className="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
             data-carousel-prev
             onClick={prevSlide}
@@ -114,6 +117,7 @@ const [selectedSize, setSelectedSize] = useState(null);
             {/* Previous button */}
           </button>
           <button
+          style={{width: '40%'}}
             type="button"
             className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
             data-carousel-next
@@ -123,22 +127,30 @@ const [selectedSize, setSelectedSize] = useState(null);
             {/* Next button */}
           </button>
         </div>
-        
 
-    {/* Description and details */}            
-    <div style={{marginLeft: '70px'}}>
-      <div>
-        <h3 className="sr-only">Description</h3>
-        <div className="space-y-6">
-          <p className="text-base text-gray-900">{products.description}</p>
+        {/* Description and details */}
+        <div style={{ marginLeft: '100px',marginTop:'20px' }}>
+          <div>
+            <h2 style={{ fontSize: '24px' }}>
+              <b>Описание</b>
+            </h2>
+            <div className="space-y-6">
+              <p
+                className="text-base text-gray-900"
+                style={{ fontSize: '20px', marginTop: '10px' }}
+              >
+                {products.description}
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-        
       </div>
       <div className="lg:w-1/3 p-8">
         {/* Product info */}
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+        <h1
+          className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
+          style={{ fontSize: '24px' }}
+        >
           {products.title}
         </h1>
 
@@ -157,9 +169,7 @@ const [selectedSize, setSelectedSize] = useState(null);
               >
                 Size guide
               </button>
-              {show && (
-            <ModalSizeGuide show={show} onHide={closeModal} />
-          )}
+              {show && <ModalSizeGuide show={show} onHide={closeModal} />}
             </div>
             <RadioGroup
               // defaultValue={products?.ProductSizes[0]?.Size?.title}
@@ -179,21 +189,19 @@ const [selectedSize, setSelectedSize] = useState(null);
                           ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
                           : 'cursor-not-allowed bg-gray-50 text-gray-200',
                         active ? 'ring-2 ring-indigo-500' : '',
-                        'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
+                        'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6',
                       )
                     }
                   >
                     {({ active, checked }) => (
                       <>
-                        <RadioGroup.Label as="span">
-                          {size.Size.title}
-                        </RadioGroup.Label>
+                        <RadioGroup.Label as="span">{size.Size.title}</RadioGroup.Label>
                         {true ? (
                           <span
                             className={classNames(
                               active ? 'border' : 'border-2',
                               checked ? 'border-indigo-500' : 'border-transparent',
-                              'pointer-events-none absolute -inset-px rounded-md'
+                              'pointer-events-none absolute -inset-px rounded-md',
                             )}
                             aria-hidden="true"
                           />
@@ -227,12 +235,12 @@ const [selectedSize, setSelectedSize] = useState(null);
           </div>
 
           <button
-          style={{backgroundColor: 'black'}}
+            style={{ backgroundColor: 'black' }}
             type="button"
             onClick={(e) =>
               addProductCartHandler(
                 e,
-                products.ProductSizes.find((el) => el.Size.id === selectedSize).id
+                products.ProductSizes.find((el) => el.Size.id === selectedSize).id,
               )
             }
             className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -241,17 +249,6 @@ const [selectedSize, setSelectedSize] = useState(null);
           </button>
         </form>
       </div>
-
-      
-
-  
     </div>
-
-    
-    
   );
-
 }
-
-
-

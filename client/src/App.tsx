@@ -58,24 +58,24 @@ function App(): JSX.Element {
       ) : (
         <>
           <NavBar />
-          <div style={{ marginTop: '200px' }}>
+          <div style={{ marginTop: '220px' }}>
             <Routes>
               <Route path="/" element={<MainPage/>} />
               <Route path="/products" element={<ProductsList />} />
               <Route
-                element={<PrivateRouter isAllowed={user.status === 'success'} redirectTo="/main" />}
+                element={<PrivateRouter isAllowed={user.status === 'success'} redirectTo="/" />}
               >
                 <Route path="/myorders" element={<MyOrdersPage />} />
               </Route>
               <Route
-                element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}
+                element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/" />}
               >
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/signin" element={<SignInPage />} />
               </Route>
               <Route
                 element={
-                  <PrivateRouter isAllowed={user?.user?.Role?.id === 1} redirectTo="/main" />
+                  <PrivateRouter isAllowed={user?.user?.Role?.id === 1} redirectTo="/" />
                 }
               >
                 <Route path="/adminorders" element={<AdminOrderPage />} />

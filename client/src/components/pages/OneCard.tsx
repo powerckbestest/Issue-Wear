@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import type { ProductType } from '../../types/productType';
 import useProductHooks from '../../hooks/useProductHooks';
+import { useAppSelector } from '../../hooks/reduxHooks';
 
 type ProductProps = {
   product: ProductType;
@@ -9,6 +10,7 @@ type ProductProps = {
 
 export default function OneCard({ product }: ProductProps): JSX.Element {
   const { deleteProductHandler } = useProductHooks();
+  const user = useAppSelector((state) => state.user);
   const isDarkMode = true;
 
   return (
@@ -45,15 +47,19 @@ export default function OneCard({ product }: ProductProps): JSX.Element {
       >
         В корзину
       </button> */}
-      <button
-        type="button"
-        className={`my-button ${
-          isDarkMode ? 'button-dark' : 'button-white'
-        } font-bold py-2 px-4 rounded-lg mt-5 mx-auto block border border-black hover:border-transparent`}
-        onClick={(e) => deleteProductHandler(e, product.id)}
-      >
-        Удалить
-      </button>
+      {user.status === 'success' && user?.user?.Role?.id === 1 ? (
+        <button
+          type="button"
+          className={`my-button ${
+            isDarkMode ? 'button-dark' : 'button-white'
+          } font-bold py-2 px-4 rounded-lg mt-5 mx-auto block border border-black hover:border-transparent`}
+          onClick={(e) => deleteProductHandler(e, product.id)}
+        >
+          Удалить
+        </button>
+      ) : (
+        false
+      )}
     </div>
   );
 }
