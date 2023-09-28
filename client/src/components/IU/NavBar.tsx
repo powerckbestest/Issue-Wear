@@ -53,6 +53,8 @@ export default function NavBar(): JSX.Element {
     };
   }, []);
 
+  const darkMode = true
+
   return (
     <Disclosure as="nav">
       {({ open }) => (
@@ -118,13 +120,13 @@ export default function NavBar(): JSX.Element {
               >
                 <div className="hidden sm:ml-1 sm:block mt-5 text-2xl">
                   <div className="flex space-x-4">
-                    <NavLink to="/products" aria-current="page">
+                    <NavLink className={`${darkMode ? 'text-dark' : 'text-white'} mt-1 text-2xl font-bold`} to="/products" aria-current="page">
                       Одежда
                     </NavLink>
-                    <NavLink to="/wardrobe" aria-current="page">
+                    <NavLink className={`${darkMode ? 'text-dark' : 'text-white'} mt-1 text-2xl font-bold`} to="/wardrobe" aria-current="page">
                       Гардероб
                     </NavLink>
-                    <NavLink to="/myorders" aria-current="page">
+                    <NavLink className={`${darkMode ? 'text-dark' : 'text-white'} mt-1 text-2xl font-bold`} to="/myorders" aria-current="page">
                       Мои заказы
                     </NavLink>
                   </div>
@@ -143,7 +145,7 @@ export default function NavBar(): JSX.Element {
                   </div>
                 ) : (
                   <div className="flex space-x-4 mt-5 text-2xl">
-                    <NavLink to="/signup" onClick={signOutActionHandler} aria-current="page">
+                    <NavLink className={`${darkMode ? 'text-dark' : 'text-white'} mt-1 text-2xl font-bold`} to="/signup" onClick={signOutActionHandler} aria-current="page">
                       Выход
                     </NavLink>
                     <NavLink
@@ -151,7 +153,7 @@ export default function NavBar(): JSX.Element {
                       className={classNames(
                         user.status !== 'success'
                           ? 'bg-gray-900 text-white'
-                          : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          : 'text-gray-300 hover:bg-black-700 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium ',
                       )}
                       aria-current="page"
