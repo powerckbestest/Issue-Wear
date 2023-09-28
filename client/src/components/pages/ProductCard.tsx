@@ -55,7 +55,7 @@ const [selectedSize, setSelectedSize] = useState(null);
     console.log(products.Images)
   return (
 <div style={{fontFamily: 'Benzin'}} className="bg-white lg:flex mt-16 relative"> {/* Added top margin */}
-<div className="lg:w-2/3">
+<div style={{width: '60%'}} className="lg:w-2/3">
   <NavLink style={{marginLeft: '40px', fontFamily: 'Benzin', fontWeight: 'bold', fontSize: '20px'}} to="/products">← Все товары</NavLink> 
       <div
       
@@ -64,7 +64,7 @@ const [selectedSize, setSelectedSize] = useState(null);
         data-carousel="static"
       >
         {/* Carousel wrapper */}
-        <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
+        <div style={{height: '40rem'}} className=" overflow-hidden md:h-96">
           
           {products?.Images
             ?.filter(image => !image.forConstructor) 
@@ -79,7 +79,7 @@ const [selectedSize, setSelectedSize] = useState(null);
               >
                 <img
                   src={`http://localhost:3001/images/${image?.url}`}
-                  style={{ width: '30%', height: 'auto', objectFit: 'Contain' }}
+                  style={{ width: '38%', height: 'auto', objectFit: 'contain' }}
                   className="absolute block w-full -translate-x-1/2  top-1/2 left-1/2"
                   alt={`Slide ${index + 1}`}
                 />
@@ -88,7 +88,7 @@ const [selectedSize, setSelectedSize] = useState(null);
         </div>
 
           {/* Slider indicators */}
-          <div className="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
+          <div  className="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
             {products?.Images?.map((_, index) => (
               
               <button
@@ -106,6 +106,7 @@ const [selectedSize, setSelectedSize] = useState(null);
           {/* Slider controls */}
           <button
             type="button"
+            style={{width: '40%'}}
             className="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
             data-carousel-prev
             onClick={prevSlide}
@@ -114,6 +115,7 @@ const [selectedSize, setSelectedSize] = useState(null);
             {/* Previous button */}
           </button>
           <button
+          style={{width: '40%'}}
             type="button"
             className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
             data-carousel-next
