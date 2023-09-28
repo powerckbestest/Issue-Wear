@@ -69,7 +69,7 @@ export default function NavBar(): JSX.Element {
                 opacity: '20%',
               }}
             />
-            <div style={{ marginTop: '180px', position: 'absolute',opacity:'40%',zIndex:'-20', textAlign: 'center'  }}>
+            <div style={{ marginTop: '210px', position: 'absolute',opacity:'40%',zIndex:'-20', textAlign: 'center', fontSize: '22px'  }}>
               <p>Спасибо улице, что воспитала,</p>
               <p>маме — что родила, е-е</p>
             </div>
@@ -107,7 +107,7 @@ export default function NavBar(): JSX.Element {
                   marginTop: '220px',
                 }}
               >
-                <div className="hidden sm:ml-6 sm:block mt-5">
+                <div className="hidden sm:ml-1 sm:block mt-5 text-2xl">
                   <div className="flex space-x-4">
                     <NavLink to="/products" aria-current="page">
                       Одежда
@@ -124,7 +124,7 @@ export default function NavBar(): JSX.Element {
                 {/* Функциональная иконка профиля */}
                 {/* {/* Profile dropdown */}
                 {user.status !== 'success' ? (
-                  <div className="flex space-x-4 mt-5">
+                  <div className="flex space-x-4 mt-5 text-2xl">
                     <NavLink to="/signin" aria-current="page">
                       Войти
                     </NavLink>
@@ -133,7 +133,7 @@ export default function NavBar(): JSX.Element {
                     </NavLink>
                   </div>
                 ) : (
-                  <div className="flex space-x-4 mt-5">
+                  <div className="flex space-x-4 mt-5 text-2xl">
                     <NavLink to="/signup" onClick={signOutActionHandler} aria-current="page">
                       Выход
                     </NavLink>
@@ -143,14 +143,14 @@ export default function NavBar(): JSX.Element {
                         user.status !== 'success'
                           ? 'bg-gray-900 text-white'
                           : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                        'rounded-md px-3 py-2 text-sm font-medium',
+                        'rounded-md px-3 py-2 text-sm font-medium ',
                       )}
                       aria-current="page"
                       style={{ marginTop: '-15px' }}
                     >
                       <img
                         src="/shopping-cart-7-svgrepo-com.svg"
-                        style={{ height: '30px', width: '30px' }}
+                        style={{ height: '50px', width: '50px' }}
                         alt="cart"
                       />
                       {cartLabel?.length > 0 ? (
