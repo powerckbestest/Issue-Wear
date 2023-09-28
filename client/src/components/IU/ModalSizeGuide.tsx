@@ -5,7 +5,7 @@ export default function ModalSizeGuide({
     onHide,
 }): JSX.Element {
   return (
-    <div className={`relative z-50 ${show ? 'block' : 'hidden'}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div className={`relative z-50  ${show ? 'block' : 'hidden'}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -18,7 +18,14 @@ export default function ModalSizeGuide({
                     <img
                       src="/Размерная сетка.jpg"
                       alt=""
-                      style={{padding: '10px', display: 'block', maxWidth: '100%', maxHeight: '100%' }} // Установлены стили для фото
+                      style={{
+                      padding: '10px', 
+                      display: 'block', 
+                      maxWidth: '100%', 
+                      maxHeight: '100%',
+                      boxShadow: '0px 10px 50px  black',
+                    
+                    }}
                     />
                   </div>
                 </div>

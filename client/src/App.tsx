@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import MainPage from './components/pages/ProductsList';
+import ProductsList from './components/pages/ProductsList';
 import SignUpPage from './components/pages/SignUpPage';
 import SignInPage from './components/pages/SignInPage';
 import NavBar from './components/IU/NavBar';
@@ -60,7 +60,7 @@ function App(): JSX.Element {
           <div style={{ marginTop: '200px' }}>
             <Routes>
               <Route path="/" />
-              <Route path="/products" element={<MainPage />} />
+              <Route path="/products" element={<ProductsList />} />
               <Route
                 element={<PrivateRouter isAllowed={user.status === 'success'} redirectTo="/main" />}
               >

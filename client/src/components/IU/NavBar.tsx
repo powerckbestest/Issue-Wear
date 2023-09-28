@@ -28,7 +28,7 @@ export default function NavBar(): JSX.Element {
     // Переключаем состояние и записываем его в localStorage
     setIsDarkMode((prevMode) => {
       const theme = document.getElementById('theme');
-      theme.href = prevMode ? '/styles/dark-mode.css' : '/dark-mode.css';
+      theme.href = prevMode ? '/styles/dark-mode.css' : '/styles/light-mode.css';
       localStorage.setItem('isDarkMode', (!prevMode).toString());
       return !prevMode;
     });
@@ -38,7 +38,7 @@ export default function NavBar(): JSX.Element {
     // Устанавливаем начальную тему при монтировании компонента
     const theme = document.getElementById('theme');
     if (theme) {
-      theme.href = isDarkMode ? '/styles/dark-mode.css' : '/light-mode.css';
+      theme.href = isDarkMode ? '/styles/dark-mode.css' : '/styles/light-mode.css';
     }
   }, [isDarkMode]);
 
@@ -76,7 +76,7 @@ export default function NavBar(): JSX.Element {
             <img
               src="/_1fire.png"
               alt="fire"
-              style={{ width: '71px', height: '101px', position: 'absolute', marginTop: '70px'}}
+              style={{ width: '71px', height: '101px', position: 'absolute', marginTop: '70px' }}
             />
           </div>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">

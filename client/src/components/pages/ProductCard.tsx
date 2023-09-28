@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
-import { useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/reduxHooks'
 import useProductHooks from '../../hooks/useProductHooks'
 import './slider.css'
 import ModalSizeGuide from '../IU/ModalSizeGuide'
 // import '/styles/slider.css'
+import '../../../public/styles/stylesheet.css'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -53,10 +54,9 @@ const [selectedSize, setSelectedSize] = useState(null);
 
     console.log(products.Images)
   return (
-<div className="bg-white lg:flex mt-16 relative"> {/* Added top margin */}
-<div className="lg:w-2/3"
-
->
+<div style={{fontFamily: 'Benzin'}} className="bg-white lg:flex mt-16 relative"> {/* Added top margin */}
+<div className="lg:w-2/3">
+  <NavLink style={{marginLeft: '40px', fontFamily: 'Benzin', fontWeight: 'bold', fontSize: '20px'}} to="/products">← Все товары</NavLink> 
       <div
       
         id="indicators-carousel"
@@ -125,20 +125,17 @@ const [selectedSize, setSelectedSize] = useState(null);
         </div>
         
 
-                {/* Description and details */}
-                
-    <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-    <div>
-      <h3 className="sr-only">Description</h3>
-      <div className="space-y-6">
-        <p className="text-base text-gray-900">{products.description}</p>
+    {/* Description and details */}            
+    <div style={{marginLeft: '70px'}}>
+      <div>
+        <h3 className="sr-only">Description</h3>
+        <div className="space-y-6">
+          <p className="text-base text-gray-900">{products.description}</p>
+        </div>
       </div>
     </div>
-  </div>
         
       </div>
-      
-
       <div className="lg:w-1/3 p-8">
         {/* Product info */}
         <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
@@ -230,6 +227,7 @@ const [selectedSize, setSelectedSize] = useState(null);
           </div>
 
           <button
+          style={{backgroundColor: 'black'}}
             type="button"
             onClick={(e) =>
               addProductCartHandler(
