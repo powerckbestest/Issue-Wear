@@ -8,7 +8,7 @@ import useProductHooks from '../../hooks/useProductHooks';
 import type { ProductType } from '../../types/productType';
 import { getCategories, getColorService, getSizes } from '../../services/modalService';
 
-export default function MainPage(): JSX.Element {
+export default function ProductsList(): JSX.Element {
   const [show, setShow] = useState(false);
   const [editProduct, setEditProduct] = useState<ProductType | null>(null);
   const { getProductsHandler } = useProductHooks();

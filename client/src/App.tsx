@@ -15,6 +15,7 @@ import WardrobePage from './components/pages/WardrobePage';
 import { setUser } from './features/redux/slices/userSlice';
 import Loader from './components/hocs/Loader';
 import AdminOrderPage from './components/pages/AdminOrderPage';
+import MainPage from './components/pages/MainPage';
 
 function App(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
@@ -58,8 +59,8 @@ function App(): JSX.Element {
           <NavBar />
           <div style={{marginTop:'200px'}}>
             <Routes>
-              <Route path="/" />
-              <Route path="/products" element={<MainPage />} />
+              <Route path="/" element={<MainPage/>} />
+              <Route path="/products" element={<ProductsList />} />
               <Route
                 element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}
               >
@@ -78,7 +79,7 @@ function App(): JSX.Element {
               <Route path="/products/:productId" element={<ProductCard />} />
             </Routes>
           </div>
-          <Footer  />
+          {/* <Footer  /> */}
         </>
       )}
     </>
