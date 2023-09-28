@@ -2,6 +2,7 @@ import type React from 'react';
 import { useAppDispatch } from './reduxHooks';
 import {
   addProductCartService,
+  cancelOrderService,
   changeOrderStatusService,
   deleteProductCartService,
   deleteProductService,
@@ -25,7 +26,7 @@ import {
   madeOrder,
 } from '../features/redux/slices/productSlice';
 import type { OrderFormType, ProductFormType } from '../types/productType';
-import { addOrder, getOrders, changeOrderStatus } from '../features/redux/slices/orderSlice';
+import { addOrder, getOrders, changeOrderStatus, cancelOrder } from '../features/redux/slices/orderSlice';
 import type { NewStatusTypeForm } from '../types/orderType';
 
 type ProductFormData = {
@@ -53,6 +54,7 @@ export default function useProductHooks(): {
     id: number,
     e: React.FormEvent<HTMLFormElement & NewStatusTypeForm>,
   ) => void;
+  cancelOrderHandler: (id: number)=> void
 } {
   const dispatch = useAppDispatch();
 
@@ -177,12 +179,17 @@ export default function useProductHooks(): {
   };
 
   const changeOrderStatusHandler = (id: number, statusId: number): void => {
-    console.log(statusId);
     const formData = new FormData();
     formData.append('status', statusId);
 
     changeOrderStatusService(id, Object.fromEntries(formData))
       .then((data) => dispatch(changeOrderStatus(data)))
+      .catch((err) => Promise.reject(err));
+  };
+
+  const cancelOrderHandler = (id: number): void => {
+    cancelOrderService(id)
+      .then(() => dispatch(cancelOrder(id)))
       .catch((err) => Promise.reject(err));
   };
 
@@ -198,5 +205,6 @@ export default function useProductHooks(): {
     makeOrderHandler,
     getOrdersHandler,
     changeOrderStatusHandler,
+    cancelOrderHandler
   };
 }

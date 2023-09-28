@@ -86,3 +86,10 @@ export function getStatusesService(): Promise<StatusType[]> {
     .then(({data}) => data)
     .catch((err) => Promise.reject(err))
 }
+
+export function cancelOrderService(id: number): Promise<number> {
+  return apiClient
+  .delete<void>(`/orders/${id}`)
+  .then(() => id)
+  .catch((err) => Promise.reject(err))
+}
