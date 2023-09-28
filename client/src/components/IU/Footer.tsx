@@ -4,8 +4,19 @@ import ymaps from 'yandex-maps';
 
 export default function Footer(): JSX.Element {
   return (
-    <footer className="footer">
+    <footer
+      style={{ backgroundColor: 'gray', position: 'fixed', bottom: '0', left: '0', width:'100%'}}
+      className="footer"
+    >
       <div className="footer-content">
+        <div style={{ float: 'left' }}>
+          <p>
+            <b>Наши контакты:</b>
+          </p>
+          <p>mail : issuewear@gmail.com</p>
+          <p>telegram : @issue_wear</p>
+          <p>direct : issue_wear</p>
+        </div>
         <div style={{ float: 'right' }}>
           <YMaps>
             <div>
@@ -20,12 +31,6 @@ export default function Footer(): JSX.Element {
             </div>
           </YMaps>
         </div>
-      </div>
-      <div className="footer-bottom">
-        По всем появившимся вопросам и предложениям смело пишите на нашу
-        <p>почту : issuewear@gmail.com</p>
-        <p>в тг : @issue_wear</p>
-        <p>директ : issue_wear</p>
       </div>
     </footer>
   );

@@ -1,0 +1,22 @@
+/* Добавьте анимацию для перехода между слайдами */
+.transition-slide-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.transition-slide-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+.transition-slide-exit {
+  opacity: 1;
+  transform: translateX(0%);
+}
+
+.transition-slide-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 10ms ease-in-out, transform 50ms ease-in-out;
+}

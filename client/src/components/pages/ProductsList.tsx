@@ -39,22 +39,29 @@ export default function MainPage(): JSX.Element {
 
   // console.log(product)
   return (
-    <>
-      {}
-      <div className="flex items-center justify-center mt-5">
-        <button
-          type="button"
-          className={`my-button ${
+    <div style={{marginTop:'150px'}}>
+      {user?.user?.Role?.id === 1 ? (
+        <div className="flex items-center justify-center mt-5">
+          <button
+            type="button"
+            className={`my-button ${
             isDarkMode ? 'button-dark' : 'button-white'
           } font-bold py-2 px-4 rounded-lg mt-5 mx-auto block border border-black hover:border-transparent`}
-          onClick={handleEditClick}
-        >
-          Добавить товар
-        </button>
-      </div>
+            onClick={handleEditClick}
+          >
+            Добавить товар
+          </button>
+          <NavLink to={'/adminorders'}>
+            Заказы клиентов
+          </NavLink>
+        </div>
+      ) : (
+        <></>
+      )}
+
       <div className="bg-grey">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2
+          <h2 style={{fontFamily: 'Benzin'}}
             className={`${
               isDarkMode ? 'text-dark' : 'text-white'
             } text-5xl font-bold tracking-tight text-center mb-20`}
@@ -82,7 +89,7 @@ export default function MainPage(): JSX.Element {
               }}
             >
               <option selected value="all">
-                Choose a color
+                Цвет
               </option>
               {color.map((el) => (
                 <option value={el.id}>{el.title}</option>
@@ -109,7 +116,7 @@ export default function MainPage(): JSX.Element {
               }}
             >
               <option selected value="all">
-                Choose a category
+                Категория
               </option>
               {categories.map((el) => (
                 <option value={el.id}>{el.title}</option>
@@ -127,6 +134,6 @@ export default function MainPage(): JSX.Element {
           product={editProduct}
         />
       </div>
-    </>
+    </div>
   );
 }
