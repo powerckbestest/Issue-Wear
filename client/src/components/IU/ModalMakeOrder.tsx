@@ -63,7 +63,7 @@ export default function ModalMakeOrder({ show, closeModal, totalPrice }: ModalMa
                               type="text"
                               placeholder="Ваше имя"
                               name="name"
-                              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              className="mt-1 p-2 border-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                           </div>
                           <div className="mt-2">
@@ -72,7 +72,7 @@ export default function ModalMakeOrder({ show, closeModal, totalPrice }: ModalMa
                               type="number"
                               placeholder="Ваш телефон"
                               name="phone"
-                              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              className="mt-1 p-2 border-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                           </div>
                           <div className="mt-2">
@@ -81,7 +81,7 @@ export default function ModalMakeOrder({ show, closeModal, totalPrice }: ModalMa
                               type="text"
                               placeholder="Ваш Адрес"
                               name="address"
-                              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              className="mt-1 p-2 border-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                           </div>
                           <div className='ml-80'>Итого к оплате: {totalPrice} руб.</div>
