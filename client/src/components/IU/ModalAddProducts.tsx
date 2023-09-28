@@ -46,8 +46,7 @@ export default function ModalAddProducts({
   }, []);
 
   const imageInputRef = useRef(null);
-const wardrobeInputRef = useRef(null);
-
+  const wardrobeInputRef = useRef(null);
 
   const { addProductHandler } = useProductHooks();
 
@@ -95,7 +94,7 @@ const wardrobeInputRef = useRef(null);
                           <input
                             type="text"
                             name="title"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="mt-1 p-2 border-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
                         </div>
 
@@ -105,7 +104,7 @@ const wardrobeInputRef = useRef(null);
                           <input
                             type="text"
                             name="price"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="mt-1 p-2 border-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
                         </div>
 
@@ -132,7 +131,7 @@ const wardrobeInputRef = useRef(null);
                           <textarea
                             type="text"
                             name="description"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="mt-1 p-2 border-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
                         </div>
 
@@ -158,19 +157,13 @@ const wardrobeInputRef = useRef(null);
                             placeholder="Количество товара"
                             type="text"
                             name="size"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="mt-1 p-2 border-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
                         </div>
 
                         <div>
                           Изображение товара для карточки
-                          <input 
-                          name="file" 
-                          type="file" 
-                          multiple 
-                          onChange={changeImg} 
-                          
-                          />
+                          <input name="file" type="file" multiple onChange={changeImg} />
                           {images
                             ? images?.map((el, index) => (
                                 <div className="col" key={index}>
@@ -199,12 +192,7 @@ const wardrobeInputRef = useRef(null);
                         <div>
                           {' '}
                           Изображение для гардероба
-                          <input
-                            type="file"
-                            name="cover"
-                            multiple
-                            onChange={changeImgWardrobe}
-                          />
+                          <input type="file" name="cover" multiple onChange={changeImgWardrobe} />
                         </div>
                       </div>
                     </div>
@@ -224,9 +212,7 @@ const wardrobeInputRef = useRef(null);
                       className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                       onClick={() => {
                         console.log('Button clicked');
-                        onHide() 
-                        
-                
+                        onHide();
                       }}
                     >
                       Сохранить
