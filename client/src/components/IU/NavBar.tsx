@@ -157,8 +157,8 @@ export default function NavBar(): JSX.Element {
                         <label
                           style={{
                             position: 'absolute',
-                            marginLeft: '20px',
-                            marginTop: '-40px',
+                            marginLeft: '35px',
+                            marginTop: '-50px',
                             borderRadius: '50px',
                             backgroundColor: 'red',
                             padding: `3px ${cartLabel.length > 10 ? '0' : 10}px`,
