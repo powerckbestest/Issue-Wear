@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { DraggingStyle, DropResult, NotDraggingStyle } from 'react-beautiful-dnd';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { useAppSelector } from '../../hooks/reduxHooks';
 
 const characters = [
   {
@@ -146,10 +147,20 @@ const getImageStyle = {
 };
 
 export default function WardrobePage(): JSX.Element {
-  const [leftColumn, setLeftColumn] = useState<Item[]>(characters);
+  const images = useAppSelector((state) => state.product.productsData.cartProducts);
+  const [leftColumn, setLeftColumn] = useState<Item[]>(
+    images
+      .map((el) => el.ProductSize?.Product.Images.find((el) => el.forConstructor))
+      .map((el) => ({ id: el?.url, name: el?.url, image: el.url })),
+  );
   const [wardrobeTop, setWardrobeTop] = useState<Item[]>([]);
   const [wardrobeBottom, setWardrobeBottom] = useState<Item[]>([]);
 
+  console.log(
+    images
+      .map((el) => el.ProductSize?.Product.Images.find((el) => el.forConstructor))
+      .map((el) => ({ id: el?.id, name: el?.url, image: el.url })),
+  );
   const onDragEnd = (result: DropResult): void => {
     // dropped outside the list
     if (!result.destination) {
@@ -280,7 +291,11 @@ export default function WardrobePage(): JSX.Element {
                         style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                       >
                         <div>
-                          <img src={item.image} alt="#" style={getImageStyle} />
+                          <img
+                            src={`http://localhost:3001/images/${item.image}`}
+                            alt="#"
+                            style={getImageStyle}
+                          />
                           {/* <div>{item.name}</div> */}
                         </div>
                       </div>
@@ -303,7 +318,7 @@ export default function WardrobePage(): JSX.Element {
                     style={getListStyleRigth(snapshot.isDraggingOver)}
                   >
                     {/* <h2>Wardrobe (Top)</h2> */}
-                    <div style={{marginRight: '-100px'}}>
+                    <div style={{ marginRight: '-100px' }}>
                       {wardrobeTop.map((item, index) => (
                         <Draggable key={item.id} draggableId={item.id} index={index}>
                           {(provided, snapshot): JSX.Element => (
@@ -317,7 +332,11 @@ export default function WardrobePage(): JSX.Element {
                               )}
                             >
                               <div>
-                                <img src={item.image} alt="#" style={getImageStyle} />
+                                <img
+                                  src={`http://localhost:3001/images/${item.image}`}
+                                  alt="#"
+                                  style={getImageStyle}
+                                />
                               </div>
                             </div>
                           )}
@@ -330,7 +349,7 @@ export default function WardrobePage(): JSX.Element {
               </Droppable>
             </div>
             {/* <hr /> */}
-            <div style={{ marginTop: '-20px' , marginLeft: '-30px'}}>
+            <div style={{ marginTop: '-20px', marginLeft: '-30px' }}>
               <Droppable droppableId="WardrobeBottom">
                 {(provided, snapshot): JSX.Element => (
                   <div
@@ -349,7 +368,11 @@ export default function WardrobePage(): JSX.Element {
                             style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                           >
                             <div>
-                              <img src={item.image} alt="#" style={getImageStyle} />
+                              <img
+                                src={`http://localhost:3001/images/${item.image}`}
+                                alt="#"
+                                style={getImageStyle}
+                              />
                             </div>
                           </div>
                         )}

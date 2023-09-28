@@ -28,7 +28,7 @@ export default function NavBar(): JSX.Element {
     // Переключаем состояние и записываем его в localStorage
     setIsDarkMode((prevMode) => {
       const theme = document.getElementById('theme');
-      theme.href = prevMode ? '/styles/dark-mode.css' : '/dark-mode.css';
+      theme.href = prevMode ? '/styles/dark-mode.css' : '/styles/light-mode.css';
       localStorage.setItem('isDarkMode', (!prevMode).toString());
       return !prevMode;
     });
@@ -38,7 +38,7 @@ export default function NavBar(): JSX.Element {
     // Устанавливаем начальную тему при монтировании компонента
     const theme = document.getElementById('theme');
     if (theme) {
-      theme.href = isDarkMode ? '/styles/dark-mode.css' : '/light-mode.css';
+      theme.href = isDarkMode ? '/styles/dark-mode.css' : '/styles/light-mode.css';
     }
   }, [isDarkMode]);
 
@@ -65,25 +65,25 @@ export default function NavBar(): JSX.Element {
                 width: '698px',
                 height: '182px',
                 position: 'absolute',
-                marginTop: '-60px',
+                marginTop: '-40px',
                 opacity: '20%',
               }}
             />
-            <div style={{ marginLeft: '-250px', marginTop: '100px', position: 'absolute',opacity:'40%',zIndex:'-20'  }}>
+            <div style={{ marginTop: '180px', position: 'absolute',opacity:'40%',zIndex:'-20', textAlign: 'center'  }}>
               <p>Спасибо улице, что воспитала,</p>
               <p>маме — что родила, е-е</p>
             </div>
             <img
               src="/_1fire.png"
               alt="fire"
-              style={{ width: '71px', height: '101px', position: 'absolute', marginTop: '70px'}}
+              style={{ width: '71px', height: '101px', position: 'absolute', marginTop: '70px' }}
             />
           </div>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                  <NavLink to="/" style={{ color: 'white', marginLeft: '-290px' }}>
+                  <NavLink to="/" style={{ color: 'white', marginLeft: '-50px' }}>
                     <img className="h-8 w-8 rounded-full" src="/fire.jpg" alt="" />
                   </NavLink>
                 </div>
@@ -107,10 +107,16 @@ export default function NavBar(): JSX.Element {
                   marginTop: '220px',
                 }}
               >
-                <div className="hidden sm:ml-6 sm:block">
+                <div className="hidden sm:ml-6 sm:block mt-5">
                   <div className="flex space-x-4">
                     <NavLink to="/products" aria-current="page">
                       Одежда
+                    </NavLink>
+                    <NavLink to="/wardrobe" aria-current="page">
+                      Гардероб
+                    </NavLink>
+                    <NavLink to="/myorders" aria-current="page">
+                      Мои заказы
                     </NavLink>
                   </div>
                 </div>
@@ -118,16 +124,16 @@ export default function NavBar(): JSX.Element {
                 {/* Функциональная иконка профиля */}
                 {/* {/* Profile dropdown */}
                 {user.status !== 'success' ? (
-                  <div className="flex space-x-4">
-                    <Navigate to="/signin" aria-current="page">
+                  <div className="flex space-x-4 mt-5">
+                    <NavLink to="/signin" aria-current="page">
                       Войти
-                    </Navigate>
+                    </NavLink>
                     <NavLink to="/signup" aria-current="page">
                       Зарегистрироваться
                     </NavLink>
                   </div>
                 ) : (
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4 mt-5">
                     <NavLink to="/signup" onClick={signOutActionHandler} aria-current="page">
                       Выход
                     </NavLink>

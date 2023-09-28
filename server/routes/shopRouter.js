@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-undef */
 /* eslint-disable no-await-in-loop */
 const express = require('express');
 const fs = require('fs/promises');
@@ -89,7 +91,30 @@ shopRouter.post(
     }
   },
 );
-
+shopRouter.delete('/orders/:id', async (req, res) => {
+  const user = await User.findByPk(req.session.user.id);
+  if (!user) {
+    return res.status(404).json({ message: 'Not auth' });
+  }
+  const order = await Order.findOne({
+    where: { id: req.params.id },
+    include: { model: OrderList },
+  });
+  if (order.userId !== user.id) {
+    return res.status(404).json({ message: 'Only for author' });
+  }
+  if (order.statusId !== 1) {
+    return res.status(404).json({ message: 'Couldnt cancel order because of status' });
+  }
+  for (const orderProduct of order.OrderLists) {
+    const product = await ProductSize.findByPk(orderProduct.productSizeId);
+    product.count += 1;
+    product.save();
+    await OrderList.destroy({ where: { id: orderProduct.id } });
+  }
+  await Order.destroy({ where: { id: req.params.id } });
+  return res.sendStatus(200);
+});
 shopRouter.put(
   '/products/:id',
   upload.fields([
@@ -158,13 +183,14 @@ shopRouter.delete('/products/:id', async (req, res) => {
 });
 shopRouter.get('/orders', async (req, res) => {
   const user = await User.findByPk(req?.session?.user?.id);
+  console.log(user);
   if (!user) {
     return res.status(400).json({ message: 'Cant find user' });
   }
   if (user.roleId === 2) {
     return res.json(
       await Order.findAll({
-        where: { userId: user.Id },
+        where: { userId: user.id },
         include: [
           {
             model: OrderList,

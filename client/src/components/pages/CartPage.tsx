@@ -31,7 +31,7 @@ export default function CartPage(): JSX.Element {
   console.log(productsInCart);
 
   return (
-    <div className="mt-8 container mx-auto px-10">
+    <div className="mt-8 mb-8 container mx-auto px-10">
       <div className="flow-root">
         <h1 className="flex justify-center items-center font-bold	text-3xl">Корзина:</h1>
         <ModalMakeOrder show={show} closeModal={closeModal} totalPrice={totalPrice} />
