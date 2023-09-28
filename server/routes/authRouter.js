@@ -57,11 +57,11 @@ authAuthRouter.post('/signin', async (req, res) => {
     name: currentUser.name,
     email: currentUser.email,
   };
-  res.json({ ...req.session.user, role: currentUser.Role });
+  res.json({ ...currentUser.dataValues, password: undefined });
 });
 
 authAuthRouter.get('/check', async (req, res) => {
-  console.log(999999)
+  console.log(999999);
   if (!req.session.user) {
     res.status(401).json({ message: 'no cookies' });
     return;

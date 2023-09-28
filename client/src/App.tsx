@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import MainPage from './components/pages/ProductsList';
+import ProductsList from './components/pages/ProductsList';
 import SignUpPage from './components/pages/SignUpPage';
 import SignInPage from './components/pages/SignInPage';
 import NavBar from './components/IU/NavBar';
@@ -15,6 +15,8 @@ import WardrobePage from './components/pages/WardrobePage';
 import { setUser } from './features/redux/slices/userSlice';
 import Loader from './components/hocs/Loader';
 import AdminOrderPage from './components/pages/AdminOrderPage';
+import MyOrdersPage from './components/pages/MyOrdersPage';
+import MainPage from './components/pages/MainPage';
 
 function App(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +35,6 @@ function App(): JSX.Element {
 
   useEffect(() => {
     void dispatch(userCheckActionThunk())
-    
       .then(() => {
         getProductsCartHandler();
         // setIsAuthenticated(user.status === 'success');
@@ -57,25 +58,34 @@ function App(): JSX.Element {
       ) : (
         <>
           <NavBar />
-          <Routes>
-            <Route path="/" />
-            <Route path="/products" element={<MainPage />} />
-            <Route
-              element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/main" />}
-            >
-              <Route path="/signup" element={<SignUpPage />} />
-              <Route path="/signin" element={<SignInPage />} />
-            </Route>
-            <Route
-              element={<PrivateRouter isAllowed={user?.user?.Role?.id === 1} redirectTo="/main" />}
-            >
-              <Route path="/adminorders" element={<AdminOrderPage />} />
-            </Route>
-            <Route path="/wardrobe" element={<WardrobePage />} />
-        <Route path="/cart" element={<CartPage />} />
-            <Route path="/products/:productId" element={<ProductCard />} />
-          </Routes>
-          {/* <Footer /> */}
+          <div style={{ marginTop: '220px' }}>
+            <Routes>
+              <Route path="/" element={<MainPage/>} />
+              <Route path="/products" element={<ProductsList />} />
+              <Route
+                element={<PrivateRouter isAllowed={user.status === 'success'} redirectTo="/" />}
+              >
+                <Route path="/myorders" element={<MyOrdersPage />} />
+              </Route>
+              <Route
+                element={<PrivateRouter isAllowed={user.status !== 'success'} redirectTo="/" />}
+              >
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/signin" element={<SignInPage />} />
+              </Route>
+              <Route
+                element={
+                  <PrivateRouter isAllowed={user?.user?.Role?.id === 1} redirectTo="/" />
+                }
+              >
+                <Route path="/adminorders" element={<AdminOrderPage />} />
+              </Route>
+              <Route path="/wardrobe" element={<WardrobePage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/products/:productId" element={<ProductCard />} />
+            </Routes>
+          </div>
+          <Footer  />
         </>
       )}
     </>

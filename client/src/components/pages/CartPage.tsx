@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import useProductHooks from '../../hooks/useProductHooks';
 import type { ProductType } from '../../types/productType';
@@ -30,7 +31,7 @@ export default function CartPage(): JSX.Element {
   console.log(productsInCart);
 
   return (
-    <div className="mt-8 container mx-auto px-10">
+    <div className="mt-8 mb-8 container mx-auto px-10">
       <div className="flow-root">
         <h1 className="flex justify-center items-center font-bold	text-3xl">Корзина:</h1>
         <ModalMakeOrder show={show} closeModal={closeModal} totalPrice={totalPrice} />
@@ -88,8 +89,19 @@ export default function CartPage(): JSX.Element {
           >
             Оформить заказ
           </button>
+          
+          
         </div>
+        <br />
+        <div className="flex justify-center items-center">
+          <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+          <NavLink style={{color: 'blue', fontSize: '15px'}} to="/products">Продолжить покупки →</NavLink>
+          </p>
+        </div>
+
+        
       </div>
     </div>
+    
   );
 }

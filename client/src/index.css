@@ -19,3 +19,32 @@
 .animate-pulse {
   animation: pulse 1.5s infinite; /* 1.5 секунды длительности анимации */
 }
+
+.accordion {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.accordion-toggle {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.accordion-content-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.accordion-content {
+  display: none;
+  padding: 10px;
+}
+
+.accordion.open .accordion-content {
+  display: block;
+}
