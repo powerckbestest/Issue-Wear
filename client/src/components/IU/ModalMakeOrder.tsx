@@ -1,15 +1,14 @@
 import React, { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
-import { useAppSelector } from '../../hooks/reduxHooks';
 import useProductHooks from '../../hooks/useProductHooks';
 
 type ModalMakeOrderProps = {
   show: boolean;
   closeModal: () => void;
+  totalPrice: string
 };
 
-export default function ModalMakeOrder({ show, closeModal }: ModalMakeOrderProps): JSX.Element {
+export default function ModalMakeOrder({ show, closeModal, totalPrice }: ModalMakeOrderProps): JSX.Element {
   const cancelButtonRef = useRef(null);
 
   const {makeOrderHandler} = useProductHooks()
@@ -85,6 +84,7 @@ export default function ModalMakeOrder({ show, closeModal }: ModalMakeOrderProps
                               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                           </div>
+                          <div className='ml-80'>Итого к оплате: {totalPrice} руб.</div>
                         </div>
                       </div>
                     </div>

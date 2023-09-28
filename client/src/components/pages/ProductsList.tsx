@@ -35,23 +35,28 @@ export default function MainPage(): JSX.Element {
   }, [product.length]);
 
   console.log(filtred.filter((el) => el.categoryId === 1));
-
-  // console.log(product)
   return (
-    <>
-      {}
-      <div className="flex items-center justify-center mt-5">
-        <button
-          type="button"
-          className="mt-3 w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-          onClick={handleEditClick}
-        >
-          Добавить товар
-        </button>
-      </div>
+    <div style={{marginTop:'150px'}}>
+      {user?.user?.Role?.id === 1 ? (
+        <div className="flex items-center justify-center mt-5">
+          <button
+            type="button"
+            className="mt-3 w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+            onClick={handleEditClick}
+          >
+            Добавить товар
+          </button>
+          <NavLink to={'/adminorders'}>
+            Заказы клиентов
+          </NavLink>
+        </div>
+      ) : (
+        <></>
+      )}
+
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2 className="text-4xl font-bold tracking-tight text-gray-900 text-center">Одежда:</h2>
+          <h2 style={{fontFamily: 'Benzin'}} className="text-4xl font-bold tracking-tight text-gray-900 text-center">Одежда:</h2>
           <div style={{ display: 'flex' }}>
             <select
               id="countries"
@@ -71,7 +76,7 @@ export default function MainPage(): JSX.Element {
               }}
             >
               <option selected value="all">
-                Choose a color
+                Цвет
               </option>
               {color.map((el) => (
                 <option value={el.id}>{el.title}</option>
@@ -96,7 +101,7 @@ export default function MainPage(): JSX.Element {
               }}
             >
               <option selected value="all">
-                Choose a category
+                Категория
               </option>
               {categories.map((el) => (
                 <option value={el.id}>{el.title}</option>
@@ -114,6 +119,6 @@ export default function MainPage(): JSX.Element {
           product={editProduct}
         />
       </div>
-    </>
+    </div>
   );
 }
