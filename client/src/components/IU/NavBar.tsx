@@ -65,19 +65,11 @@ export default function NavBar(): JSX.Element {
                 width: '698px',
                 height: '182px',
                 position: 'absolute',
-                marginTop: '-60px',
+                marginTop: '-40px',
                 opacity: '20%',
               }}
             />
-            <div
-              style={{
-                marginLeft: '-250px',
-                marginTop: '100px',
-                position: 'absolute',
-                opacity: '40%',
-                zIndex: '-20',
-              }}
-            >
+            <div style={{ marginTop: '180px', position: 'absolute',opacity:'40%',zIndex:'-20', textAlign: 'center'  }}>
               <p>Спасибо улице, что воспитала,</p>
               <p>маме — что родила, е-е</p>
             </div>
@@ -91,7 +83,7 @@ export default function NavBar(): JSX.Element {
             <div className="relative flex h-16 items-center justify-between">
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                  <NavLink to="/" style={{ color: 'white', marginLeft: '-290px' }}>
+                  <NavLink to="/" style={{ color: 'white', marginLeft: '-50px' }}>
                     <img className="h-8 w-8 rounded-full" src="/fire.jpg" alt="" />
                   </NavLink>
                 </div>
@@ -115,10 +107,16 @@ export default function NavBar(): JSX.Element {
                   marginTop: '220px',
                 }}
               >
-                <div className="hidden sm:ml-6 sm:block">
+                <div className="hidden sm:ml-6 sm:block mt-5">
                   <div className="flex space-x-4">
                     <NavLink to="/products" aria-current="page">
                       Одежда
+                    </NavLink>
+                    <NavLink to="/wardrobe" aria-current="page">
+                      Гардероб
+                    </NavLink>
+                    <NavLink to="/myorders" aria-current="page">
+                      Мои заказы
                     </NavLink>
                   </div>
                 </div>
@@ -126,7 +124,7 @@ export default function NavBar(): JSX.Element {
                 {/* Функциональная иконка профиля */}
                 {/* {/* Profile dropdown */}
                 {user.status !== 'success' ? (
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4 mt-5">
                     <NavLink to="/signin" aria-current="page">
                       Войти
                     </NavLink>
@@ -135,7 +133,7 @@ export default function NavBar(): JSX.Element {
                     </NavLink>
                   </div>
                 ) : (
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4 mt-5">
                     <NavLink to="/signup" onClick={signOutActionHandler} aria-current="page">
                       Выход
                     </NavLink>

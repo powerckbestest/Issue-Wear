@@ -4,7 +4,8 @@ import ymaps from 'yandex-maps';
 
 export default function Footer(): JSX.Element {
   return (
-    <footer style={{ backgroundColor: 'gray', bottom: '0', left: '0', width:'100%'}}
+    <footer
+      style={{ backgroundColor: '#cccccd', bottom: '0', left: '0', width:'100%'}}
       className="footer"
     >
       <div className="footer-content">

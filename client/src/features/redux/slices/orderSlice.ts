@@ -16,9 +16,10 @@ export const orderSlice = createSlice({
     },
     changeOrderStatus: (state, action: PayloadAction<OrderFromDb>) =>
       state.map((order) => (order.id === action.payload.id ? action.payload : order)),
+    cancelOrder: (state, action: PayloadAction<number>) => state.filter((el) => el.id !== action.payload)
   },
 });
 
 export default orderSlice.reducer;
 
-export const { getOrders, addOrder, changeOrderStatus } = orderSlice.actions;
+export const { getOrders, addOrder, changeOrderStatus, cancelOrder } = orderSlice.actions;
